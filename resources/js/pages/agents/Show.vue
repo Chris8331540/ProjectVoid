@@ -1,0 +1,348 @@
+<script setup lang="ts">
+import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { type BreadcrumbItem } from '@/types';
+import { Head } from '@inertiajs/vue3';
+import { computed } from 'vue';
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Agents',
+        href: '/dashboard',
+    },
+];
+
+const props = defineProps<{
+    name?: string;
+    agent: any
+}>();
+
+const ranks = {
+    s: "/storage/images/agents/Icon_AgentRank_S.webp",
+    a: "/storage/images/agents/Icon_AgentRank_A.webp"
+}
+const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
+</script>
+
+<template>
+
+    <Head :title="agent.name" />
+
+    <AppLayout :breadcrumbs="breadcrumbs">
+
+        <div class="relative w-full min-h-screen "> <!-- Contenedor principal -->
+            <!-- Fondo con patrón -->
+            <svg class="absolute inset-0 w-full h-full stroke-neutral-900/20 dark:stroke-neutral-100/20" fill="none">
+                <defs>
+                    <pattern :id="patternId" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                        <path d="M-1 5L5 -1M3 9L8.5 3.5" stroke-width="0.5"></path>
+                    </pattern>
+                </defs>
+                <rect stroke="none" :fill="`url(#${patternId})`" width="100%" height="100%"></rect>
+            </svg>
+
+            <div class="w-full p-4">
+                <div class="pj-presentation flex relative z-10 overflow-hidden"
+                    :style="{ backgroundImage: `url(${agent.image_show})` }">
+                    <div class="flex pj-name w-full justify-end items-center p-4 z-20 flex-wrap">
+                        <div class="mr-8 flex flex-col">
+                            <div class="flex">
+                                <span class="mr-5 border-text">{{ agent.name }}</span>
+                            </div>
+
+                            <div class="flex mr-8">
+                                <img :src="agent.element.image" class="w-12 mr-5" />
+                                <img :src="agent.type.image" class="w-12 mr-5" />
+                                <img v-if="agent.rank == 's'" :src="ranks.s" class="w-12" />
+                                <img v-else :src="ranks.a" class="w-12 mr-0" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="w-full pl-4 pt-4 pr-4 uppercase title-show">stats (level 60)</div>
+            <div class="w-full p-4 flex flex-wrap md:flex-nowrap">
+                <div class="flex w-full md:w-1/2 md:pr-2">
+                    <div class="relative overflow-x-hidden shadow-md rounded-xl w-full">
+                        <table class="w-full text-sm text-left rtl:text-right font-bold">
+                            <tbody>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        hp
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.hp }}
+                                    </td>
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        def
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.def }}
+                                    </td>
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        atk
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.atk }}
+                                    </td>
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        crit rate
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.crit_rate }}%
+                                    </td>
+
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        crit dmg
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.crit_dmg }}%
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="flex w-full md:w-1/2 mt-4 md:mt-0 md:pl-2">
+                    <div class="relative overflow-x-hidden shadow-md rounded-xl w-full">
+                        <table class="w-full text-sm text-left rtl:text-right">
+                            <tbody>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        pen ratio
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.pen_ratio }}
+                                    </td>
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        impact
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.impact }}
+                                    </td>
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        anomaly mastery
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.anomaly_mastery }}
+                                    </td>
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        anomaly proficiency
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.anomaly_proficiency }}
+                                    </td>
+
+                                </tr>
+                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
+                                        energy regen
+                                    </th>
+                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
+                                        {{ agent.energy_regen }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full flex z-0 p-4">
+                <div class="w-full button-box-wrapper relative">
+                    <div class="w-full flex button-box italic uppercase tittle-button">
+                        <div class="w-1/3 button-animation button-left flex justify-center bg-black p-4">
+                            <span class="relative z-10">core skills</span>
+
+                        </div>
+                        <div class="w-1/3 button-animation button-middle flex justify-center bg-black p-4">
+                            <span class="relative z-10">skills</span>
+                        </div>
+                        <div class="w-1/3 button-animation button-right flex justify-center bg-black p-4">
+                            <span class="relative z-10">mindscapes</span>
+                        </div>
+                    </div>
+                    <div class="w-full h-full flex absolute top-0 left-0 dot-pattern"></div>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </AppLayout>
+
+</template>
+<style>
+.base-text-style {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tittle-button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.pj-name {
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+}
+
+.title-show {
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+.pj-presentation {
+    /* border-radius: 400px 80px; */
+    background-color: black;
+    border-radius: 15px;
+
+    background-size: cover;
+    /* Ajusta la imagen para cubrir el div */
+    background-position: left center;
+    /* Centra la imagen */
+    background-repeat: no-repeat;
+    /* Evita que se repita */
+
+}
+
+.border-text {
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+/*estilos botones */
+.button-animation:hover {
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: 800;
+    color: black;
+    background: linear-gradient(to left,
+            #A6C100 0%,
+            #DBD100 25%,
+            #A6C100 50%,
+            #DBD100 75%,
+            #A6C100 100%);
+    background-size: 400% auto;
+    animation: textShine 2.5s linear infinite;
+    /* border-radius: 100px 20px; */
+    /* Transiciones específicas para los cambios de posicionamiento */
+    transition: transform 0.5s ease-in-out, border-radius 1s ease;
+    z-index: 20;
+}
+
+.button-left {
+    border-radius: 120px 40px 200px 120px;
+}
+
+.button-middle {
+    border-radius: 100px 40px;
+}
+
+.button-right {
+    border-radius: 200px 120px 120px 40px;
+}
+
+.button-box-wrapper {
+    /* background-color: #24242c; */
+    background-color: oklch(0.274 0.006 286.033);
+    /* hex: #27272a*/
+    border-radius: 100px;
+    padding: 0.2rem;
+    border: 4px solid black;
+
+}
+
+.dot-pattern {
+    border-radius: 100px;
+    pointer-events: none;
+
+    opacity: 0.4;
+    background-image: repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a), repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a);
+    background-position: 0 0, 4px 4px;
+    background-size: 8px 8px;
+}
+
+.button-box {
+    background-color: black;
+    border-radius: 100px;
+
+
+}
+
+.button-animation:hover>img {
+    filter: invert(1);
+}
+
+@keyframes breath {
+    0% {
+        transform: scale(1);
+        /* tamaño normal */
+    }
+
+    50% {
+        transform: scale(1.02, 1.08);
+        /* tamaño expandido */
+    }
+
+    100% {
+        transform: scale(1);
+        /* vuelve al tamaño original */
+    }
+}
+
+@keyframes textShine {
+    0% {
+        background-position: 135% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.button-animation:hover {
+    animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
+
+}
+</style>
