@@ -19,7 +19,7 @@ class Basic extends Model
     public function basicMultiplier(){
         return $this->hasMany(BasicMultiplier::class);
     }
-    public function Agent(){
+    public function agent(){
         return $this->belongsTo(Agent::class);
     }
 

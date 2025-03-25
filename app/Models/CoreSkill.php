@@ -24,7 +24,7 @@ class CoreSkill extends Model
         return $this->hasMany(CoreSkillAttribute::class);
     }
 
-    public function Agent(){
+    public function agent(){
         return $this->belongsTo(Agent::class);
     }
 }

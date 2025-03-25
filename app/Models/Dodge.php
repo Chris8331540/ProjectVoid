@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Chain extends Model
+class Dodge extends Model
 {
-    /** @use HasFactory<\Database\Factories\ChainFactory> */
+    /** @use HasFactory<\Database\Factories\DodgeFactory> */
     use HasFactory;
+
     protected $fillable = [
         "name",
         "info",
         "order",
-        "image"
+        "image",
     ];
 
-    public function chainMultiplier(){
-        return $this->hasMany(ChainMultiplier::class);
+    public function dodgeMultiplier(){
+        return $this->hasMany(DodgeMultiplier::class);
     }
 
     public function agent(){
