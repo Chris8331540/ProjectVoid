@@ -16,7 +16,7 @@ class Chain extends Model
         "image"
     ];
 
-    public function chain_multiplier(){
+    public function chainMultiplier(){
         return $this->hasMany(ChainMultiplier::class);
     }
 }
