@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('core_skills', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("info");
+            $table->text("info");
             $table->integer("order");
             $table->string("image");
             $table->foreignIdFor(Agent::class);

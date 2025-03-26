@@ -30,7 +30,11 @@ class Agent extends Model
         return $this->belongsTo(Element::class);
     }
 
-    public function Type(){
+    public function type(){
         return $this->belongsTo(Type::class);
+    }
+
+    public function coreSkill(){
+        return $this->hasMany(CoreSkill::class);
     }
 }

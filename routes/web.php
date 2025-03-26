@@ -14,7 +14,9 @@ Route::get("/agents", function () {
 })->name("agents");
 
 Route::get("/agents/{id}", function ($id) {
-    $agent = Agent::with(["element", "type"])->findOrFail($id);
+    $agent = Agent::with(["element", "type", "coreSkill"=>function($query){
+        $query->with(["coreSkillMultiplier", "coreSkillAttribute.coreSkillAddition"]);
+    }])->findOrFail($id);
     return Inertia::render("agents/Show", ["agent" => $agent]);
 })->name("agents.show");
 

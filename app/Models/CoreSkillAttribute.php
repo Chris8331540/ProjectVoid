@@ -18,7 +18,7 @@ class CoreSkillAttribute extends Model
         return $this->belongsTo(CoreSkill::class);
     }
 
-    protected function coreSkillAddition(){
+    public function coreSkillAddition(){
         return $this->hasMany(CoreSkillAddition::class);
     }
 }

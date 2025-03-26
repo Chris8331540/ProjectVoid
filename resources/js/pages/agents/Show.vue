@@ -4,6 +4,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import Agents from '../Agents.vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Agents',
@@ -15,7 +16,6 @@ const props = defineProps<{
     name?: string;
     agent: any
 }>();
-
 const ranks = {
     s: "/storage/images/agents/Icon_AgentRank_S.webp",
     a: "/storage/images/agents/Icon_AgentRank_A.webp"
@@ -172,12 +172,11 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
                 </div>
             </div>
 
-            <div class="w-full flex z-0 p-4">
+            <div class="w-full flex z-0 p-4" id="botones-principal">
                 <div class="w-full button-box-wrapper relative">
                     <div class="w-full flex button-box italic uppercase tittle-button">
                         <div class="w-1/3 button-animation button-left flex justify-center bg-black p-4">
                             <span class="relative z-10">core skills</span>
-
                         </div>
                         <div class="w-1/3 button-animation button-middle flex justify-center bg-black p-4">
                             <span class="relative z-10">skills</span>
@@ -188,13 +187,23 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
                     </div>
                     <div class="w-full h-full flex absolute top-0 left-0 dot-pattern"></div>
                 </div>
-
             </div>
-
-
-
-
-
+            <div class="w-full flex p-4 z-0">
+                <div class="w-full flex rounded-xl relative text-wrapper">
+                    <div class="w-full flex-col relative bg-black rounded-md p-4">
+                        <div id="CoreSkill1" class="w-full relative z-10">
+                            <div class="title text-xl">{{ agent.core_skill[0].name }}</div>
+                            <div class="info ml-1">{{ agent.core_skill[0].info }}</div>
+                        </div>
+                        <!-- <div class="m-4">{{agent.core_skill[0].core_skill_attribute.core_skill_addition }}</div> -->
+                        <div id="CoreSkill2" class="w-full relative z-10">
+                            <div class="title text-xl">{{ agent.core_skill[1].name }}</div>
+                            <div class="info ml-1">{{ agent.core_skill[1].info }}</div>
+                        </div>
+                        <div class="w-full h-full flex absolute top-0 left-0 dot-pattern-text"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -290,11 +299,26 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
     border-radius: 100px;
     padding: 0.2rem;
     border: 4px solid black;
+}
 
+.text-wrapper{
+    background-color: oklch(0.274 0.006 286.033);
+    padding: 0.2rem;
+    border: 4px solid black;
 }
 
 .dot-pattern {
     border-radius: 100px;
+    pointer-events: none;
+
+    opacity: 0.4;
+    background-image: repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a), repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a);
+    background-position: 0 0, 4px 4px;
+    background-size: 8px 8px;
+}
+
+.dot-pattern-text {
+    border-radius: 12px;
     pointer-events: none;
 
     opacity: 0.4;

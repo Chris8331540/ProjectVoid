@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\CoreSkill;
+use App\Models\CoreSkillAddition;
+use App\Models\CoreSkillAttribute;
+use App\Models\CoreSkillMultiplier;
 use App\Models\Element;
 use App\Models\Type;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -152,5 +156,51 @@ class DatabaseSeeder extends Seeder
             "element_id"=>$elementsID["physical"],
             "type_id"=>$typesID["attack"]
         ]);
+
+        //CREAMOS EJEMPLO DE CORE SKILL DE ASTRA
+
+        CoreSkill::factory()->create([
+            "name"=>"Core Passive Graceful Andante",
+            "info"=>"During the Idyllic Cadenza state, when other characters switch in through a Quick Assist, Chain Attack, Defensive Assist, or Evasive Assist, and when Astra Yao expends Energy to release Tremolo to attack, both Astra Yao and the incoming character's ATK are increased. The increase is equal to {multiplier}% of Astra Yao's initial ATK, up to a maximum of 1,200. The effect lasts for 20s and can be extended up to 30s with repeated triggers.",
+            "order"=>1,
+            "image"=>"",
+            "agent_id"=>1
+        ]);
+
+
+        $multipicadores = ["22", "24", "26", "28", "30", "32", "35"];
+        foreach($multipicadores as $index=>$multiplicador){
+            CoreSkillMultiplier::factory()->create([
+                "multiplier"=>$multiplicador,
+                "order"=>1,
+                "lvl"=>$index+1,
+                "core_skill_id"=>1
+            ]);
+        }
+
+        CoreSkillAttribute::factory()->create([
+            "name"=>"atk",
+            "core_skill_id"=>1
+        ]);
+
+        $valueLevel = ["0", "0", "25", "25", "50", "50", "75"];
+
+        foreach($valueLevel as $index=>$value){
+            CoreSkillAddition::factory()->create([
+                "value"=>$value,
+                "lvl"=>$index+1,
+                "core_skill_attribute_id"=>1,
+            ]);
+        }
+        
+        //El core Skill Adicional
+        CoreSkill::factory()->create([
+            "name"=>"Additional Ability Moonlit Frenzy",
+            "info"=>"When another character in your squad is an Attack or Anomaly character: When Energy is consumed to trigger a Precise Assist or Basic Attack: Finale, Astra Yao will additionally follow up with 1 Tremolo and 3 Tone Clusters.",
+            "order"=>2,
+            "image"=>"",
+            "agent_id"=>1
+        ]);
+
     }
 }

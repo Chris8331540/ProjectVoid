@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('specials', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("info");
+            $table->text("info");
             $table->integer("order");
             $table->string("image");
             $table->timestamps();
