@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('core_skill_additions', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
             $table->string("value");
             $table->integer("lvl");
 

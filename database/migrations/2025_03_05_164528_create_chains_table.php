@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('info');
-            $table->string("order");
+            $table->integer("order");
             $table->string("image");
 
             $table->foreignIdFor(Agent::class);

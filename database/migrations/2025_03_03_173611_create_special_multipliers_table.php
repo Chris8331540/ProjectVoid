@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("multiplier_type");
-            $table->string("order");
+            $table->integer("order");
             $table->timestamps();
 
             $table->foreignIdFor(Special::class);

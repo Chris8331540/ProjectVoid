@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('special_other_properties', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("value");
+            $table->integer("lvl");
+            $table->string("multiplier");
             $table->timestamps();
 
             $table->foreignIdFor(SpecialMultiplier::class);
