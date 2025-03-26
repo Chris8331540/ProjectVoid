@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\CoreSkill;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('core_skill_multipliers', function (Blueprint $table) {
             $table->id();
+            $table->string("multiplier");
+            $table->integer("order");
+            $table->integer("lvl");
+
+            $table->foreignIdFor(CoreSkill::class);
             $table->timestamps();
         });
     }
