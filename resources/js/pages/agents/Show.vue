@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import CoreSkillTabs from '@/components/CoreSkillTabs.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import { useCoreSkill } from '@/composables/useCoreSkill';
 import Agents from '../Agents.vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,7 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
 ];
-
+const propCoreSkill = useCoreSkill();
 const props = defineProps<{
     name?: string;
     agent: any
@@ -191,6 +193,7 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
             <div class="w-full flex p-4 z-0">
                 <div class="w-full flex rounded-xl relative text-wrapper">
                     <div class="w-full flex-col relative bg-black rounded-md p-4">
+                        <CoreSkillTabs class="relative z-10" :letterSelected = "propCoreSkill.letterSelected.value" :updateCoreSkill="propCoreSkill.updateLetter"></CoreSkillTabs>
                         <div id="CoreSkill1" class="w-full relative z-10">
                             <div class="title text-xl">{{ agent.core_skill[0].name }}</div>
                             <div class="info ml-1">{{ agent.core_skill[0].info }}</div>
