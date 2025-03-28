@@ -168,7 +168,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        $multipicadores = ["22", "24", "26", "28", "30", "32", "35"];
+        $multipicadores = ["24", "26", "28", "30", "32", "35"];
         foreach($multipicadores as $index=>$multiplicador){
             CoreSkillMultiplier::factory()->create([
                 "multiplier"=>$multiplicador,
@@ -183,7 +183,7 @@ class DatabaseSeeder extends Seeder
             "core_skill_id"=>1
         ]);
 
-        $valueLevel = ["0", "0", "25", "25", "50", "50", "75"];
+        $valueLevel = ["0", "25", "25", "50", "50", "75"];
 
         foreach($valueLevel as $index=>$value){
             CoreSkillAddition::factory()->create([

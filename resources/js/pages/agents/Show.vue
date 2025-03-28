@@ -23,6 +23,12 @@ const ranks = {
     a: "/storage/images/agents/Icon_AgentRank_A.webp"
 }
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
+
+function replacePlaceholder(text: string, multiplier: string): string {
+    return text.replace(/{multiplier}/g, multiplier.toString());
+}
+
+
 </script>
 
 <template>
@@ -193,12 +199,12 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
             <div class="w-full flex p-4 z-0">
                 <div class="w-full flex rounded-xl relative text-wrapper">
                     <div class="w-full flex-col relative bg-black rounded-md p-4">
-                        <CoreSkillTabs class="relative z-10" :letterSelected = "propCoreSkill.letterSelected.value" :updateCoreSkill="propCoreSkill.updateLetter"></CoreSkillTabs>
+                        <CoreSkillTabs class="relative z-10" :letterSelected = "propCoreSkill.letterSelected.value" :numberCore="propCoreSkill.numberCore.value" :updateCoreSkill="propCoreSkill.updateCoreSkill"></CoreSkillTabs>
                         <div id="CoreSkill1" class="w-full relative z-10">
                             <div class="title text-xl">{{ agent.core_skill[0].name }}</div>
-                            <div class="info ml-1">{{ agent.core_skill[0].info }}</div>
+                            <div class="info ml-1">{{ replacePlaceholder(agent.core_skill[0].info, agent.core_skill[0].core_skill_multiplier[propCoreSkill.numberCore.value].multiplier) }}</div>
                         </div>
-                        <!-- <div class="m-4">{{agent.core_skill[0].core_skill_attribute.core_skill_addition }}</div> -->
+                        <div class="m-4 relative z-10">{{agent.core_skill[0].core_skill_attribute[0].name }} - {{ agent.core_skill[0].core_skill_attribute[0].core_skill_addition[propCoreSkill.numberCore.value].value }} </div>
                         <div id="CoreSkill2" class="w-full relative z-10">
                             <div class="title text-xl">{{ agent.core_skill[1].name }}</div>
                             <div class="info ml-1">{{ agent.core_skill[1].info }}</div>

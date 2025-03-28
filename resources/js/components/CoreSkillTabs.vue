@@ -15,6 +15,7 @@ onUnmounted(()=>{
 interface Props {
     class?: string;
     letterSelected: string,
+    numberCore: number,
     updateCoreSkill: Function
 }
 const letters = ["A", "B", "C", "D", "E", "F"];
@@ -36,7 +37,8 @@ const { class: containerClass = '' } = defineProps<Props>();
                 </filter>
             </svg>
             <div class="w-full flex button-box italic uppercase tittle-button p-1 gap-1 transition-all duration-1000 ease-in-out">
-                <button type="button"  v-for="letter in letters" :key="letter" @click="updateCoreSkill(letter)" :data-char="letter" class="relative z-10" :title="letter">
+                <button type="button" v-for="letter in letters" :key="letter" @click="updateCoreSkill(letter)" :data-char="letter" class="relative z-10" :title="letter"
+                :class="[letterSelected===letter?'coreSkillSelectedEffect':'']">
                 </button>
             </div>
             <div class="w-full h-full flex absolute top-0 left-0 dot-pattern"></div>
@@ -114,17 +116,14 @@ button {
   transition: box-shadow 0.35s ease-out;
   cursor: pointer;
 }
-button:focus {
-  outline: none;
-}
-button:hover, button:focus {
-  --light: 1 ;
+
+.coreSkillSelectedEffect{
   animation: shadowAnimation 3s ease-in-out infinite;
   outline: none;
 }
 button:active {
-  --press: 1 ;
-  animation: shadowAnimation 3s ease-in-out infinite;
+  --press: 1.5 ;
+  animation: shadowAnimation 2s ease-in-out infinite;
   outline: none;
 }
 button::before, button::after {
