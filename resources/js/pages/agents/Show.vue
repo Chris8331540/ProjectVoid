@@ -1,31 +1,41 @@
 <script setup lang="ts">
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
-import CoreSkillTabs from '@/components/CoreSkillTabs.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import CoreSkillOption from '@/components/coreSkillOption.vue';
+import SkillOption from '@/components/SkillOption.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { useCoreSkill } from '@/composables/useCoreSkill';
-import Agents from '../Agents.vue';
+import { useShowSubMenu } from '@/composables/useShowSubMenu';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Agents',
         href: '/dashboard',
     },
 ];
-const propCoreSkill = useCoreSkill();
 const props = defineProps<{
     name?: string;
     agent: any
 }>();
+const propCoreSkill = useCoreSkill();
+const propShowSubMenu = useShowSubMenu();
 const ranks = {
     s: "/storage/images/agents/Icon_AgentRank_S.webp",
     a: "/storage/images/agents/Icon_AgentRank_A.webp"
 }
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
 
-function replacePlaceholder(text: string, multiplier: string): string {
-    return text.replace(/{multiplier}/g, multiplier.toString());
+
+function replacePlaceholder(text: string, multipliers: Array<any>) {
+    let multipliersOrdered = orderMultipliers(multipliers);
+    let index = 0; // Para llevar el seguimiento de los reemplazos
+    return text.replace(/{multiplier}/g, () => multipliersOrdered[index++].multiplier || "");
+}
+
+function orderMultipliers(multipliers: Array<any>) {
+    //Se suma 1, ya que numbeCore es el index del array que se usa para mostrar la información al usuario.
+    return multipliers.filter(mult => mult.lvl == propCoreSkill.numberCore.value + 1).sort((a, b) => a.orden - b.orden);
 }
 
 
@@ -182,49 +192,45 @@ function replacePlaceholder(text: string, multiplier: string): string {
 
             <div class="w-full flex z-0 p-4" id="botones-principal">
                 <div class="w-full button-box-wrapper relative">
-                    <div class="w-full flex button-box italic uppercase tittle-button">
-                        <div class="w-1/3 button-animation button-left flex justify-center bg-black p-4">
+                    <div class="w-full flex button-box italic uppercase title-button">
+                        <div class="w-1/3 button-left flex justify-center bg-black p-4 cursor-pointer"
+                            @click="propShowSubMenu.updateOptionSelected(0)"
+                            :class="[propShowSubMenu.optionSelected.value === 0 ? 'button-animation' : '']">
                             <span class="relative z-10">core skills</span>
                         </div>
-                        <div class="w-1/3 button-animation button-middle flex justify-center bg-black p-4">
+                        <div class="w-1/3 button-middle flex justify-center bg-black p-4 cursor-pointer"
+                            @click="propShowSubMenu.updateOptionSelected(1)"
+                            :class="[propShowSubMenu.optionSelected.value === 1 ? 'button-animation' : '']">
                             <span class="relative z-10">skills</span>
                         </div>
-                        <div class="w-1/3 button-animation button-right flex justify-center bg-black p-4">
+                        <div class="w-1/3 button-right flex justify-center bg-black p-4 cursor-pointer"
+                            @click="propShowSubMenu.updateOptionSelected(2)"
+                            :class="[propShowSubMenu.optionSelected.value === 2 ? 'button-animation' : '']">
                             <span class="relative z-10">mindscapes</span>
                         </div>
                     </div>
                     <div class="w-full h-full flex absolute top-0 left-0 dot-pattern"></div>
                 </div>
             </div>
-            <div class="w-full flex p-4 z-0">
-                <div class="w-full flex rounded-xl relative text-wrapper">
-                    <div class="w-full flex-col relative bg-black rounded-md p-4">
-                        <CoreSkillTabs class="relative z-10" :letterSelected = "propCoreSkill.letterSelected.value" :numberCore="propCoreSkill.numberCore.value" :updateCoreSkill="propCoreSkill.updateCoreSkill"></CoreSkillTabs>
-                        <div id="CoreSkill1" class="w-full relative z-10">
-                            <div class="title text-xl">{{ agent.core_skill[0].name }}</div>
-                            <div class="info ml-1">{{ replacePlaceholder(agent.core_skill[0].info, agent.core_skill[0].core_skill_multiplier[propCoreSkill.numberCore.value].multiplier) }}</div>
-                        </div>
-                        <div class="m-4 relative z-10">{{agent.core_skill[0].core_skill_attribute[0].name }} - {{ agent.core_skill[0].core_skill_attribute[0].core_skill_addition[propCoreSkill.numberCore.value].value }} </div>
-                        <div id="CoreSkill2" class="w-full relative z-10">
-                            <div class="title text-xl">{{ agent.core_skill[1].name }}</div>
-                            <div class="info ml-1">{{ agent.core_skill[1].info }}</div>
-                        </div>
-                        <div class="w-full h-full flex absolute top-0 left-0 dot-pattern-text"></div>
-                    </div>
-                </div>
-            </div>
+
+            <CoreSkillOption v-if="propShowSubMenu.optionSelected.value===0" :coreSkills="agent.core_skill" :numberCore="propCoreSkill.numberCore.value" :letterSelected="propCoreSkill.letterSelected.value" :updateCoreSkill="propCoreSkill.updateCoreSkill">
+            </CoreSkillOption>
+            <SkillOption></SkillOption>
+
+
+
         </div>
 
 
     </AppLayout>
 
 </template>
-<style>
+<style scoped>
 .base-text-style {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.tittle-button {
+.title-button {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1rem;
     font-weight: 800;
@@ -268,7 +274,7 @@ function replacePlaceholder(text: string, multiplier: string): string {
 }
 
 /*estilos botones */
-.button-animation:hover {
+.button-animation {
     text-transform: uppercase;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: italic;
@@ -282,7 +288,7 @@ function replacePlaceholder(text: string, multiplier: string): string {
             #DBD100 75%,
             #A6C100 100%);
     background-size: 400% auto;
-    animation: textShine 2.5s linear infinite;
+    animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
     /* border-radius: 100px 20px; */
     /* Transiciones específicas para los cambios de posicionamiento */
     transition: transform 0.5s ease-in-out, border-radius 1s ease;
@@ -310,7 +316,7 @@ function replacePlaceholder(text: string, multiplier: string): string {
     border: 4px solid black;
 }
 
-.text-wrapper{
+.text-wrapper {
     background-color: oklch(0.274 0.006 286.033);
     padding: 0.2rem;
     border: 4px solid black;
@@ -343,9 +349,9 @@ function replacePlaceholder(text: string, multiplier: string): string {
 
 }
 
-.button-animation:hover>img {
+/* .button-animation:hover>img {
     filter: invert(1);
-}
+} */
 
 @keyframes breath {
     0% {

@@ -2,15 +2,15 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 const isMobile = ref(window.innerWidth < 512);
-const checkScreenSize = () =>{
-    isMobile.value = window.innerWidth < 512;
-}
-onMounted(()=>{
-    window.addEventListener("resize", checkScreenSize);
-});
-onUnmounted(()=>{
-    window.addEventListener("resize", checkScreenSize);
-});
+// const checkScreenSize = () =>{
+//     isMobile.value = window.innerWidth < 512;
+// }
+// onMounted(()=>{
+//     window.addEventListener("resize", checkScreenSize);
+// });
+// onUnmounted(()=>{
+//     window.addEventListener("resize", checkScreenSize);
+// });
 
 interface Props {
     class?: string;
@@ -123,7 +123,7 @@ button {
 }
 button:active {
   --press: 1.5 ;
-  animation: shadowAnimation 2s ease-in-out infinite;
+  animation: shadowAnimation 3s ease-in-out infinite;
   outline: none;
 }
 button::before, button::after {
