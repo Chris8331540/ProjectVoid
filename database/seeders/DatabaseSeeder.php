@@ -2,14 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Agent;
-use App\Models\CoreSkill;
-use App\Models\CoreSkillAddition;
-use App\Models\CoreSkillAttribute;
-use App\Models\CoreSkillMultiplier;
-use App\Models\Element;
-use App\Models\Type;
+use App\Models\{User, Agent, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use PharIo\Manifest\ElementCollection;
@@ -198,6 +191,15 @@ class DatabaseSeeder extends Seeder
             "name"=>"Additional Ability Moonlit Frenzy",
             "info"=>"When another character in your squad is an Attack or Anomaly character: When Energy is consumed to trigger a Precise Assist or Basic Attack: Finale, Astra Yao will additionally follow up with 1 Tremolo and 3 Tone Clusters.",
             "order"=>2,
+            "image"=>"",
+            "agent_id"=>1
+        ]);
+
+        //BASIC ATTACKS
+        Basic::factory()->create([
+            "name"=>'"Capriccio"',
+            "info"=>"Press {basicAttackImg} to activate:<br>Perform up to three attacks forward, dealing Ether DMG.<br>During the 3rd-hit, hold {basicAttackImg} to charge, drawing enemies in and expanding the attack range for a stronger attack. After using other skills, hold {basicAttackImg} to initiate the 3rd-hit directly.",
+            "order"=>1,
             "image"=>"",
             "agent_id"=>1
         ]);

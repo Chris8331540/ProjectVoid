@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import CoreSkillOption from '@/components/coreSkillOption.vue';
+import CoreSkillOption from '@/components/CoreSkillOption.vue';
 import SkillOption from '@/components/SkillOption.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { useCoreSkill } from '@/composables/useCoreSkill';
 import { useShowSubMenu } from '@/composables/useShowSubMenu';
+import {useSkill} from '@/composables/useSkill';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,6 +21,7 @@ const props = defineProps<{
 }>();
 const propCoreSkill = useCoreSkill();
 const propShowSubMenu = useShowSubMenu();
+const propSkill = useSkill();
 const ranks = {
     s: "/storage/images/agents/Icon_AgentRank_S.webp",
     a: "/storage/images/agents/Icon_AgentRank_A.webp"
@@ -215,7 +217,7 @@ function orderMultipliers(multipliers: Array<any>) {
 
             <CoreSkillOption v-if="propShowSubMenu.optionSelected.value===0" :coreSkills="agent.core_skill" :numberCore="propCoreSkill.numberCore.value" :letterSelected="propCoreSkill.letterSelected.value" :updateCoreSkill="propCoreSkill.updateCoreSkill">
             </CoreSkillOption>
-            <SkillOption></SkillOption>
+            <SkillOption v-if="propShowSubMenu.optionSelected.value===1" :agent="agent" :skillSelected = "propSkill.skillSelected.value" :updateSkillSelected="propSkill.updateSkillSelected"></SkillOption>
 
 
 
@@ -314,6 +316,7 @@ function orderMultipliers(multipliers: Array<any>) {
     border-radius: 100px;
     padding: 0.2rem;
     border: 4px solid black;
+    min-width: 473.6px;
 }
 
 .text-wrapper {

@@ -37,4 +37,8 @@ class Agent extends Model
     public function coreSkill(){
         return $this->hasMany(CoreSkill::class);
     }
+
+    public function basic(){
+        return $this->hasMany(Basic::class);
+    }
 }
