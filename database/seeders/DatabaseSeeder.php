@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User, Agent, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic};
+use App\Models\{User, Agent, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use PharIo\Manifest\ElementCollection;
@@ -198,10 +198,90 @@ class DatabaseSeeder extends Seeder
         //BASIC ATTACKS
         Basic::factory()->create([
             "name"=>'"Capriccio"',
-            "info"=>"Press {basicAttackImg} to activate:<br>Perform up to three attacks forward, dealing Ether DMG.<br>During the 3rd-hit, hold {basicAttackImg} to charge, drawing enemies in and expanding the attack range for a stronger attack. After using other skills, hold {basicAttackImg} to initiate the 3rd-hit directly.",
+            "info"=>"Press {basic} to activate:<br>Perform up to three attacks forward, dealing Ether DMG.<br>During the 3rd-hit, hold {basic} to charge, drawing enemies in and expanding the attack range for a stronger attack. After using other skills, hold {basic} to initiate the 3rd-hit directly.",
             "order"=>1,
             "image"=>"",
             "agent_id"=>1
+        ]);
+
+        //BASIC MULTIPLIERS
+        BasicMultiplier::factory()->create([
+            "name"=> "1st-Hit",
+            "multiplier_type"=>"atk",
+            "order"=>1,
+            "basic_id"=>1
+        ]);
+        BasicMultiplier::factory()->create([
+            "name"=> "2nd-Hit",
+            "multiplier_type"=>"atk",
+            "order"=>2,
+            "basic_id"=>1
+        ]);
+        BasicMultiplier::factory()->create([
+            "name"=> "3nd-Hit Min",
+            "multiplier_type"=>"atk",
+            "order"=>3,
+            "basic_id"=>1
+        ]);
+        BasicMultiplier::factory()->create([
+            "name"=> "3nd-Hit Max",
+            "multiplier_type"=>"atk",
+            "order"=>4,
+            "basic_id"=>1
+        ]);
+        $basic_dazes = [[["43.80%", "41.30%"], ["59.10%", "56.40%"], ["120.90%", "114.80%"], ["270.70%", "219.40%"]],
+        [["47.80%", "43.20%"], ["64.50%", "59.00%"], ["131.90%", "120.10%"], ["295.40%", "229.40%"]],
+        [["51.80%", "45.10%"], ["69.90%", "61.60%"], ["142.90%", "125.40%"], ["320.10%", "239.40%"]],
+        [["55.80%", "47.00%"], ["75.30%", "64.20%"], ["153.90%", "130.70%"], ["344.80%", "249.40%"]],
+        [["59.80%", "48.90%"], ["80.70%", "66.80%"], ["164.90%", "136.00%"], ["369.50%", "259.40%"]],
+        ];
+        //BASIC DMG and DAZES
+        BasicDmg::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"43.80%",
+            "basic_multiplier_id"=>1
+        ]);
+
+        BasicDaze::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"41.30%",
+            "basic_multiplier_id"=>1
+        ]);
+
+        BasicDmg::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"59.10%",
+            "basic_multiplier_id"=>2
+        ]);
+
+        BasicDaze::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"56.40%",
+            "basic_multiplier_id"=>2
+        ]);
+
+        BasicDmg::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"120.90%",
+            "basic_multiplier_id"=>3
+        ]);
+
+        BasicDaze::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"114.80%",
+            "basic_multiplier_id"=>3
+        ]);
+
+        BasicDmg::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"270.70%",
+            "basic_multiplier_id"=>4
+        ]);
+
+        BasicDaze::factory()->create([
+            "lvl"=>1,
+            "multiplier"=>"219.40%",
+            "basic_multiplier_id"=>4
         ]);
 
     }

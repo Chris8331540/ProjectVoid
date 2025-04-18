@@ -2,12 +2,13 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoreSkillOption from '@/components/CoreSkillOption.vue';
 import SkillOption from '@/components/SkillOption.vue';
+import TextWrapper from '@/components/TextWrapper.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { useCoreSkill } from '@/composables/useCoreSkill';
 import { useShowSubMenu } from '@/composables/useShowSubMenu';
-import {useSkill} from '@/composables/useSkill';
+import { useSkill } from '@/composables/useSkill';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -81,114 +82,111 @@ function orderMultipliers(multipliers: Array<any>) {
                 </div>
             </div>
             <div class="w-full pl-4 pt-4 pr-4 uppercase title-show">stats (level 60)</div>
-            <div class="w-full p-4 flex flex-wrap md:flex-nowrap">
-                <div class="flex w-full md:w-1/2 md:pr-2">
-                    <div class="relative overflow-x-hidden shadow-md rounded-xl w-full">
-                        <table class="w-full text-sm text-left rtl:text-right font-bold">
-                            <tbody>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        hp
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.hp }}
-                                    </td>
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        def
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.def }}
-                                    </td>
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        atk
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.atk }}
-                                    </td>
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        crit rate
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.crit_rate }}%
-                                    </td>
-
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        crit dmg
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.crit_dmg }}%
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="w-full flex flex-wrap md:flex-nowrap">
+                <div class="flex w-full md:w-1/2">
+                    <TextWrapper>
+                        <div class="flex flex-col gap-5 font-bold">
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    hp
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.hp }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    def
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.def }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    atk
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.atk }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    crit rate
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.crit_rate }}%
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    crit dmg
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.crit_dmg }}%
+                                </div>
+                            </div>
+                        </div>
+                    </TextWrapper>
                 </div>
-                <div class="flex w-full md:w-1/2 mt-4 md:mt-0 md:pl-2">
-                    <div class="relative overflow-x-hidden shadow-md rounded-xl w-full">
-                        <table class="w-full text-sm text-left rtl:text-right">
-                            <tbody>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        pen ratio
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.pen_ratio }}
-                                    </td>
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        impact
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.impact }}
-                                    </td>
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        anomaly mastery
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.anomaly_mastery }}
-                                    </td>
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        anomaly proficiency
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.anomaly_proficiency }}
-                                    </td>
+                <div class="flex w-full md:w-1/2">
+                    <TextWrapper>
+                        <div class="flex flex-col gap-5 font-bold">
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    pen ratio
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.pen_ratio }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    impact
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.impact }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    anomaly mastery
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.anomaly_mastery }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    anomaly proficiency
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.anomaly_proficiency }}
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full bg-black justify-between rounded-full relative z-10 py-3 px-8 depth-effect">
+                                <div class="base-text-style uppercase text-start">
+                                    energy regen
+                                </div>
+                                <div class="text-end">
+                                    {{ agent.energy_regen }}
+                                </div>
+                            </div>
+                        </div>
+                    </TextWrapper>
 
-                                </tr>
-                                <tr class="odd:dark:bg-black even:dark:bg-zinc-800">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-200 uppercase base-text-style">
-                                        energy regen
-                                    </th>
-                                    <td class="px-6 py-4 flex justify-end dark:text-zinc-200">
-                                        {{ agent.energy_regen }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
+
                 </div>
             </div>
 
@@ -215,9 +213,13 @@ function orderMultipliers(multipliers: Array<any>) {
                 </div>
             </div>
 
-            <CoreSkillOption v-if="propShowSubMenu.optionSelected.value===0" :coreSkills="agent.core_skill" :numberCore="propCoreSkill.numberCore.value" :letterSelected="propCoreSkill.letterSelected.value" :updateCoreSkill="propCoreSkill.updateCoreSkill">
+            <CoreSkillOption v-if="propShowSubMenu.optionSelected.value === 0" :coreSkills="agent.core_skill"
+                :numberCore="propCoreSkill.numberCore.value" :letterSelected="propCoreSkill.letterSelected.value"
+                :updateCoreSkill="propCoreSkill.updateCoreSkill">
             </CoreSkillOption>
-            <SkillOption v-if="propShowSubMenu.optionSelected.value===1" :agent="agent" :skillSelected = "propSkill.skillSelected.value" :updateSkillSelected="propSkill.updateSkillSelected"></SkillOption>
+            <SkillOption v-if="propShowSubMenu.optionSelected.value === 1" :agent="agent"
+                :skillSelected="propSkill.skillSelected.value" :updateSkillSelected="propSkill.updateSkillSelected">
+            </SkillOption>
 
 
 
@@ -385,6 +387,21 @@ function orderMultipliers(multipliers: Array<any>) {
 
 .button-animation:hover {
     animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
+}
 
+/*Efecto de profundidad para las stats */
+.depth-effect {
+    box-shadow: inset 0 0 10px 6px #000000, 0 0 10px 2px rgba(255, 255, 255, 0.1), 0.125em 0.125em 0.25em rgba(0, 0, 0, 0.125), 0 0.0625em 0.375em rgba(0, 0, 0, 0.1875);
+    background-color: transparent;
+    /*#0a0a0a0a */
+}
+
+.depth-effect::before,
+.depth-effect::after {
+    z-index: 1;
+    border-radius: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

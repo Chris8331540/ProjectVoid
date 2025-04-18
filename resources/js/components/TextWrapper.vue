@@ -19,9 +19,7 @@
 }
 
 .dot-pattern-text {
-    border-radius: 12px;
     pointer-events: none;
-
     opacity: 0.4;
     background-image: repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a), repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a);
     background-position: 0 0, 4px 4px;
