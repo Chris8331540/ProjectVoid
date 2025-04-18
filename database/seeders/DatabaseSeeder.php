@@ -234,55 +234,34 @@ class DatabaseSeeder extends Seeder
         [["51.80%", "45.10%"], ["69.90%", "61.60%"], ["142.90%", "125.40%"], ["320.10%", "239.40%"]],
         [["55.80%", "47.00%"], ["75.30%", "64.20%"], ["153.90%", "130.70%"], ["344.80%", "249.40%"]],
         [["59.80%", "48.90%"], ["80.70%", "66.80%"], ["164.90%", "136.00%"], ["369.50%", "259.40%"]],
+        [["63.80%", "50.80%"], ["86.10%", "69.40%"], ["175.90%", "141.30%"], ["394.20%", "269.40%"]],
+        [["67.80%", "52.70%"], ["91.50%", "72.00%"], ["186.90%", "146.60%"], ["418.90%", "279.40%"]],
+        [["71.80%", "54.60%"], ["96.90%", "74.60%"], ["197.90%", "151.90%"], ["443.60%", "289.40%"]],
+        [["75.80%", "56.50%"], ["102.30%", "77.20%"], ["208.90%", "157.20%"], ["468.30%", "299.40%"]],
+        [["79.80%", "58.40%"], ["107.70%", "79.80%"], ["219.90%", "162.50%"], ["493.00%", "309.40%"]],
+        [["83.80%", "60.30%"], ["113.10%", "82.40%"], ["230.90%", "517.70%"], ["493.00%", "319.40%"]],
+        [["87.80%", "62.20%"], ["118.50%", "85.00%"], ["241.90%", "173.10%"], ["542.40%", "329.40%"]],
         ];
         //BASIC DMG and DAZES
-        BasicDmg::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"43.80%",
-            "basic_multiplier_id"=>1
-        ]);
-
-        BasicDaze::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"41.30%",
-            "basic_multiplier_id"=>1
-        ]);
-
-        BasicDmg::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"59.10%",
-            "basic_multiplier_id"=>2
-        ]);
-
-        BasicDaze::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"56.40%",
-            "basic_multiplier_id"=>2
-        ]);
-
-        BasicDmg::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"120.90%",
-            "basic_multiplier_id"=>3
-        ]);
-
-        BasicDaze::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"114.80%",
-            "basic_multiplier_id"=>3
-        ]);
-
-        BasicDmg::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"270.70%",
-            "basic_multiplier_id"=>4
-        ]);
-
-        BasicDaze::factory()->create([
-            "lvl"=>1,
-            "multiplier"=>"219.40%",
-            "basic_multiplier_id"=>4
-        ]);
+        foreach ($basic_dazes as $lvlIndex => $entries) {
+            $lvl = $lvlIndex + 1;
+        
+            foreach ($entries as $multiplierIndex => $pair) {
+                $basic_multiplier_id = $multiplierIndex + 1;
+        
+                BasicDmg::factory()->create([
+                    'lvl' => $lvl,
+                    'multiplier' => $pair[0],
+                    'basic_multiplier_id' => $basic_multiplier_id,
+                ]);
+        
+                BasicDaze::factory()->create([
+                    'lvl' => $lvl,
+                    'multiplier' => $pair[1],
+                    'basic_multiplier_id' => $basic_multiplier_id,
+                ]);
+            }
+        }
 
     }
 }
