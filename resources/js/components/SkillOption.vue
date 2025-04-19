@@ -41,7 +41,7 @@ const currentLvl = ref(1);
 // const currentDmg = computed(() => props.agent.basic.basic_multiplier_basic_dmg[currentLvl.value - 1] || []);
 // const currentOther = computed(() => props.agent.basic.basic_multiplier.basic_other_property[currentLvl.value - 1] || []);
 const findMultiplier = (array: any[], lvl: any) => {
-  return array.find(item => item.lvl === lvl)?.multiplier || "-";
+    return array.find(item => item.lvl === lvl)?.multiplier || "-";
 };
 
 </script>
@@ -61,18 +61,29 @@ const findMultiplier = (array: any[], lvl: any) => {
                 <label for="lvl">Nivel: {{ currentLvl }}</label>
                 <input class="shiny-slider" type="range" min="1" max="12" v-model.number="currentLvl" id="lvl" />
 
-                <table class="mt-4 border-collapse border border-gray-400 w-full">
-                    <tbody>
-                        <tr v-for="(entry, index) in agent.basic[indexBasic].basic_multiplier" :key="index">
-                            <td class="border border-gray-300 px-4 py-2">{{ entry.name }} Dmg Multiplier</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ findMultiplier(entry.basic_dmg, currentLvl) }}
-                            </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ entry.name }} Daze Multiplier</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ findMultiplier(entry.basic_daze, currentLvl) }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="flex flex-col gap-4 font-bold mt-4">
+                    <div v-for="(entry, index) in agent.basic[indexBasic].basic_multiplier" :key="index"
+                        class="flex w-full gap-4">
+                        <div class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect w-1/2 md:flex">
+                            <div class="base-text-style uppercase text-start">
+                                {{ entry.name }} Dmg Multiplier
+                            </div>
+                            <div class="md:text-end">
+                                {{ findMultiplier(entry.basic_dmg, currentLvl) }}
+                            </div>
+                        </div>
+
+                        <div class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect w-1/2 md:flex">
+                            <div class="base-text-style uppercase text-start">
+                                {{ entry.name }} Daze Multiplier
+                            </div>
+                            <div class="md:text-end">
+                                {{ findMultiplier(entry.basic_daze, currentLvl) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </template>
     </TextWrapper>
@@ -82,59 +93,74 @@ const findMultiplier = (array: any[], lvl: any) => {
 input[type="range"] {
     width: 100%;
 }
+
 .shiny-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 0px;
-  background: transparent;
-  position: relative;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 0px;
+    background: transparent;
+    position: relative;
 }
 
 /* Barra del slider (track) */
 .shiny-slider::-webkit-slider-runnable-track {
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(to left, 
-    #A6C100 0%, 
-    #DBD100 25%, 
-    #A6C100 50%, 
-    #DBD100 75%, 
-    #A6C100 100%);
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to left,
+            #A6C100 0%,
+            #DBD100 25%,
+            #A6C100 50%,
+            #DBD100 75%,
+            #A6C100 100%);
 }
 
 .shiny-slider::-moz-range-track {
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(to left, 
-    #A6C100 0%, 
-    #DBD100 25%, 
-    #A6C100 50%, 
-    #DBD100 75%, 
-    #A6C100 100%);
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to left,
+            #A6C100 0%,
+            #DBD100 25%,
+            #A6C100 50%,
+            #DBD100 75%,
+            #A6C100 100%);
 }
 
 /* Thumb del slider */
 .shiny-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  background: #A6C100;
-  border-radius: 50%;
-  border: 3px solid white;
-  margin-top: -5px;
-  cursor: pointer;
-  z-index: 10;
-  position: relative;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #A6C100;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-top: -5px;
+    cursor: pointer;
+    z-index: 10;
+    position: relative;
 }
 
 .shiny-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: #A6C100;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
+    width: 18px;
+    height: 18px;
+    background: #A6C100;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
+.depth-effect {
+    box-shadow: inset 0 0 10px 6px #000000, 0 0 10px 2px rgba(255, 255, 255, 0.1), 0.125em 0.125em 0.25em rgba(0, 0, 0, 0.125), 0 0.0625em 0.375em rgba(0, 0, 0, 0.1875);
+    background-color: transparent;
+    /*#0a0a0a0a */
+}
+
+.depth-effect::before,
+.depth-effect::after {
+    z-index: 1;
+    border-radius: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
