@@ -18,6 +18,9 @@ Route::get("/agents/{id}", function ($id) {
         $query->with(["coreSkillMultiplier", "coreSkillAttribute.coreSkillAddition"]);
     }, "basic"=>function($query){
         $query->with(["basicMultiplier.basicDmg", "basicMultiplier.basicDaze", "basicMultiplier.basicOtherProperty"]);
+    },
+    "dodge"=>function($query){
+        $query->with(["dodgeMultiplier.dodgeDmg", "dodgeMultiplier.dodgeDaze", "dodgeMultiplier.dodgeOtherProperty"]);
     }])->findOrFail($id);
     return Inertia::render("agents/Show", ["agent" => $agent]);
 })->name("agents.show");

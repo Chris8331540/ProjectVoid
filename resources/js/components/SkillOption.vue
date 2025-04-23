@@ -36,10 +36,6 @@ function replacePlaceholderImg(text: string) {
 }
 const currentLvl = ref(1);
 //Tendría que ordenar los dazes, dmgs y otherproperties por nivel, para poder usar currentLvl
-// const currentDaze = computed(() => props.agent.basic[0].basic_multiplier.basic_daze[currentLvl.value - 1] || []);
-// console.log(props.agent);
-// const currentDmg = computed(() => props.agent.basic.basic_multiplier_basic_dmg[currentLvl.value - 1] || []);
-// const currentOther = computed(() => props.agent.basic.basic_multiplier.basic_other_property[currentLvl.value - 1] || []);
 const findMultiplier = (array: any[], lvl: any) => {
     return array.find(item => item.lvl === lvl)?.multiplier || "-";
 };
@@ -87,6 +83,47 @@ const findMultiplier = (array: any[], lvl: any) => {
             </div>
         </template>
     </TextWrapper>
+
+
+    <TextWrapper v-if="skillSelected === 1">
+        <template v-for="(dodge, indexDodge) in agent.dodge">
+            <div class="w-full relative z-10 coreSkill">
+                <div class="title text-xl">{{ dodge.name }}</div>
+                <div class="info ml-1" v-html="replacePlaceholderImg(dodge.info)"></div>
+            </div>
+            <!--Multiplicadores-->
+            <div class="p-4 relative z-10">
+                <label for="lvl">Nivel: {{ currentLvl }}</label>
+                <input class="shiny-slider" type="range" min="1" max="12" v-model.number="currentLvl" id="lvl" />
+
+                <div class="flex flex-col gap-4 font-bold mt-4">
+                    <div v-for="(entry, index) in agent.dodge[indexDodge].dodge_multiplier" :key="index"
+                        class="flex w-full gap-4">
+                        <div class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect w-1/2 md:flex">
+                            <div class="base-text-style uppercase text-start">
+                                {{ entry.name }} Dmg Multiplier
+                            </div>
+                            <div class="md:text-end">
+                                {{ findMultiplier(entry.dodge_dmg, currentLvl) }}
+                            </div>
+                        </div>
+
+                        <div class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect w-1/2 md:flex">
+                            <div class="base-text-style uppercase text-start">
+                                {{ entry.name }} Daze Multiplier
+                            </div>
+                            <div class="md:text-end">
+                                {{ findMultiplier(entry.dodge_daze, currentLvl) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+    </TextWrapper>
+
+
 </template>
 
 <style scoped>
