@@ -46,7 +46,7 @@ const findMultiplier = (array: any[], lvl: any) => {
     <div class="w-full">
         <SkillTabs :skillSelected="skillSelected" :updateSkillSelected="updateSkillSelected"></SkillTabs>
     </div>
-    <TextWrapper v-if="skillSelected === 0">
+    <TextWrapper v-if="skillSelected === 0" widthClass="w-1/2">
         <template v-for="(basic, indexBasic) in agent.basic">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">Basic Attack: {{ basic.name }}</div>
