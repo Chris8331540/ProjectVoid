@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User, Agent, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, DodgeDaze, DodgeDmg, DodgeMultiplier};
+use App\Models\{User, Agent, Assist, AssistDaze, AssistDmg, AssistMultiplier, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, DodgeDaze, DodgeDmg, DodgeMultiplier};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use PharIo\Manifest\ElementCollection;
@@ -314,6 +314,58 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        //ASSIST SKILL
+        Assist::factory()->create([
+            "name"=>'Quick Assist: "One Luminous Sky"',
+            "info"=>"When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
+            "order"=>1,
+            "image"=>"",
+            "agent_id"=>1
+        ]);
+        AssistMultiplier::factory()->create([
+            "name"=>"",
+            "multiplier_type"=>"atk",
+            "order"=>1,
+            "assist_id"=>1
+        ]);
+
+        $assist_dmg_dazes =[
+            [["55.00%", "48.40%"]],
+            [["60.00%", "50.60%"]],
+            [["65.00%", "52.80%"]],
+            [["70.00%", "55.00%"]],
+            [["75.00%", "57.20%"]],
+            [["80.00%", "59.40%"]],
+            [["85.00%", "61.60%"]],
+            [["90.00%", "63.80%"]],
+            [["95.00%", "66.00%"]],
+            [["100.00%", "68.20%"]],
+            [["105.00%", "70.40%"]],
+            [["110.00%", "72.60%"]],
+        ];
+
+        foreach ($assist_dmg_dazes as $lvlIndex => $entries) {
+            $lvl = $lvlIndex + 1;
+
+            foreach ($entries as $multiplierIndex => $pair) {
+                $basic_multiplier_id = $multiplierIndex + 1;
+
+                AssistDmg::factory()->create([
+                    'lvl' => $lvl,
+                    'multiplier' => $pair[0],
+                    'assist_multiplier_id' => $basic_multiplier_id,
+                ]);
+
+                AssistDaze::factory()->create([
+                    'lvl' => $lvl,
+                    'multiplier' => $pair[1],
+                    'assist_multiplier_id' => $basic_multiplier_id,
+                ]);
+            }
+        }
+
+
 
     }
 }

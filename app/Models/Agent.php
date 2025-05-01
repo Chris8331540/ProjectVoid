@@ -45,4 +45,7 @@ class Agent extends Model
     public function dodge(){
         return $this->hasMany(Dodge::class);
     }
+    public function assist(){
+        return $this->hasMany(Assist::class);
+    }
 }
