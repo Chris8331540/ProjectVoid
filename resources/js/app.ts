@@ -9,6 +9,8 @@ import { initializeTheme } from './composables/useAppearance';
 
 import { createPinia } from 'pinia';
 
+import PrimeVue from 'primevue/config';
+
 const pinia = createPinia();
 
 // Extend ImportMeta interface for Vite...
@@ -34,6 +36,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(pinia)
+            .use(PrimeVue)
             .mount(el);
     },
     progress: {

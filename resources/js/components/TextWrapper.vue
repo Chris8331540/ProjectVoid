@@ -1,14 +1,16 @@
 <script setup lang="ts">
 
 const props = withDefaults(defineProps<{
-  widthClass?: string
+    widthClass?: string,
+    paddingClass?: string
 }>(), {
-  widthClass: 'w-full'
+    widthClass: 'w-full',
+    paddingClass: "p-4"
 });
 
 </script>
 <template>
-    <div :class="['flex p-4 z-0', widthClass]">
+    <div :class="['flex z-0', widthClass, paddingClass]">
         <div class="w-full flex rounded-xl relative text-wrapper">
             <div class="w-full flex-col relative bg-black rounded-md p-4">
                 <slot></slot>
