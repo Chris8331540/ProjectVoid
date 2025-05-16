@@ -13,6 +13,10 @@ Route::get("/agents", function () {
     return Inertia::render("Agents", ["agents" => $agents]);
 })->name("agents");
 
+Route::get("/agents/create", function(){
+    return Inertia::render("agents/Create");
+});
+
 Route::get("/agents/{id}", function ($id) {
     $agent = Agent::with(["element", "type", "coreSkill"=>function($query){
         $query->with(["coreSkillMultiplier", "coreSkillAttribute.coreSkillAddition"]);
@@ -27,6 +31,9 @@ Route::get("/agents/{id}", function ($id) {
     return Inertia::render("agents/Show", ["agent" => $agent]);
 })->name("agents.show");
 
+Route::get("/agents/create", function(){
+    return Inertia::render("agents/Create");
+});
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
