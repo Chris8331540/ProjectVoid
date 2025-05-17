@@ -26,6 +26,8 @@ Route::get("/agents/{id}", function ($id) {
         $query->with(["dodgeMultiplier.dodgeDmg", "dodgeMultiplier.dodgeDaze", "dodgeMultiplier.dodgeOtherProperty"]);
     }, "assist"=>function($query){
         $query->with(["assistMultiplier.assistDmg", "assistMultiplier.assistDaze", "assistMultiplier.assistOtherProperty"]);    
+    }, "mindscape"=>function($query){
+        $query->orderBy("order");
     }
     ])->findOrFail($id);
     return Inertia::render("agents/Show", ["agent" => $agent]);

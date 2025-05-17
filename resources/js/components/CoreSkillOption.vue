@@ -18,7 +18,7 @@ function replacePlaceholder(text: string, multipliers: Array<any>) {
 
 function orderMultipliers(multipliers: Array<any>) {
     //Se suma 1, ya que numbeCore es el index del array que se usa para mostrar la información al usuario.
-    return multipliers.filter(mult => mult.lvl == props.numberCore + 1).sort((a, b) => a.orden - b.orden);
+    return multipliers.filter(mult => mult.lvl == props.numberCore + 1).sort((a, b) => a.order - b.order);
 }
 
 </script>

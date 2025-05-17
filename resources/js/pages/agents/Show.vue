@@ -46,10 +46,9 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
 
 <template>
 
-    <Head :title="agent.name" />
+    <Head :title="agent.name"></Head>
 
     <AppLayout :breadcrumbs="breadcrumbs">
-
         <div class="relative w-full min-h-screen "> <!-- Contenedor principal -->
             <!-- Fondo con patrón -->
             <svg class="absolute inset-0 w-full h-full stroke-neutral-900/20 dark:stroke-neutral-100/20" fill="none">
@@ -220,14 +219,15 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
             <SkillOption v-if="propShowSubMenu.optionSelected.value === 1" :agent="agent"
                 :skillSelected="propSkill.skillSelected.value" :updateSkillSelected="propSkill.updateSkillSelected">
             </SkillOption>
-
-
-
+            <div v-if="propShowSubMenu.optionSelected.value === 2"
+                class="w-full flex-column flex-wrap flex relative z-10">
+                <TextWrapper v-for="mindscape in agent.mindscape" widthClass="sm:w-1/2 w-full">
+                    <div class="relative z-10 title text-xl !ml-0">{{ mindscape.title }}</div>
+                    <div class="relative z-10">{{ mindscape.description }}</div>
+                </TextWrapper>
+            </div>
         </div>
-
-
     </AppLayout>
-
 </template>
 <style scoped>
 .base-text-style {

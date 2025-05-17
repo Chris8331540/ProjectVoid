@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User, Agent, Assist, AssistDaze, AssistDmg, AssistMultiplier, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, DodgeDaze, DodgeDmg, DodgeMultiplier};
+use App\Models\{User, Agent, Assist, AssistDaze, AssistDmg, AssistMultiplier, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, DodgeDaze, DodgeDmg, DodgeMultiplier, Mindscape};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use PharIo\Manifest\ElementCollection;
@@ -365,7 +365,44 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-
+        //MINDSCAPES
+        Mindscape::factory()->create([
+            "title"=>"M1: 12-Tone Equal Temperament",
+            "description"=>"When Astra Yao's attack hits an enemy, the target's All-Attribute RES is reduced by 6%, stacking up to 3 times and lasting 30s. Repeated triggers refresh the duration. Upon entering the battlefield, Astra Yao immediately gains 1,000 Decibels. When activating her Ultimate, all squad members gain 1 stack of Song of Protection for 60s. When attacked by an enemy, consume Song of Protection, granting Invulnerability for 1s.",
+            "order"=>1,
+            "agent_id"=>1
+        ]);
+        Mindscape::factory()->create([
+            "title"=>"M2: Art of Greed",
+            "description"=>"The ATK buff from Core Passive: Graceful Andante is further increased by 19%, with an increased maximum of 400. While in the Idyllic Cadenza state, when other characters switch in through a Quick Assist, Chain Attack, Defensive Assist, or Evasive Assist, Astra Yao will additionally follow up with 1 Tremolo and 3 Tone Clusters to attack. This effect can trigger once every 3s.",
+            "order"=>2,
+            "agent_id"=>1
+        ]);
+        Mindscape::factory()->create([
+            "title"=>"M3: Interwoven Staff Notation",
+            "description"=>"Basic Attack, Assist, Dodge, Special Attack, and Chain Attack Lv. +2",
+            "order"=>3,
+            "agent_id"=>1
+        ]);
+        Mindscape::factory()->create([
+            "title"=>"M4: Hair Upon Your Nape",
+            "description"=>"After activating a Chain Attack or Ultimate, within 15s, Astra Yao can trigger a Quick Assist even if she does not have Chords. When the attack hits an enemy, the interval for triggering a Quick Assist is reduced to 1s. While in the Idyllic Cadenza state, when other characters enter the field via a Quick Assist, they will receive different buffs based on their specialty, and this effect can be triggered once every 3s for the entire squad: Attack: The next Quick Assist heavy attack on an enemy will deal extra DMG equal to 300% of Astra Yao's ATK; Anomaly: The next Quick Assist will have 50% increased Anomaly Buildup; Stun: The next Quick Assist will inflict 50% increased Daze.",
+            "order"=>4,
+            "agent_id"=>1
+        ]);
+        Mindscape::factory()->create([
+            "title"=>"M5: Proxy and Silk String",
+            "description"=>"Basic Attack, Assist, Dodge, Special Attack, and Chain Attack Lv. +2",
+            "order"=>5,
+            "agent_id"=>1
+        ]);
+        Mindscape::factory()->create([
+            "title"=>"M6: We Are the World",
+            "description"=>"While in the Idyllic Cadenza state, the DMG multiplier for Tremolo and Tone Clusters released or followed up with will increase to 200% of the original, and CRIT Rate is increased by 80%. When triggering a Precise Assist, Astra Yao will automatically follow up with the charged 3rd-hit of Basic Attack: Capriccio, with a 80% increased CRIT Rate. This effect can trigger once every 10s.",
+            "order"=>6,
+            "agent_id"=>1
+        ]);
+        
 
     }
 }

@@ -48,4 +48,8 @@ class Agent extends Model
     public function assist(){
         return $this->hasMany(Assist::class);
     }
+
+    public function mindscape(){
+        return $this->hasMany(Mindscape::class);
+    }
 }
