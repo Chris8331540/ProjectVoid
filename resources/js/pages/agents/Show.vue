@@ -30,17 +30,6 @@ const ranks = {
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
 
 
-// function replacePlaceholder(text: string, multipliers: Array<any>) {
-//     let multipliersOrdered = orderMultipliers(multipliers);
-//     let index = 0; // Para llevar el seguimiento de los reemplazos
-//     return text.replace(/{multiplier}/g, () => multipliersOrdered[index++].multiplier || "");
-// }
-
-// function orderMultipliers(multipliers: Array<any>) {
-//     //Se suma 1, ya que numbeCore es el index del array que se usa para mostrar la información al usuario.
-//     return multipliers.filter(mult => mult.lvl == propCoreSkill.numberCore.value + 1).sort((a, b) => a.orden - b.orden);
-// }
-
 
 </script>
 
