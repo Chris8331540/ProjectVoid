@@ -9,10 +9,7 @@ class CoreSkillAddition extends Model
 {
     /** @use HasFactory<\Database\Factories\CoreSkillAdditionFactory> */
     use HasFactory;
-    protected $fillable = [
-        "value",
-        "lvl",
-    ];
+    protected $guarded = [];
 
     public function coreSkillAttribute(){
         return $this->belongsTo(CoreSkillAttribute::class);

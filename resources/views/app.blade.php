@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta id="metaViewport" name="viewport" content="width=device-width">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         {{-- Si en algún momento fallan escalados, poner intial-scale=1 y usar el js --}}
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 

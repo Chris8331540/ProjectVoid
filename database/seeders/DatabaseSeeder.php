@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             "fire" => "Icon_Fire.webp",
             "frost" => "Icon_Frost.webp",
             "ice" => "Icon_Ice.webp",
-            "physical" => "Icon_Electric.webp",
+            "physical" => "Icon_Physical.webp",
         ];
         foreach ($elements as $element => $elementIcon) {
             Element::factory()->create([

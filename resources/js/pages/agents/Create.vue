@@ -6,6 +6,9 @@ import { computed } from 'vue';
 import TextWrapper from '@/components/TextWrapper.vue';
 import { ref } from "vue";
 
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+
+
 const imagePreview = ref<{ [key: string]: string | null }>({
     imagePrincipal: null,
     imageShow: null,
@@ -127,11 +130,11 @@ function insertBasicSkillTemplate() {
 function insertDodgeSkillTemplate() {
     const dodgeSkillData = [
         {
-            "dodges": [{
+            "dodge": {
                 "name": "Dash Attack: \"Lunar Eclipse Melody\"",
                 "info": "Press {basic} during a dodge to activate:<br>Attack ahead, dealing Ether DMG.<br>When triggered, dragging thestick/joystick allows movement in the corresponding direction.",
                 "image": "",
-            }],
+            },
             "dodgeMultipliers": [
                 {
                     "name": "",
@@ -152,13 +155,13 @@ function insertDodgeSkillTemplate() {
 function insertAssistSkillTemplate() {
     const assistSkillData = [
         {
-            "assists": [
-                {
-                    "name": "Quick Assist: \"One Luminous Sky\"",
-                    "info": "When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
-                    "image": "",
-                }
-            ],
+            "assist":
+            {
+                "name": "Quick Assist: \"One Luminous Sky\"",
+                "info": "When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
+                "image": "",
+            }
+            ,
             "assistMultipliers": [
                 {
                     "name": "",
@@ -183,6 +186,7 @@ function insertAssistSkillTemplate() {
     <Head title="Create Agent" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <form action="/agents/create" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_token" :value="csrfToken" />
             <div class="relative w-full min-h-screen ">
                 <svg class="absolute inset-0 w-full h-full stroke-neutral-900/20 dark:stroke-neutral-100/20"
                     fill="none">
@@ -197,7 +201,7 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Agent data</div>
-                        <button class="btn-check vertical-align" @click="insertAgentDataTemplate">Insert agent data
+                        <button type="button" class="btn-check vertical-align" @click="insertAgentDataTemplate">Insert agent data
                             template</button>
                     </div>
                     <div>
@@ -209,7 +213,7 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Core Skill data</div>
-                        <button class="btn-check vertical-align" @click="insertCoreSkillTemplate">Insert Core Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertCoreSkillTemplate">Insert Core Skill
                             template</button>
                     </div>
                     <div>
@@ -221,7 +225,7 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Basic Skill data</div>
-                        <button class="btn-check vertical-align" @click="insertBasicSkillTemplate">Insert Basic Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertBasicSkillTemplate">Insert Basic Skill
                             template</button>
                     </div>
                     <div>
@@ -232,7 +236,7 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Dodge Skill data</div>
-                        <button class="btn-check vertical-align" @click="insertDodgeSkillTemplate">Insert Dodge Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertDodgeSkillTemplate">Insert Dodge Skill
                             template</button>
                     </div>
                     <div>
@@ -243,7 +247,7 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Assist Skill data</div>
-                        <button class="btn-check vertical-align" @click="insertAssistSkillTemplate">Insert Assist Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertAssistSkillTemplate">Insert Assist Skill
                             template</button>
                     </div>
                     <div>
@@ -257,11 +261,20 @@ function insertAssistSkillTemplate() {
                         <div class="title relative z-10">Agent images</div>
                     </div>
                     <div>
-                        <input type="file" @change="previewImage($event, 'imagePrincipal')" class="relative z-10" required/>
-                        <img v-if="imagePreview.imagePrincipal" :src="imagePreview.imagePrincipal" class="mt-2 max-w-[200px] relative z-10" />
+                        <input name="imagePrincipal" type="file" @change="previewImage($event, 'imagePrincipal')" class="relative z-10"
+                            required/>
+                        <img v-if="imagePreview.imagePrincipal" :src="imagePreview.imagePrincipal"
+                            class="mt-2 max-w-[200px] relative z-10" />
 
-                        <input type="file" @change="previewImage($event, 'imageShow')" class="relative z-10" required/>
-                        <img v-if="imagePreview.imageShow" :src="imagePreview.imageShow" class="mt-2 max-w-[200px] relative z-10" />
+                        <input name="imageShow" type="file" @change="previewImage($event, 'imageShow')" class="relative z-10" required />
+                        <img v-if="imagePreview.imageShow" :src="imagePreview.imageShow"
+                            class="mt-2 max-w-[200px] relative z-10" />
+                    </div>
+                </TextWrapper>
+                
+                <TextWrapper>
+                    <div>
+                        <input class="relative z-10" type="submit" value="Crear agente">
                     </div>
                 </TextWrapper>
             </div>

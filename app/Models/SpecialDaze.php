@@ -9,10 +9,7 @@ class SpecialDaze extends Model
 {
     /** @use HasFactory<\Database\Factories\SpecialDazeFactory> */
     use HasFactory;
-    protected $fillable = [
-        "lvl",
-        "multiplier"
-    ];
+    protected $guarded = [];
 
     public function specialMultiplier(){
         return $this->belongsTo(SpecialMultiplier::class);

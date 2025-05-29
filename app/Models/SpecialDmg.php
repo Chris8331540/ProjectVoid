@@ -10,10 +10,7 @@ class SpecialDmg extends Model
     /** @use HasFactory<\Database\Factories\SpecialDmgFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multiplier"
-    ];
+    protected $guarded = [];
 
     public function specialMultiplier(){
         return $this->belongsTo(SpecialMultiplier::class);

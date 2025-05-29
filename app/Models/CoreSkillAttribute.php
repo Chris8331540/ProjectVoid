@@ -10,9 +10,7 @@ class CoreSkillAttribute extends Model
     /** @use HasFactory<\Database\Factories\CoreSkillAttributeFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-    ];
+    protected $guarded = [];
 
     public function coreSkill(){
         return $this->belongsTo(CoreSkill::class);

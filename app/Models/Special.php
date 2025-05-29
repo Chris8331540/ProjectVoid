@@ -10,12 +10,7 @@ class Special extends Model
     /** @use HasFactory<\Database\Factories\SpecialFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-        "info",
-        "order",
-        "image"
-    ];
+    protected $guarded = [];
 
     public function agent(){
         return $this->belongsTo(Agent::class);

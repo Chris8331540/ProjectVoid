@@ -10,10 +10,7 @@ class BasicDmg extends Model
     /** @use HasFactory<\Database\Factories\BasicDmgFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multiplier",
-    ];
+    protected $guarded = [];
 
     public function BasicMultiplier(){
         return $this->belongsTo(BasicMultiplier::class);

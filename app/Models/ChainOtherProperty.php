@@ -9,10 +9,7 @@ class ChainOtherProperty extends Model
 {
     /** @use HasFactory<\Database\Factories\ChainOtherPropertyFactory> */
     use HasFactory;
-    protected $fillable = [
-        "lvl",
-        "multiplier"
-    ];
+    protected $guarded = [];
 
     public function chainMultiplier(){
         return $this->belongsTo(ChainMultiplier::class);

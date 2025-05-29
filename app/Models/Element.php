@@ -9,10 +9,7 @@ class Element extends Model
 {
     use HasFactory;
     
-    protected $fillable = [
-        "name",
-        "image"
-    ];
+    protected $guarded = [];
 
     public function agent(){
         return $this->hasMany(Agent::class);

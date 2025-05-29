@@ -10,11 +10,7 @@ class DodgeMultiplier extends Model
     /** @use HasFactory<\Database\Factories\DodgeMultiplierFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-        "multiplier_type",
-        "order",
-    ];
+    protected $guarded = [];
 
     public function dodgeDmg(){
         return $this->hasMany(DodgeDmg::class);

@@ -10,10 +10,7 @@ class BasicDaze extends Model
     /** @use HasFactory<\Database\Factories\BasicDazeFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multipiler",
-    ];
+    protected $guarded = [];
 
     public function basicMultiplier(){
         return $this->belongsTo(BasicMultiplier::class);

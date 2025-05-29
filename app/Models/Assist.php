@@ -10,12 +10,7 @@ class Assist extends Model
     /** @use HasFactory<\Database\Factories\AssistFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-        "info",
-        "order",
-        "image",
-    ];
+    protected $guarded = [];
 
     public function assistMultiplier(){
         return $this->hasMany(AssistMultiplier::class);

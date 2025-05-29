@@ -10,10 +10,7 @@ class AssistDmg extends Model
     /** @use HasFactory<\Database\Factories\AssistDmgFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multiplier",
-    ];
+    protected $guarded = [];
 
     public function assistMultiplier(){
         return $this->belongsTo(AssistMultiplier::class);

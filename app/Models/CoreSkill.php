@@ -9,12 +9,7 @@ class CoreSkill extends Model
 {
     /** @use HasFactory<\Database\Factories\CoreSkillFactory> */
     use HasFactory;
-    protected $fillable = [
-        "name",
-        "info",
-        "order",
-        "image"
-    ];
+    protected $guarded = [];
 
     public function coreSkillMultiplier(){
         return $this->hasMany(CoreSkillMultiplier::class);

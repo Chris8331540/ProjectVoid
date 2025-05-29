@@ -9,12 +9,7 @@ class Basic extends Model
 {
     /** @use HasFactory<\Database\Factories\BasicFactory> */
     use HasFactory;
-    protected $fillable = [
-        "name",
-        "info",
-        "order",
-        "image",
-    ];
+    protected $guarded = [];
 
     public function basicMultiplier(){
         return $this->hasMany(BasicMultiplier::class);

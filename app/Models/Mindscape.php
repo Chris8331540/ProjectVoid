@@ -10,11 +10,7 @@ class Mindscape extends Model
     /** @use HasFactory<\Database\Factories\MindscapeFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "title",
-        "description",
-        "order"
-    ];
+    protected $guarded = [];
 
     public function agent(){
         return $this->hasOne(Agent::class);

@@ -10,11 +10,7 @@ class AssistMultiplier extends Model
     /** @use HasFactory<\Database\Factories\AssistMultiplierFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-        "multiplier_type",
-        "order",
-    ];
+    protected $guarded = [];
 
     public function assistDmg(){
         return $this->hasMany(AssistDmg::class);

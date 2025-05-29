@@ -10,11 +10,7 @@ class CoreSkillMultiplier extends Model
     /** @use HasFactory<\Database\Factories\CoreSkillMultiplierFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "multiplier",
-        "order",
-        "lvl"
-    ];
+    protected $guarded = [];
 
     public function coreSkill(){
         return $this->belongsTo(CoreSkill::class);

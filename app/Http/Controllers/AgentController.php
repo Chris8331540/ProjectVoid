@@ -18,12 +18,12 @@ class AgentController extends Controller
         $imageShow = null;
         //Almacenamos la imagen
         if ($request->hasFile("imagePrincipal")) {
-            $imagePrincipal = $request->file("imagePrincipal")->store("/storage/images/agents");
+            $imagePrincipal = $request->file("imagePrincipal")->store("images/agents", 'public');
             $imagePrincipal = Storage::url($imagePrincipal);
         }
 
         if ($request->hasFile("imageShow")) {
-            $imageShow = $request->file("imageShow")->store("/storage/images/agents");
+            $imageShow = $request->file("imageShow")->store("images/agents", 'public');
             $imageShow = Storage::url($imageShow);
         }
         //Rescatamos los json necesarios para comenzar a crear al personaje con sus habilidades
@@ -40,5 +40,14 @@ class AgentController extends Controller
 
         //Creamos las basics skill
         $basicSkills = $agentService->createBasicSkills($basicSkillData, $agent);
+
+        //creamos los dodge skill
+        $dodgeSkills = $agentService->createDodgeSkills($dodgeSkillData, $agent);
+
+        //creamos los assist skill
+        $assistSkills = $agentService->createAssistSkills($assistSkillData, $agent);
+
+        //Redireccionamos a la página del personaje recién creado
+        return redirect()->route('agents.show', ['id' => $agent->id]);
     }
 }

@@ -10,12 +10,7 @@ class Dodge extends Model
     /** @use HasFactory<\Database\Factories\DodgeFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-        "info",
-        "order",
-        "image",
-    ];
+    protected $guarded = [];
 
     public function dodgeMultiplier(){
         return $this->hasMany(DodgeMultiplier::class);

@@ -9,12 +9,7 @@ class Chain extends Model
 {
     /** @use HasFactory<\Database\Factories\ChainFactory> */
     use HasFactory;
-    protected $fillable = [
-        "name",
-        "info",
-        "order",
-        "image"
-    ];
+    protected $guarded = [];
 
     public function chainMultiplier(){
         return $this->hasMany(ChainMultiplier::class);

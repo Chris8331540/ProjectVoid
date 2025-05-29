@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Type extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        "name",
-        "image"
-    ];
+    protected $guarded = [];
 
     public function agent(){
         return $this->hasMany(Agent::class);

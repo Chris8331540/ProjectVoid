@@ -10,10 +10,7 @@ class AssistDaze extends Model
     /** @use HasFactory<\Database\Factories\AssistDazeFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multipiler",
-    ];
+    protected $guarded = [];
 
     public function assistMultiplier(){
         return $this->belongsTo(AssistMultiplier::class);

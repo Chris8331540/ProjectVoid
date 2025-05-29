@@ -10,10 +10,7 @@ class DodgeDaze extends Model
     /** @use HasFactory<\Database\Factories\DodgeDazeFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multiplier",
-    ];
+    protected $guarded = [];
 
     public function dodgeMultiplier(){
         return $this->belongsTo(DodgeMultiplier::class);

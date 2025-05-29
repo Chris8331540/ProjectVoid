@@ -8,23 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Agent extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        "name",
-        "info",
-        "rank",
-        "hp",
-        "def",
-        "atk",
-        "crit_rate",
-        "crit_dmg",
-        "pen_ratio",
-        "impact",
-        "anomaly_mastery",
-        "anomaly_proficiency",
-        "energy_regen",
-        "image",
-        "image_show"
-    ];
+    protected $guarded = [];
 
     public function element(){
         return $this->belongsTo(Element::class);

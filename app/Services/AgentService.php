@@ -3,6 +3,10 @@
 namespace App\Services;
 
 use App\Models\Agent;
+use App\Models\Assist;
+use App\Models\AssistDaze;
+use App\Models\AssistDmg;
+use App\Models\AssistMultiplier;
 use App\Models\Basic;
 use App\Models\BasicDaze;
 use App\Models\BasicDmg;
@@ -11,6 +15,10 @@ use App\Models\CoreSkill;
 use App\Models\CoreSkillAddition;
 use App\Models\CoreSkillAttribute;
 use App\Models\CoreSkillMultiplier;
+use App\Models\Dodge;
+use App\Models\DodgeDaze;
+use App\Models\DodgeDmg;
+use App\Models\DodgeMultiplier;
 use Illuminate\Http\Request;
 use App\Models\Element as ModelsElement;
 use App\Models\Type;
@@ -22,6 +30,9 @@ class AgentService
 
     public function createAgent(array $agentData, string $imagePrincipal, string $imageShow): Agent
     {
+        // dd($agentData);
+        // $tipos = Type::all();
+        // dd($tipos);
         $agent = Agent::create([
             "name" => $agentData["name"],
             "info" => $agentData["info"],
@@ -95,18 +106,18 @@ class AgentService
     public function createBasicSkills($basicSkillData, Agent $agent): array
     {
         $basicsCreated = [];
-        foreach ($basicSkillData as $index => $basic) {
+        foreach ($basicSkillData as $index => $basicSkill) {
             $basic = Basic::create([
-                "name" => $basic["basic"]["name"],
-                "info" => $basic["basic"]["info"],
+                "name" => $basicSkill["basic"]["name"],
+                "info" => $basicSkill["basic"]["info"],
                 "order" => $index,
-                "image" => $basic["basic"]["image"],
+                "image" => $basicSkill["basic"]["image"],
                 "agent_id" => $agent->id
             ]);
             array_push($basicsCreated, $basic);
 
-            foreach ($basic["basicMultipliers"] as $indexM => $basicMultiplier) {
-                $basicMultiplier = BasicMultiplier::create([
+            foreach ($basicSkill["basicMultipliers"] as $indexM => $basicMultiplier) {
+                $basicMult = BasicMultiplier::create([
                     "name" => $basicMultiplier["name"],
                     "multiplier_type" => $basicMultiplier["multiplier_type"],
                     "order" => $indexM + 1,
@@ -117,16 +128,89 @@ class AgentService
                     $dmg = BasicDmg::create([
                         "lvl" => $indexDD,
                         "multiplier" => $dmgDaze[0],
-                        "basic_multiplier_id" => $basicMultiplier->id
+                        "basic_multiplier_id" => $basicMult->id
                     ]);
                     $daze = BasicDaze::create([
                         "lvl" => $indexDD,
                         "multiplier" => $dmgDaze[1],
-                        "basic_multiplier_id" => $basicMultiplier->id
+                        "basic_multiplier_id" => $basicMult->id
                     ]);
                 }
             }
         }
         return $basicsCreated;
+    }
+
+    public function createDodgeSkills($dodgeSkillData, Agent $agent)
+    {
+        $dodgesCreated = [];
+        foreach ($dodgeSkillData as $index => $dodgeSkill) {
+            $dodge = Dodge::create([
+                "name" => $dodgeSkill["dodge"]["name"],
+                "info" => $dodgeSkill["dodge"]["info"],
+                "order" => $index,
+                "image" => $dodgeSkill["dodge"]["image"],
+                "agent_id" => $agent->id
+            ]);
+            array_push($dodgesCreated, $dodge);
+
+            foreach ($dodgeSkill["dodgeMultipliers"] as $indexDM => $dodgeMultiplier) {
+                $dodgeMult = DodgeMultiplier::create([
+                    "name" => $dodgeMultiplier["name"],
+                    "multiplier_type" => $dodgeMultiplier["multiplier_type"],
+                    "order" => $indexDM + 1,
+                    "dodge_id" => $dodge->id
+                ]);
+                //Creamos sus multiplicadores de daño y aturdimiento
+                foreach ($dodgeMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
+                    $dmg = DodgeDmg::create([
+                        "lvl" => $indexDD,
+                        "multiplier" => $dmgDaze[0],
+                        "dodge_multiplier_id" => $dodgeMult->id
+                    ]);
+                    $daze = DodgeDaze::create([
+                        "lvl" => $indexDD,
+                        "multiplier" => $dmgDaze[1],
+                        "dodge_multiplier_id" => $dodgeMult->id
+                    ]);
+                }
+            }
+        }
+    }
+
+    public function createAssistSkills($assistSkillData, Agent $agent){
+        $assistCreated = [];
+        foreach ($assistSkillData as $index => $assistSkill) {
+            $assist = Assist::create([
+                "name" => $assistSkill["assist"]["name"],
+                "info" => $assistSkill["assist"]["info"],
+                "order" => $index,
+                "image" => $assistSkill["assist"]["image"],
+                "agent_id" => $agent->id
+            ]);
+            array_push($assistCreated, $assist);
+
+            foreach ($assistSkill["assistMultipliers"] as $indexAM => $assistMultiplier) {
+                $assistMult = AssistMultiplier::create([
+                    "name" => $assistMultiplier["name"],
+                    "multiplier_type" => $assistMultiplier["multiplier_type"],
+                    "order" => $indexAM + 1,
+                    "assist_id" => $assist->id
+                ]);
+                //Creamos sus multiplicadores de daño y aturdimiento
+                foreach ($assistMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
+                    $dmg = AssistDmg::create([
+                        "lvl" => $indexDD,
+                        "multiplier" => $dmgDaze[0],
+                        "assist_multiplier_id" => $assistMult->id
+                    ]);
+                    $daze = AssistDaze::create([
+                        "lvl" => $indexDD,
+                        "multiplier" => $dmgDaze[1],
+                        "assist_multiplier_id" => $assistMult->id
+                    ]);
+                }
+            }
+        }
     }
 }

@@ -9,11 +9,7 @@ class SpecialMultiplier extends Model
 {
     /** @use HasFactory<\Database\Factories\SpecialMultiplierFactory> */
     use HasFactory;
-    protected $fillable = [
-        "name",
-        "multiplier_type",
-        "order"
-    ];
+    protected $guarded = [];
 
     public function special()
     {

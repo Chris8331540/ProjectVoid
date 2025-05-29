@@ -10,10 +10,7 @@ class BasicOtherProperty extends Model
     /** @use HasFactory<\Database\Factories\BasicOtherPropertyFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multipiler",
-    ];
+    protected $guarded = [];
 
     public function basicMultiplier(){
         return $this->belongsTo(BasicMultiplier::class);

@@ -10,10 +10,7 @@ class AssistOtherProperty extends Model
     /** @use HasFactory<\Database\Factories\AssistOtherPropertyFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        "lvl",
-        "multiplier",
-    ];
+    protected $guarded = [];
 
     public function assistMultiplier(){
         return $this->belongsTo(AssistMultiplier::class);
