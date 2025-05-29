@@ -5,6 +5,9 @@ use Inertia\Inertia;
 use App\Models\Agent;
 
 use App\Http\Controllers\AgentController;
+use App\Http\Middleware\AdminMiddleware;
+
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -15,11 +18,17 @@ Route::get("/agents", function () {
     return Inertia::render("Agents", ["agents" => $agents]);
 })->name("agents");
 
-Route::get("/agents/create", function () {
-    return Inertia::render("agents/Create");
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get("/agents/create", function () {
+        return Inertia::render("agents/Create");
+    });
+
+    Route::post("/agents/create", [AgentController::class, 'create']);
 });
 
-Route::post("/agents/create", [AgentController::class, 'create']);
+
+
 
 Route::get("/agents/{id}", function ($id) {
     $agent = Agent::with([

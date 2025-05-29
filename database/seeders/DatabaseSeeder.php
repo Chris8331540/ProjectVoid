@@ -14,11 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            "password"=>"PasswordSeguraÑ",
+            'role'=>"user"
+        ]);
+        User::factory()->create([
+            'name' => 'Chris Admin',
+            'email' => 'chris@gmail.com',
+            "password"=>"PasswordSeguraÑ",
+            'role'=>"admin"
+
         ]);
 
         //CREAR TIPOS

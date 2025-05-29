@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class AdminMiddleware
      */
     public function handle($request, \Closure $next)
     {
+        dd('admin middleware');
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }

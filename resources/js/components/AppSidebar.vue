@@ -53,9 +53,11 @@ const footerNavItems: NavItem[] = [
             <NavMain :items="mainNavItems" />
         </SidebarContent>
 
+        <!--Este se encarga de mostrar el usuario logeado-->
         <SidebarFooter>
             <NavFooter :items="footerNavItems" />
             <NavUser v-if="isAuthenticated"/>
+            
         </SidebarFooter>
     </Sidebar>
     <slot />
