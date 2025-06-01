@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User, Agent, Assist, AssistDaze, AssistDmg, AssistMultiplier, CoreSkill, CoreSkillAddition, CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, DodgeDaze, DodgeDmg, DodgeMultiplier, Mindscape};
+use App\Models\{User, Agent, Assist, AssistDaze, AssistDmg, AssistMultiplier, CoreSkill, CoreSkillAddition, 
+    CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, 
+    DodgeDaze, DodgeDmg, DodgeMultiplier, Mindscape, Tierlist, TierlistEntry};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use PharIo\Manifest\ElementCollection;
@@ -409,6 +411,47 @@ class DatabaseSeeder extends Seeder
             "description"=>"While in the Idyllic Cadenza state, the DMG multiplier for Tremolo and Tone Clusters released or followed up with will increase to 200% of the original, and CRIT Rate is increased by 80%. When triggering a Precise Assist, Astra Yao will automatically follow up with the charged 3rd-hit of Basic Attack: Capriccio, with a 80% increased CRIT Rate. This effect can trigger once every 10s.",
             "order"=>6,
             "agent_id"=>1
+        ]);
+
+
+        //Creamos una tierlist de ejemplo
+        Tierlist::factory()->create([
+            "title"=>"Tierlist de prueba",
+            "description"=>"Esta es una tierlist de prueba",
+            "rating_score"=>1,
+            "user_id"=>2
+        ]);
+
+        //Creamos varios registros de ejemplo
+        TierlistEntry::factory()->create([
+            "category"=>"s",
+            "order"=>2,
+            "tierlist_id"=>1,
+            "agent_id"=>1
+        ]);
+        TierlistEntry::factory()->create([
+            "category"=>"s",
+            "order"=>1,
+            "tierlist_id"=>1,
+            "agent_id"=>3
+        ]);
+        TierlistEntry::factory()->create([
+            "category"=>"a",
+            "order"=>1,
+            "tierlist_id"=>1,
+            "agent_id"=>4
+        ]);
+        TierlistEntry::factory()->create([
+            "category"=>"b",
+            "order"=>1,
+            "tierlist_id"=>1,
+            "agent_id"=>5
+        ]);
+        TierlistEntry::factory()->create([
+            "category"=>"c",
+            "order"=>1,
+            "tierlist_id"=>1,
+            "agent_id"=>2
         ]);
         
 

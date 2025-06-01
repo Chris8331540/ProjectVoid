@@ -61,8 +61,11 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
                             <div class="flex mr-8">
                                 <img :src="agent.element.image" class="w-12 mr-5" />
                                 <img :src="agent.type.image" class="w-12 mr-5" />
-                                <img v-if="agent.rank == 's'" :src="ranks.s" class="w-12" />
-                                <img v-else :src="ranks.a" class="w-12 mr-0" />
+
+                                <img v-if="agent.rank.toLowerCase() === 's'" :src="ranks.s" class="w-12"  />
+                                <img v-else :src="ranks.a" class="w-12 mr-0"  />
+
+
                             </div>
                         </div>
 

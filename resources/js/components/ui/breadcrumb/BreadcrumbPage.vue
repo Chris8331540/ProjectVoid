@@ -5,6 +5,7 @@ import type { HTMLAttributes } from 'vue';
 const props = defineProps<{
     class?: HTMLAttributes['class'];
 }>();
+//TODO: Cambiar a scoped el style y ver como poner el estilo en los sitios necesarios
 </script>
 
 <template>

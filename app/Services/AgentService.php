@@ -30,9 +30,6 @@ class AgentService
 
     public function createAgent(array $agentData, string $imagePrincipal, string $imageShow): Agent
     {
-        // dd($agentData);
-        // $tipos = Type::all();
-        // dd($tipos);
         $agent = Agent::create([
             "name" => $agentData["name"],
             "info" => $agentData["info"],

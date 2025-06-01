@@ -46,4 +46,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function tierlists(){
+        return $this->hasMany(Tierlist::class);
+    }
 }

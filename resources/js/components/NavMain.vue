@@ -2,12 +2,14 @@
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 defineProps<{
     items: NavItem[];
 }>();
 
 const page = usePage<SharedData>();
+const currentPage = computed(() => page.url);
 </script>
 
 <template>
@@ -16,7 +18,7 @@ const page = usePage<SharedData>();
         <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
                 <SidebarMenuButton as-child :is-active="item.href === page.url">
-                    <Link :href="item.href" class="button flex justify-center items-center">
+                    <Link :href="item.href" class="flex justify-center items-center" :class="item.href===currentPage? 'button-selected':'button'">
                     <component v-if="typeof item.icon !== 'string'" :is="item.icon" />
                     <img v-else :src="item.icon" class="h-10 w-10" />
                     <span>{{ item.title }}</span>
@@ -27,7 +29,7 @@ const page = usePage<SharedData>();
     </SidebarGroup>
 </template>
 
-<style>
+<style scoped>
 .button:hover {
     text-transform: uppercase;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -46,12 +48,40 @@ const page = usePage<SharedData>();
     border-radius: 100px 20px;
     /* Transiciones específicas para los cambios de posicionamiento */
     transition: transform 0.5s ease-in-out, border-radius 1s ease;
+    animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
 }
 
 .button:hover>img {
     filter: invert(1);
 }
 
+.button-selected{
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: 800;
+    color: white;
+    background: linear-gradient(to left,
+            #A6C100 0%,
+            #DBD100 25%,
+            #A6C100 50%,
+            #DBD100 75%,
+            #A6C100 100%);
+    background-size: 400% auto;
+    animation: textShine 2.5s linear infinite;
+    border-radius: 100px 20px;
+    /* Transiciones específicas para los cambios de posicionamiento */
+    transition: transform 0.5s ease-in-out, border-radius 1s ease;
+    animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
+}
+.button-selected > img{
+    filter: invert(1);
+}
+
+.button-selected > component{
+    filter: invert(1);
+}
 @keyframes breath {
     0% {
         transform: scale(1);
@@ -77,10 +107,5 @@ const page = usePage<SharedData>();
     100% {
         background-position: 0% 50%;
     }
-}
-
-.button:hover {
-    animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
-
 }
 </style>
