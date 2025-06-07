@@ -55,10 +55,4 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
-
-    Route::get("/agents/create", function () {
-        return Inertia::render("agents/Create");
-    });
-
-    Route::post("/agents/create", [AgentController::class, 'create']);
 });

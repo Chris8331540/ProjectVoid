@@ -3,16 +3,16 @@ import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, Sideba
 import { type SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed, onMounted } from 'vue';
-import { useSidebarStore } from '@/composables/useSidebar';
+
 defineProps<{
     items: NavItem[];
 }>();
 
 const page = usePage<SharedData>();
 const currentPage = computed(() => page.url);
-const {sidebar} = useSidebarStore();
-//intentar cambiar el tamaño de la imagen dependiendo de si está cerrado el sidebar y añadir js para que se cambie dinamicamente
 
+
+const {isMobile, state} = useSidebar();
 </script>
 
 <template>
@@ -22,9 +22,9 @@ const {sidebar} = useSidebarStore();
             <SidebarMenuItem v-for="item in items" :key="item.title">
                 <SidebarMenuButton as-child :is-active="item.href === page.url" class="mt-0.5 mb-0.5">
                     <Link :href="item.href" class="flex justify-center items-center"
-                        :class="[currentPage.startsWith(item.href) ? 'button-selected' : 'button bg-zinc-800', sidebar?'sidebarOpen':'aspect-square justify-center items-center !gap-0']">
+                        :class="[currentPage.startsWith(item.href) ? 'button-selected' : 'button bg-zinc-800', state!='collapsed'?'sidebarOpen':'aspect-square justify-center items-center !gap-0']">
                     <component v-if="typeof item.icon !== 'string'" :is="item.icon" />
-                    <img v-else :src="item.icon" class="h-10 w-10 aspect-square object-contain" :class="sidebar?'':''" />
+                    <img v-else :src="item.icon" class="h-10 w-10 aspect-square object-contain"/>
                     <span>{{ item.title }}</span>
                     </Link>
                 </SidebarMenuButton>
@@ -51,9 +51,7 @@ const {sidebar} = useSidebarStore();
             #A6C100 100%);
     background-size: 400% auto;
     animation: textShine 2.5s linear infinite;
-    /* border-radius: 100px 20px; */
-    /* Transiciones específicas para los cambios de posicionamiento */
-    transition: transform 0.5s ease-in-out, border-radius 1s ease;
+    transition: transform 0.5s ease-in-out, border-radius 0.2s linear;
     animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
 }
 .sidebarOpen{
@@ -78,9 +76,6 @@ const {sidebar} = useSidebarStore();
             #A6C100 100%);
     background-size: 400% auto;
     animation: textShine 2.5s linear infinite;
-    /* border-radius: 100px 20px; */
-    /* Transiciones específicas para los cambios de posicionamiento */
-    transition: transform 0.5s ease-in-out, border-radius 1s ease;
     animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
 }
 

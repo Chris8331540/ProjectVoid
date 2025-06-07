@@ -2,12 +2,11 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Plus, Trophy } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, Plus, Trophy, User } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
-
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
@@ -33,6 +32,7 @@ const footerNavItems: NavItem[] = [
         icon: Plus,
     }
 ];
+const {isMobile, state} = useSidebar();
 </script>
 
 <template>
@@ -41,7 +41,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
+                        <Link :href="route('home')">
                         <AppLogo />
                         </Link>
                     </SidebarMenuButton>
@@ -60,8 +60,9 @@ const footerNavItems: NavItem[] = [
             <div v-else>
                 <Link :href="route('login')">
                 <button
-                    class=" w-full p-2 rounded border text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100 hover:bg-zinc-800">Iniciar
-                    sesión</button>
+                    class="w-full flex btn-login gap-2 p-2 rounded border text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100 hover:bg-zinc-800">
+                    <component :is="User" />
+                   <span v-if="state!='collapsed' || isMobile">Log in</span></button>
                 </Link>
             </div>
 
@@ -69,3 +70,8 @@ const footerNavItems: NavItem[] = [
     </Sidebar>
     <slot />
 </template>
+<style scoped>
+.btn-login{
+    justify-content: center;
+}
+</style>
