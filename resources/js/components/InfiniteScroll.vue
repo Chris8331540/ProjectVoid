@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Link } from '@inertiajs/vue3'
 import TextWrapper from './TextWrapper.vue'
 import { usePage } from '@inertiajs/vue3';
+import StarScore from './StarScore.vue';
 const props = defineProps<{
     userId?: any
 }>();
@@ -22,18 +23,17 @@ const hasMore = ref(true)
 const scrollContainer = ref(null)
 
 const deleteTierlist = async (id: number) => {
-  try {
-    await axios.delete(`/tierlists/${id}`);
-    tierlists.value = tierlists.value.filter((t: any) => t.id !== id);
-  } catch (error) {
-    console.error("Error eliminando tierlist:", error);
-  }
+    try {
+        await axios.delete(`/tierlists/${id}`);
+        tierlists.value = tierlists.value.filter((t: any) => t.id !== id);
+    } catch (error) {
+        console.error("Error eliminando tierlist:", error);
+    }
 };
 
 const fetchItems = async () => {
     if (loading.value || !hasMore.value) return
     loading.value = true
-
     try {
         // URL sin /api porque usamos web.php y same domain
         const res = await axios.get(`${currentUrl}` + `?page=${page.value}`)
@@ -60,7 +60,7 @@ const fetchItems = async () => {
         loading.value = false
     }
 }
-
+console.log(tierlists);
 const onScroll = () => {
     const el = scrollContainer.value as any;
     if (!el) return
@@ -69,7 +69,13 @@ const onScroll = () => {
         fetchItems()
     }
 }
-
+// const average_score = 4.7
+// function calculateAverageScore(averageScore: any) {
+//     if (averageScore == null) {
+//         return 0;
+//     }
+//     return averageScore / 5 * 100;
+// }
 onMounted(() => {
     fetchItems()
 })
@@ -85,7 +91,10 @@ onMounted(() => {
                     <Link :href="`/tierlists/${tierlist.id}`">
                     <div class="relative z-10 title !ml-0 w-full">{{ tierlist.title }}, by {{ tierlist.user.name }}
                     </div>
+
                     <div class="relative z-10 w-full">{{ tierlist.description }}</div>
+                    <StarScore :averageScore="tierlist.average_score" :tierlistId="tierlist.id">
+                    </StarScore>
                     </Link>
                 </div>
 
@@ -130,25 +139,29 @@ onMounted(() => {
     border-color: #CE0A10;
     border: 0.25rem solid;
     color: #CE0A10;
-    font-weight:bolder;
+    font-weight: bolder;
     text-transform: uppercase;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: italic;
 }
-.bg-button:hover{
+
+.bg-button:hover {
     border-color: black;
     color: black;
     background-color: #CE0A10;
     transition: all 0.05s ease-in-out;
 
 }
+
 .depth-effect {
     box-shadow: inset 0 0 10px 6px #000000, 0 0 10px 2px rgba(255, 255, 255, 0.1), 0.125em 0.125em 0.25em rgba(0, 0, 0, 0.125), 0 0.0625em 0.375em rgba(0, 0, 0, 0.1875);
     border-radius: 2rem;
 }
+
 .depth-effect:hover {
     box-shadow: none;
 }
+
 .depth-effect::before,
 .depth-effect::after {
     z-index: 1;
@@ -186,7 +199,7 @@ onMounted(() => {
     }
 
     50% {
-        transform: scale(1.04);
+        transform: scale(1.02);
         /* tamaño expandido */
     }
 

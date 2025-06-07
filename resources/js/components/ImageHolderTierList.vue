@@ -17,7 +17,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Link :href="route('agents.show', agentId)" target="_blank">
+    <Link :href="route('agents.show', agentId)" target="_blank" method="get" as="a">
     <div class="relative w-full h-full"> <!-- Contenedor principal -->
         <svg class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" fill="none">
             <defs>

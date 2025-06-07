@@ -7,7 +7,6 @@ import { Link } from '@inertiajs/vue3';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 const props = defineProps<{
     name?: string;
-    tierlists: any
 }>();
 const breadcrumbs: BreadcrumbItem[] = [
     {

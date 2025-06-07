@@ -7,6 +7,7 @@ use App\Models\Agent;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\TierlistController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Score;
 use App\Models\Tierlist;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -57,12 +58,20 @@ Route::get("/agents/{id}", function ($id) {
 Route::get("/tierlists", function (Request $request) {
     //Si requiere json, rescata de 10 en 10 y devuelve en json
     if ($request->wantsJson()) {
-        $tierlist = Tierlist::with(["user"])->paginate(10);
-        return $tierlist;
+        $tierlists = Tierlist::with(['user'])
+            ->withAvg('scores as average_score', 'score') // relación 'scores' que conecta con tabla pivote
+            ->paginate(10);
+
+        $tierlists->getCollection()->transform(function ($tierlists) {
+            $tierlists->average_score = (float) $tierlists->average_score ?? 0;
+            return $tierlists;
+        });
+
+        return response()->json($tierlists);
     }
     //Si no, rescata normal y entrega normal /eliminar la entrega
-    $tierlists = Tierlist::with(["user"])->get();
-    return Inertia::render("tierlists/Index", ["tierlists" => $tierlists]);
+    // $tierlists = Tierlist::with(["user"])->get();
+    return Inertia::render("tierlists/Index");
 });
 
 //Rutas protegidas con autenticación user/admin
@@ -74,13 +83,30 @@ Route::middleware(["auth"])->group(function () {
 
     Route::post("/tierlists/create", [TierlistController::class, 'store']);
 
-    Route::delete("/tierlists/{id}", function($id){
-        $tierlist=Tierlist::findOrFail($id);
-        if($tierlist->user_id!==Auth::id()){
+    Route::delete("/tierlists/{id}", function ($id) {
+        $tierlist = Tierlist::findOrFail($id);
+        if ($tierlist->user_id !== Auth::id()) {
             abort(403, "Unauthorized");
         }
         $tierlist->delete();
-         return response()->json(['message' => 'Eliminada correctamente']);
+        return response()->json(['message' => 'Eliminada correctamente']);
+    });
+
+    Route::post('/tierlists/{id}/rate', function ($id, Request $request) {
+        $request->validate([
+            'score' => 'required|integer|min:1|max:5'
+        ]);
+
+        $userId = Auth::id();
+        $tierlist = Tierlist::findOrFail($id);
+        Score::updateOrCreate(
+            ['user_id' => $userId, 'tierlist_id' => $id],
+            ['score' => $request->input('score')]
+        );
+        // Calculamos nueva media
+        $average = (float) Score::where('tierlist_id', $id)->avg('score');
+
+        return response()->json(['average' => $average]);
     });
 });
 
@@ -88,7 +114,12 @@ Route::get("/profile/{id}", function (Request $request, $id) {
     $user = User::findOrFail($id);
     if ($request->wantsJson()) {
         // Retornamos sólo los datos en JSON para AJAX
-        $tierlists = Tierlist::with("user")->where("user_id", $id)->paginate(10);
+        $tierlists = Tierlist::with("user")->where("user_id", $id)->withAvg('scores as average_score', 'score')->paginate(10);
+         $tierlists->getCollection()->transform(function ($tierlists) {
+            $tierlists->average_score = (float) $tierlists->average_score ?? 0;
+            return $tierlists;
+        });
+        
         return $tierlists;
         //Como el json es separado en user, y tierlists, cuando se accede al perfil el método actual de extracción no es factible
     }
@@ -97,6 +128,7 @@ Route::get("/profile/{id}", function (Request $request, $id) {
 
 Route::get("/tierlists/{id}", function ($id) {
     $tierlist = Tierlist::with([
+        'user',
         'tierlistEntries' => function ($query) {
             $query->with([
                 'agent' => function ($agentQuery) {
@@ -104,7 +136,8 @@ Route::get("/tierlists/{id}", function ($id) {
                 }
             ]);
         }
-    ])->findOrFail($id);
+    ])->withAvg('scores as average_score', 'score')->findOrFail($id);
+    $tierlist->average_score = (float) $tierlist->average_score ?? 0;
     return Inertia::render("tierlists/Show", ["tierlist" => $tierlist]);
 })->name("tierlists.show");
 Route::get('dashboard', function () {

@@ -10,7 +10,9 @@ import AppearanceTabs from '@/components/AppearanceTabs.vue';
 import { useFilterStore } from '@/composables/useFilters';
 import TextWrapper from '@/components/TextWrapper.vue';
 import { Link } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
 import { ref } from 'vue';
+import StarScore from '@/components/StarScore.vue';
 type TierCategory = 's' | 'a' | 'b' | 'c' | 'd' | 'e'
 
 const categoriesName: TierCategory[] = ['s', 'a', 'b', 'c', 'd', 'e']
@@ -28,6 +30,7 @@ const props = defineProps<{
     name?: string;
     tierlist: any
 }>();
+console.log(props.tierlist);
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Tier List',
@@ -54,6 +57,8 @@ function ordenarTierlist(entries: any[]) {
 
 ordenarTierlist(props.tierlist.tierlist_entries);
 // console.log(tierlistOrdered);
+const formatedDate = dayjs(props.tierlist.user.created_at).format('DD/MM/YY');
+console.log(props.tierlist.average_score);
 </script>
 
 <template>
@@ -61,6 +66,19 @@ ordenarTierlist(props.tierlist.tierlist_entries);
     <Head title="Tier List" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <TextWrapper class="-mb-4">
+            <div class="flex flex-column">
+                <div>
+                    <div class="relative z-10 title !ml-0">{{ tierlist.title }} by {{ tierlist.user.name }}</div>
+                    <div class="relative z-10"> {{ tierlist.description }}</div>
+                </div>
+                <div>
+                    <StarScore :averageScore="tierlist.average_score" :tierlistId="tierlist.id">
+                    </StarScore>
+                </div>
+            </div>
+
+        </TextWrapper>
         <TextWrapper>
             <div class="flex flex-col space-y-2 relative z-10">
                 <div v-for="category in categoriesName" :key="category" class="flex items-center border-2 rounded p-1">
@@ -77,8 +95,6 @@ ordenarTierlist(props.tierlist.tierlist_entries);
                                 :agentId="entry.agent.id" />
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </TextWrapper>
@@ -87,6 +103,10 @@ ordenarTierlist(props.tierlist.tierlist_entries);
 
 </template>
 <style scoped>
+.stars {
+    align-items: center;
+}
+
 /*Efecto de profundidad para las stats */
 .depth-effect {
     box-shadow: inset 0 0 10px 6px #000000, 0 0 10px 2px rgba(255, 255, 255, 0.1), 0.125em 0.125em 0.25em rgba(0, 0, 0, 0.125), 0 0.0625em 0.375em rgba(0, 0, 0, 0.1875);

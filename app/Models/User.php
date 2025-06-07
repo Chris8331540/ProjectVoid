@@ -47,7 +47,15 @@ class User extends Authenticatable
         ];
     }
 
-    public function tierlists(){
+    public function tierlists()
+    {
         return $this->hasMany(Tierlist::class);
+    }
+
+    public function scoredTierlists()
+    {
+        return $this->belongsToMany(Tierlist::class, 'scores')
+            ->withPivot('score')
+            ->withTimestamps();
     }
 }

@@ -23,7 +23,7 @@ const handleSystemThemeChange = () => {
 export function initializeTheme() {
     // Initialize theme from saved preference or default to system...
     const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
-    updateTheme(savedAppearance || 'system');
+    updateTheme(savedAppearance || 'dark');
 
     // Set up system theme change listener...
     mediaQuery.addEventListener('change', handleSystemThemeChange);

@@ -9,14 +9,28 @@ class Tierlist extends Model
 {
     /** @use HasFactory<\Database\Factories\TierlistFactory> */
     use HasFactory;
-    
+
     protected $guarded = [];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function tierlistEntries(){
+    public function tierlistEntries()
+    {
         return $this->hasMany(TierlistEntry::class);
+    }
+    
+    public function scorers()
+    {
+        return $this->belongsToMany(User::class, 'scores')
+            ->withPivot('score')
+            ->withTimestamps();
+    }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
     }
 }
