@@ -21,8 +21,8 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Tier List',
-        href:'/tierlists',
-        icon:Trophy,
+        href: '/tierlists',
+        icon: Trophy,
     }
 ];
 
@@ -42,7 +42,7 @@ const footerNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
-                            <AppLogo />
+                        <AppLogo />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -56,8 +56,15 @@ const footerNavItems: NavItem[] = [
         <!--Este se encarga de mostrar el usuario logeado-->
         <SidebarFooter>
             <NavFooter :items="footerNavItems" />
-            <NavUser v-if="isAuthenticated"/>
-            
+            <NavUser v-if="isAuthenticated" />
+            <div v-else>
+                <Link :href="route('login')">
+                <button
+                    class=" w-full p-2 rounded border text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100 hover:bg-zinc-800">Iniciar
+                    sesión</button>
+                </Link>
+            </div>
+
         </SidebarFooter>
     </Sidebar>
     <slot />

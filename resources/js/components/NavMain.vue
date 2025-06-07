@@ -1,26 +1,30 @@
 <script setup lang="ts">
-import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { type SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
-
+import { computed, onMounted } from 'vue';
+import { useSidebarStore } from '@/composables/useSidebar';
 defineProps<{
     items: NavItem[];
 }>();
 
 const page = usePage<SharedData>();
 const currentPage = computed(() => page.url);
+const {sidebar} = useSidebarStore();
+//intentar cambiar el tamaño de la imagen dependiendo de si está cerrado el sidebar y añadir js para que se cambie dinamicamente
+
 </script>
 
 <template>
     <SidebarGroup class="px-2 py-0">
-        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <!-- <SidebarGroupLabel>Platform</SidebarGroupLabel> -->
         <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
-                <SidebarMenuButton as-child :is-active="item.href === page.url">
-                    <Link :href="item.href" class="flex justify-center items-center" :class="item.href===currentPage? 'button-selected':'button'">
+                <SidebarMenuButton as-child :is-active="item.href === page.url" class="mt-0.5 mb-0.5">
+                    <Link :href="item.href" class="flex justify-center items-center"
+                        :class="[currentPage.startsWith(item.href) ? 'button-selected' : 'button bg-zinc-800', sidebar?'sidebarOpen':'aspect-square justify-center items-center !gap-0']">
                     <component v-if="typeof item.icon !== 'string'" :is="item.icon" />
-                    <img v-else :src="item.icon" class="h-10 w-10" />
+                    <img v-else :src="item.icon" class="h-10 w-10 aspect-square object-contain" :class="sidebar?'':''" />
                     <span>{{ item.title }}</span>
                     </Link>
                 </SidebarMenuButton>
@@ -30,6 +34,8 @@ const currentPage = computed(() => page.url);
 </template>
 
 <style scoped>
+
+
 .button:hover {
     text-transform: uppercase;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,23 +51,25 @@ const currentPage = computed(() => page.url);
             #A6C100 100%);
     background-size: 400% auto;
     animation: textShine 2.5s linear infinite;
-    border-radius: 100px 20px;
+    /* border-radius: 100px 20px; */
     /* Transiciones específicas para los cambios de posicionamiento */
     transition: transform 0.5s ease-in-out, border-radius 1s ease;
     animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
 }
-
+.sidebarOpen{
+    border-radius: 100px 20px;
+}
 .button:hover>img {
     filter: invert(1);
 }
 
-.button-selected{
+.button-selected {
     text-transform: uppercase;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: italic;
     font-size: 1rem;
     font-weight: 800;
-    color: white;
+    color: black;
     background: linear-gradient(to left,
             #A6C100 0%,
             #DBD100 25%,
@@ -70,18 +78,27 @@ const currentPage = computed(() => page.url);
             #A6C100 100%);
     background-size: 400% auto;
     animation: textShine 2.5s linear infinite;
-    border-radius: 100px 20px;
+    /* border-radius: 100px 20px; */
     /* Transiciones específicas para los cambios de posicionamiento */
     transition: transform 0.5s ease-in-out, border-radius 1s ease;
     animation: breath 1.4s ease-in-out infinite, textShine 1.4s ease-in-out infinite;
 }
-.button-selected > img{
+
+.button-selected>img {
     filter: invert(1);
 }
 
-.button-selected > component{
+.button-selected>component {
     filter: invert(1);
 }
+
+.img-config {
+    min-height: 2.5rem;
+    width: auto;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+}
+
 @keyframes breath {
     0% {
         transform: scale(1);

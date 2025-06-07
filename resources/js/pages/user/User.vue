@@ -4,31 +4,43 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import TextWrapper from '@/components/TextWrapper.vue';
 import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 const props = defineProps<{
     name?: string;
-    tierlists: any
+    user: any
 }>();
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Tier List',
+        title: 'Profile',
         href: '/dashboard',
     },
 ];
+const page = usePage();
+// const user = page.props.auth?.user;
+
+const formatedDate = dayjs(props.user.created_at).format('DD/MM/YY');
 </script>
 
 <template>
 
-    <Head title="Tier List" />
+    <Head title="Profile" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <!--Solo mostrar el botón si está logueado-->
-        <div class="flex ml-6 mt-4">
-            <Link :href="'/tierlists/create'" class="p-2 bg-neutral-900 rounded button">
-            Create tierlist
-            </Link>
-        </div>
-        <InfiniteScroll class="mt-4 mb-2"></InfiniteScroll>
+        <!--Se mostrará siempre ya que se supone que debe estar logueado para entrar, si o si-->
+        <TextWrapper>
+            <div class="relative z-10 title !ml-0">{{ user.name }}</div>
+            <div class="relative z-10">Se unió el {{ formatedDate }}</div>
+
+        </TextWrapper>
+        <!-- <Link v-for="tierlist in user.tierlists" :href="'/tierlists/' + tierlist.id">
+        <TextWrapper>
+            <div class="relative z-10 title !ml-0">{{ tierlist.title }}</div>
+            <div class="relative z-10">{{ tierlist.description }}</div>
+        </TextWrapper>
+        </Link> -->
+        <InfiniteScroll class="mt-4 mb-2" :userId="user.id"></InfiniteScroll>
     </AppLayout>
 
 </template>
@@ -51,6 +63,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     /* Transiciones específicas para los cambios de posicionamiento */
     animation: textShine 1.4s ease-in-out infinite;
 }
+
 @keyframes textShine {
     0% {
         background-position: 135% 50%;

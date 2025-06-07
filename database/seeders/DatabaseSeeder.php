@@ -2,9 +2,31 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User, Agent, Assist, AssistDaze, AssistDmg, AssistMultiplier, CoreSkill, CoreSkillAddition, 
-    CoreSkillAttribute, CoreSkillMultiplier, Element, Type, Basic, BasicDaze, BasicDmg, BasicMultiplier, Dodge, 
-    DodgeDaze, DodgeDmg, DodgeMultiplier, Mindscape, Tierlist, TierlistEntry};
+use App\Models\{
+    User,
+    Agent,
+    Assist,
+    AssistDaze,
+    AssistDmg,
+    AssistMultiplier,
+    CoreSkill,
+    CoreSkillAddition,
+    CoreSkillAttribute,
+    CoreSkillMultiplier,
+    Element,
+    Type,
+    Basic,
+    BasicDaze,
+    BasicDmg,
+    BasicMultiplier,
+    Dodge,
+    DodgeDaze,
+    DodgeDmg,
+    DodgeMultiplier,
+    Mindscape,
+    Tierlist,
+    TierlistEntry
+};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use PharIo\Manifest\ElementCollection;
@@ -20,14 +42,14 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            "password"=>"PasswordSeguraÑ",
-            'role'=>"user"
+            "password" => "PasswordSeguraÑ",
+            'role' => "user"
         ]);
         User::factory()->create([
             'name' => 'Chris Admin',
             'email' => 'chris@gmail.com',
-            "password"=>"PasswordSeguraÑ",
-            'role'=>"admin"
+            "password" => "PasswordSeguraÑ",
+            'role' => "admin"
 
         ]);
 
@@ -327,20 +349,20 @@ class DatabaseSeeder extends Seeder
 
         //ASSIST SKILL
         Assist::factory()->create([
-            "name"=>'Quick Assist: "One Luminous Sky"',
-            "info"=>"When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
-            "order"=>1,
-            "image"=>"",
-            "agent_id"=>1
+            "name" => 'Quick Assist: "One Luminous Sky"',
+            "info" => "When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
+            "order" => 1,
+            "image" => "",
+            "agent_id" => 1
         ]);
         AssistMultiplier::factory()->create([
-            "name"=>"",
-            "multiplier_type"=>"atk",
-            "order"=>1,
-            "assist_id"=>1
+            "name" => "",
+            "multiplier_type" => "atk",
+            "order" => 1,
+            "assist_id" => 1
         ]);
 
-        $assist_dmg_dazes =[
+        $assist_dmg_dazes = [
             [["55.00%", "48.40%"]],
             [["60.00%", "50.60%"]],
             [["65.00%", "52.80%"]],
@@ -377,83 +399,84 @@ class DatabaseSeeder extends Seeder
 
         //MINDSCAPES
         Mindscape::factory()->create([
-            "title"=>"M1: 12-Tone Equal Temperament",
-            "description"=>"When Astra Yao's attack hits an enemy, the target's All-Attribute RES is reduced by 6%, stacking up to 3 times and lasting 30s. Repeated triggers refresh the duration. Upon entering the battlefield, Astra Yao immediately gains 1,000 Decibels. When activating her Ultimate, all squad members gain 1 stack of Song of Protection for 60s. When attacked by an enemy, consume Song of Protection, granting Invulnerability for 1s.",
-            "order"=>1,
-            "agent_id"=>1
+            "title" => "M1: 12-Tone Equal Temperament",
+            "description" => "When Astra Yao's attack hits an enemy, the target's All-Attribute RES is reduced by 6%, stacking up to 3 times and lasting 30s. Repeated triggers refresh the duration. Upon entering the battlefield, Astra Yao immediately gains 1,000 Decibels. When activating her Ultimate, all squad members gain 1 stack of Song of Protection for 60s. When attacked by an enemy, consume Song of Protection, granting Invulnerability for 1s.",
+            "order" => 1,
+            "agent_id" => 1
         ]);
         Mindscape::factory()->create([
-            "title"=>"M2: Art of Greed",
-            "description"=>"The ATK buff from Core Passive: Graceful Andante is further increased by 19%, with an increased maximum of 400. While in the Idyllic Cadenza state, when other characters switch in through a Quick Assist, Chain Attack, Defensive Assist, or Evasive Assist, Astra Yao will additionally follow up with 1 Tremolo and 3 Tone Clusters to attack. This effect can trigger once every 3s.",
-            "order"=>2,
-            "agent_id"=>1
+            "title" => "M2: Art of Greed",
+            "description" => "The ATK buff from Core Passive: Graceful Andante is further increased by 19%, with an increased maximum of 400. While in the Idyllic Cadenza state, when other characters switch in through a Quick Assist, Chain Attack, Defensive Assist, or Evasive Assist, Astra Yao will additionally follow up with 1 Tremolo and 3 Tone Clusters to attack. This effect can trigger once every 3s.",
+            "order" => 2,
+            "agent_id" => 1
         ]);
         Mindscape::factory()->create([
-            "title"=>"M3: Interwoven Staff Notation",
-            "description"=>"Basic Attack, Assist, Dodge, Special Attack, and Chain Attack Lv. +2",
-            "order"=>3,
-            "agent_id"=>1
+            "title" => "M3: Interwoven Staff Notation",
+            "description" => "Basic Attack, Assist, Dodge, Special Attack, and Chain Attack Lv. +2",
+            "order" => 3,
+            "agent_id" => 1
         ]);
         Mindscape::factory()->create([
-            "title"=>"M4: Hair Upon Your Nape",
-            "description"=>"After activating a Chain Attack or Ultimate, within 15s, Astra Yao can trigger a Quick Assist even if she does not have Chords. When the attack hits an enemy, the interval for triggering a Quick Assist is reduced to 1s. While in the Idyllic Cadenza state, when other characters enter the field via a Quick Assist, they will receive different buffs based on their specialty, and this effect can be triggered once every 3s for the entire squad: Attack: The next Quick Assist heavy attack on an enemy will deal extra DMG equal to 300% of Astra Yao's ATK; Anomaly: The next Quick Assist will have 50% increased Anomaly Buildup; Stun: The next Quick Assist will inflict 50% increased Daze.",
-            "order"=>4,
-            "agent_id"=>1
+            "title" => "M4: Hair Upon Your Nape",
+            "description" => "After activating a Chain Attack or Ultimate, within 15s, Astra Yao can trigger a Quick Assist even if she does not have Chords. When the attack hits an enemy, the interval for triggering a Quick Assist is reduced to 1s. While in the Idyllic Cadenza state, when other characters enter the field via a Quick Assist, they will receive different buffs based on their specialty, and this effect can be triggered once every 3s for the entire squad: Attack: The next Quick Assist heavy attack on an enemy will deal extra DMG equal to 300% of Astra Yao's ATK; Anomaly: The next Quick Assist will have 50% increased Anomaly Buildup; Stun: The next Quick Assist will inflict 50% increased Daze.",
+            "order" => 4,
+            "agent_id" => 1
         ]);
         Mindscape::factory()->create([
-            "title"=>"M5: Proxy and Silk String",
-            "description"=>"Basic Attack, Assist, Dodge, Special Attack, and Chain Attack Lv. +2",
-            "order"=>5,
-            "agent_id"=>1
+            "title" => "M5: Proxy and Silk String",
+            "description" => "Basic Attack, Assist, Dodge, Special Attack, and Chain Attack Lv. +2",
+            "order" => 5,
+            "agent_id" => 1
         ]);
         Mindscape::factory()->create([
-            "title"=>"M6: We Are the World",
-            "description"=>"While in the Idyllic Cadenza state, the DMG multiplier for Tremolo and Tone Clusters released or followed up with will increase to 200% of the original, and CRIT Rate is increased by 80%. When triggering a Precise Assist, Astra Yao will automatically follow up with the charged 3rd-hit of Basic Attack: Capriccio, with a 80% increased CRIT Rate. This effect can trigger once every 10s.",
-            "order"=>6,
-            "agent_id"=>1
+            "title" => "M6: We Are the World",
+            "description" => "While in the Idyllic Cadenza state, the DMG multiplier for Tremolo and Tone Clusters released or followed up with will increase to 200% of the original, and CRIT Rate is increased by 80%. When triggering a Precise Assist, Astra Yao will automatically follow up with the charged 3rd-hit of Basic Attack: Capriccio, with a 80% increased CRIT Rate. This effect can trigger once every 10s.",
+            "order" => 6,
+            "agent_id" => 1
         ]);
 
 
-        //Creamos una tierlist de ejemplo
-        Tierlist::factory()->create([
-            "title"=>"Tierlist de prueba",
-            "description"=>"Esta es una tierlist de prueba",
-            "rating_score"=>1,
-            "user_id"=>2
-        ]);
+        //Creamos la misma tierlist de ejemplo varias veces (probar scroll infinito)
 
-        //Creamos varios registros de ejemplo
-        TierlistEntry::factory()->create([
-            "category"=>"s",
-            "order"=>2,
-            "tierlist_id"=>1,
-            "agent_id"=>1
-        ]);
-        TierlistEntry::factory()->create([
-            "category"=>"s",
-            "order"=>1,
-            "tierlist_id"=>1,
-            "agent_id"=>3
-        ]);
-        TierlistEntry::factory()->create([
-            "category"=>"a",
-            "order"=>1,
-            "tierlist_id"=>1,
-            "agent_id"=>4
-        ]);
-        TierlistEntry::factory()->create([
-            "category"=>"b",
-            "order"=>1,
-            "tierlist_id"=>1,
-            "agent_id"=>5
-        ]);
-        TierlistEntry::factory()->create([
-            "category"=>"c",
-            "order"=>1,
-            "tierlist_id"=>1,
-            "agent_id"=>2
-        ]);
-        
+        for ($i = 0; $i <=50; $i++) {
+            $tier = Tierlist::factory()->create([
+                "title" => "Tierlist de prueba",
+                "description" => "Esta es una tierlist de prueba",
+                "rating_score" => 1,
+                "user_id" => 2
+            ]);
 
+            //Creamos varios registros de ejemplo
+            TierlistEntry::factory()->create([
+                "category" => "s",
+                "order" => 2,
+                "tierlist_id" => $tier->id,
+                "agent_id" => 1
+            ]);
+            TierlistEntry::factory()->create([
+                "category" => "s",
+                "order" => 1,
+                "tierlist_id" => $tier->id,
+                "agent_id" => 3
+            ]);
+            TierlistEntry::factory()->create([
+                "category" => "a",
+                "order" => 1,
+                "tierlist_id" => $tier->id,
+                "agent_id" => 4
+            ]);
+            TierlistEntry::factory()->create([
+                "category" => "b",
+                "order" => 1,
+                "tierlist_id" => $tier->id,
+                "agent_id" => 5
+            ]);
+            TierlistEntry::factory()->create([
+                "category" => "c",
+                "order" => 1,
+                "tierlist_id" => $tier->id,
+                "agent_id" => 2
+            ]);
+        }
     }
 }
