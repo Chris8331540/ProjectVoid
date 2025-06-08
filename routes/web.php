@@ -26,6 +26,7 @@ Route::get("/agents", function () {
 //Rutas protegidas con autentiación admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get("/agents/create", function () {
+
         return Inertia::render("agents/Create");
     });
 

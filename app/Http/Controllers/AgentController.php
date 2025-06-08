@@ -8,14 +8,15 @@ use App\Models\CoreSkillAttribute;
 use App\Models\CoreSkillMultiplier;
 use Illuminate\Support\Facades\Storage;
 use App\Services\AgentService;
+use Exception;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
 {
     public function create(Request $request, AgentService $agentService)
     {
-        $imagePrincipal = null;
-        $imageShow = null;
+        $imagePrincipal = "";
+        $imageShow = "";
         //Almacenamos la imagen
         if ($request->hasFile("imagePrincipal")) {
             $imagePrincipal = $request->file("imagePrincipal")->store("images/agents", 'public');
@@ -32,6 +33,8 @@ class AgentController extends Controller
         $basicSkillData = json_decode($request->input('basicSkillDataJson'), true);
         $dodgeSkillData = json_decode($request->input('dodgeSkillDataJson'), true);
         $assistSkillData = json_decode($request->input('assistSkillDataJson'), true);
+        $specialSkillData = json_decode($request->input('specialSkillDataJson'), true);
+        $chainSkillData = json_decode($request->input('chainSkillDataJson'), true);
 
         //Creamos el agente
         $agent = $agentService->createAgent($agentData, $imagePrincipal, $imageShow);
@@ -46,6 +49,12 @@ class AgentController extends Controller
 
         //creamos los assist skill
         $assistSkills = $agentService->createAssistSkills($assistSkillData, $agent);
+
+        // //creamos los special skill
+        $specialSkills = $agentService->createSpecialSkills($specialSkillData, $agent);
+
+        // //creamos los chain skill
+        $chainSkills = $agentService->createChainSkills($chainSkillData, $agent);
 
         //Redireccionamos a la página del personaje recién creado
         return redirect()->route('agents.show', ['id' => $agent->id]);

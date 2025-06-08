@@ -50,7 +50,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'chris@gmail.com',
             "password" => "PasswordSeguraÑ",
             'role' => "admin"
-
         ]);
 
         //CREAR TIPOS

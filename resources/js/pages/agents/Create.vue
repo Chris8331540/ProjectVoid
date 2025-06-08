@@ -40,6 +40,8 @@ const coreSkillDataJson = ref("");
 const basicSkillDataJson = ref("");
 const dodgeSkillDataJson = ref("");
 const assistSkillDataJson = ref("");
+const specialSkillDataJson = ref("");
+const chainSkillDataJson = ref("");
 
 function insertAgentDataTemplate() {
     const agentData = {
@@ -179,6 +181,62 @@ function insertAssistSkillTemplate() {
     ];
     assistSkillDataJson.value = JSON.stringify(assistSkillData, null, 4);
 }
+
+function insertSpecialSkillTemplate() {
+    const specialSkillData = [
+        {
+            "special":
+            {
+                "name": "Quick Assist: \"One Luminous Sky\"",
+                "info": "When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
+                "image": "",
+            }
+            ,
+            "specialMultipliers": [
+                {
+                    "name": "",
+                    "multiplier_type": "atk",
+                    "dmgs_dazes": [
+                        ["43.80%", "41.30%"], ["59.10%", "56.40%"], ["120.90%", "114.80%"], ["270.70%", "219.40%"],
+                        ["47.80%", "43.20%"], ["64.50%", "59.00%"], ["131.90%", "120.10%"], ["295.40%", "229.40%"],
+                        ["51.80%", "45.10%"], ["69.90%", "61.60%"], ["142.90%", "125.40%"], ["320.10%", "239.40%"],
+                        ["55.80%", "47.00%"], ["75.30%", "64.20%"], ["153.90%", "130.70%"], ["344.80%", "249.40%"]
+                    ]
+                }
+            ]
+        }
+
+    ];
+    specialSkillDataJson.value = JSON.stringify(specialSkillData, null, 4);
+}
+
+function insertChainSkillTemplate() {
+    const chainSkillData = [
+        {
+            "chain":
+            {
+                "name": "Quick Assist: \"One Luminous Sky\"",
+                "info": "When the on-field character is launched, press {assist} to activate.<br>Attack enemies in front, dealing Ether DMG.<br>Character is invulnerable while using this skill.",
+                "image": "",
+            }
+            ,
+            "chainMultipliers": [
+                {
+                    "name": "",
+                    "multiplier_type": "atk",
+                    "dmgs_dazes": [
+                        ["43.80%", "41.30%"], ["59.10%", "56.40%"], ["120.90%", "114.80%"], ["270.70%", "219.40%"],
+                        ["47.80%", "43.20%"], ["64.50%", "59.00%"], ["131.90%", "120.10%"], ["295.40%", "229.40%"],
+                        ["51.80%", "45.10%"], ["69.90%", "61.60%"], ["142.90%", "125.40%"], ["320.10%", "239.40%"],
+                        ["55.80%", "47.00%"], ["75.30%", "64.20%"], ["153.90%", "130.70%"], ["344.80%", "249.40%"]
+                    ]
+                }
+            ]
+        }
+
+    ];
+    chainSkillDataJson.value = JSON.stringify(chainSkillData, null, 4);
+}
 </script>
 
 <template>
@@ -201,7 +259,8 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Agent data</div>
-                        <button type="button" class="btn-check vertical-align" @click="insertAgentDataTemplate">Insert agent data
+                        <button type="button" class="btn-check vertical-align" @click="insertAgentDataTemplate">Insert
+                            agent data
                             template</button>
                     </div>
                     <div>
@@ -213,7 +272,8 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Core Skill data</div>
-                        <button type="button" class="btn-check vertical-align" @click="insertCoreSkillTemplate">Insert Core Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertCoreSkillTemplate">Insert
+                            Core Skill
                             template</button>
                     </div>
                     <div>
@@ -225,7 +285,8 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Basic Skill data</div>
-                        <button type="button" class="btn-check vertical-align" @click="insertBasicSkillTemplate">Insert Basic Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertBasicSkillTemplate">Insert
+                            Basic Skill
                             template</button>
                     </div>
                     <div>
@@ -236,7 +297,8 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Dodge Skill data</div>
-                        <button type="button" class="btn-check vertical-align" @click="insertDodgeSkillTemplate">Insert Dodge Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertDodgeSkillTemplate">Insert
+                            Dodge Skill
                             template</button>
                     </div>
                     <div>
@@ -247,7 +309,8 @@ function insertAssistSkillTemplate() {
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Assist Skill data</div>
-                        <button type="button" class="btn-check vertical-align" @click="insertAssistSkillTemplate">Insert Assist Skill
+                        <button type="button" class="btn-check vertical-align" @click="insertAssistSkillTemplate">Insert
+                            Assist Skill
                             template</button>
                     </div>
                     <div>
@@ -258,20 +321,47 @@ function insertAssistSkillTemplate() {
 
                 <TextWrapper width-class="w-full">
                     <div class="relative z-10 flex w-full justify-between mb-3">
+                        <div class="title relative z-10">Special Skill data</div>
+                        <button type="button" class="btn-check vertical-align"
+                            @click="insertSpecialSkillTemplate">Insert Special Skill
+                            template</button>
+                    </div>
+                    <div>
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="specialSkillDataJson"
+                            name="specialSkillDataJson"></textarea>
+                    </div>
+                </TextWrapper>
+
+                <TextWrapper width-class="w-full">
+                    <div class="relative z-10 flex w-full justify-between mb-3">
+                        <div class="title relative z-10">Chain Skill data</div>
+                        <button type="button" class="btn-check vertical-align" @click="insertChainSkillTemplate">Insert
+                            Chain Skill
+                            template</button>
+                    </div>
+                    <div>
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="chainSkillDataJson"
+                            name="chainSkillDataJson"></textarea>
+                    </div>
+                </TextWrapper>
+
+                <TextWrapper width-class="w-full">
+                    <div class="relative z-10 flex w-full justify-between mb-3">
                         <div class="title relative z-10">Agent images</div>
                     </div>
                     <div>
-                        <input name="imagePrincipal" type="file" @change="previewImage($event, 'imagePrincipal')" class="relative z-10"
-                            required/>
+                        <input name="imagePrincipal" type="file" @change="previewImage($event, 'imagePrincipal')"
+                            class="relative z-10" />
                         <img v-if="imagePreview.imagePrincipal" :src="imagePreview.imagePrincipal"
                             class="mt-2 max-w-[200px] relative z-10" />
 
-                        <input name="imageShow" type="file" @change="previewImage($event, 'imageShow')" class="relative z-10" required />
+                        <input name="imageShow" type="file" @change="previewImage($event, 'imageShow')"
+                            class="relative z-10" />
                         <img v-if="imagePreview.imageShow" :src="imagePreview.imageShow"
                             class="mt-2 max-w-[200px] relative z-10" />
                     </div>
                 </TextWrapper>
-                
+
                 <TextWrapper>
                     <div>
                         <input class="relative z-10" type="submit" value="Crear agente">
