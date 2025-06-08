@@ -5,8 +5,10 @@ import { type BreadcrumbItem } from '@/types';
 import { computed } from 'vue';
 import TextWrapper from '@/components/TextWrapper.vue';
 import { ref } from "vue";
+import { useForm } from '@inertiajs/vue3'
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+
 
 
 const imagePreview = ref<{ [key: string]: string | null }>({
@@ -18,6 +20,9 @@ function previewImage(event: Event, key: 'imagePrincipal' | 'imageShow') {
     const input = event.target as HTMLInputElement
     const file = input.files?.[0]
     if (!file) return
+
+    //ponemos la imagen en el form
+    form[key] = file;
 
     const reader = new FileReader()
     reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -35,14 +40,43 @@ const breadcrumbs: BreadcrumbItem[] = [
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
 
 /*variables para las plantillas*/
-const agentDataJson = ref("");
-const coreSkillDataJson = ref("");
-const basicSkillDataJson = ref("");
-const dodgeSkillDataJson = ref("");
-const assistSkillDataJson = ref("");
-const specialSkillDataJson = ref("");
-const chainSkillDataJson = ref("");
+// const agentDataJson = ref("");
+// const coreSkillDataJson = ref("");
+// const basicSkillDataJson = ref("");
+// const dodgeSkillDataJson = ref("");
+// const assistSkillDataJson = ref("");
+// const specialSkillDataJson = ref("");
+// const chainSkillDataJson = ref("");
+const form = useForm<{
+    agentDataJson: string;
+    coreSkillDataJson: string;
+    basicSkillDataJson: string;
+    dodgeSkillDataJson: string;
+    assistSkillDataJson: string;
+    specialSkillDataJson: string;
+    chainSkillDataJson: string;
+    imagePrincipal: File | null;
+    imageShow: File | null;
+}>({
+    agentDataJson: '',
+    coreSkillDataJson: '',
+    basicSkillDataJson: '',
+    dodgeSkillDataJson: '',
+    assistSkillDataJson: '',
+    specialSkillDataJson: '',
+    chainSkillDataJson: '',
+    imagePrincipal: null,
+    imageShow: null,
+});
 
+const submit = () => {
+    form.post('/agents/create', {
+        forceFormData: true,
+        onSuccess: () => {
+            // Opcional: resetear el formulario o mostrar un mensaje
+        },
+    })
+}
 function insertAgentDataTemplate() {
     const agentData = {
         "name": "Astra Yao",
@@ -62,7 +96,7 @@ function insertAgentDataTemplate() {
         "type": "support"
     };
 
-    agentDataJson.value = JSON.stringify(agentData, null, 4);
+    form.agentDataJson = JSON.stringify(agentData, null, 4);
 }
 
 //tomar en cuenta que los valores de coreSkillMultipliers son un array por cada valor (6 niveles) es decir, que es posible tener de 1 a X valores, y opr lo tanto arrays
@@ -79,7 +113,7 @@ function insertCoreSkillTemplate() {
         "coreSkillAdditions": [["0", "25", "25", "50", "50", "75"]]
     }]
 
-    coreSkillDataJson.value = JSON.stringify(coreSkillData, null, 4);
+    form.coreSkillDataJson = JSON.stringify(coreSkillData, null, 4);
 }
 
 function insertBasicSkillTemplate() {
@@ -126,7 +160,7 @@ function insertBasicSkillTemplate() {
 
         }
     ];
-    basicSkillDataJson.value = JSON.stringify(basicSkillData, null, 4);
+    form.basicSkillDataJson = JSON.stringify(basicSkillData, null, 4);
 }
 
 function insertDodgeSkillTemplate() {
@@ -151,7 +185,7 @@ function insertDodgeSkillTemplate() {
             ],
         }
     ];
-    dodgeSkillDataJson.value = JSON.stringify(dodgeSkillData, null, 4);
+    form.dodgeSkillDataJson = JSON.stringify(dodgeSkillData, null, 4);
 }
 
 function insertAssistSkillTemplate() {
@@ -179,7 +213,7 @@ function insertAssistSkillTemplate() {
         }
 
     ];
-    assistSkillDataJson.value = JSON.stringify(assistSkillData, null, 4);
+    form.assistSkillDataJson = JSON.stringify(assistSkillData, null, 4);
 }
 
 function insertSpecialSkillTemplate() {
@@ -207,7 +241,7 @@ function insertSpecialSkillTemplate() {
         }
 
     ];
-    specialSkillDataJson.value = JSON.stringify(specialSkillData, null, 4);
+    form.specialSkillDataJson = JSON.stringify(specialSkillData, null, 4);
 }
 
 function insertChainSkillTemplate() {
@@ -235,7 +269,7 @@ function insertChainSkillTemplate() {
         }
 
     ];
-    chainSkillDataJson.value = JSON.stringify(chainSkillData, null, 4);
+    form.chainSkillDataJson = JSON.stringify(chainSkillData, null, 4);
 }
 </script>
 
@@ -243,8 +277,8 @@ function insertChainSkillTemplate() {
 
     <Head title="Create Agent" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <form action="/agents/create" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="_token" :value="csrfToken" />
+         <form @submit.prevent="submit" enctype="multipart/form-data">
+            <!-- <input type="hidden" name="_token" :value="csrfToken" /> -->
             <div class="relative w-full min-h-screen ">
                 <svg class="absolute inset-0 w-full h-full stroke-neutral-900/20 dark:stroke-neutral-100/20"
                     fill="none">
@@ -264,7 +298,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="agentDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.agentDataJson"
                             name="agentDataJson"></textarea>
                     </div>
                 </TextWrapper>
@@ -277,7 +311,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="coreSkillDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.coreSkillDataJson"
                             name="coreSkillDataJson"></textarea>
                     </div>
                 </TextWrapper>
@@ -290,7 +324,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="basicSkillDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.basicSkillDataJson"
                             name="basicSkillDataJson"></textarea>
                     </div>
                 </TextWrapper>
@@ -302,7 +336,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="dodgeSkillDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.dodgeSkillDataJson"
                             name="dodgeSkillDataJson"></textarea>
                     </div>
                 </TextWrapper>
@@ -314,7 +348,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="assistSkillDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.assistSkillDataJson"
                             name="assistSkillDataJson"></textarea>
                     </div>
                 </TextWrapper>
@@ -327,7 +361,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="specialSkillDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.specialSkillDataJson"
                             name="specialSkillDataJson"></textarea>
                     </div>
                 </TextWrapper>
@@ -340,7 +374,7 @@ function insertChainSkillTemplate() {
                             template</button>
                     </div>
                     <div>
-                        <textarea class="bg-black relative z-10 w-full rounded" v-model="chainSkillDataJson"
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.chainSkillDataJson"
                             name="chainSkillDataJson"></textarea>
                     </div>
                 </TextWrapper>
