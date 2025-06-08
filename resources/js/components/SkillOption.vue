@@ -15,7 +15,7 @@ const props = defineProps<{
     skillSelected: number,
     updateSkillSelected: Function
 }>();
-
+const srcReplacement="/storage/images/attacks/";
 const abilitysImg: {
     [key: string]: string;  // Define que las claves son cadenas y los valores son cadenas
 } = {
@@ -33,7 +33,7 @@ function replacePlaceholderImg(text: string) {
     const resultText = text.replace(regex, (match, placeholder) => {
         // Verificamos si el placeholder es una clave válida
         if (abilitysImg[placeholder]) {
-            return `<img src="/storage/images/attacks/${abilitysImg[placeholder]}" alt="${placeholder}" class="w-8 h-8 inline" />`;
+            return `<img src="${srcReplacement+abilitysImg[placeholder]}" alt="${placeholder}" class="w-8 h-8 inline" />`;
         } else {
             return match; // Si no es un placeholder válido, mantenemos el texto original
         }
