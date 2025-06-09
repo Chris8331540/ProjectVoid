@@ -34,11 +34,36 @@ class TierlistController extends Controller
         $rating_score = 0;
         $user_id = $request->user()->id;
 
-        //usamos el service para crear la tierlist
-        $tierlist = $tierlistService->createTierlist($title, $description, $rating_score, $user_id, $data);
-        return redirect()->route('tierlists.show', ['id' => $tierlist->id]);
+        // Validaciones
+        $errors = [];
 
+        if (empty($title)) {
+            $errors['titleTierlist'] = 'The tierlist must have a title.';
+        }
+
+        if (empty($description)) {
+            $errors['descriptionTierlist'] = 'The tierlist must have a description.';
+        }
+
+        $hasAgents = collect($data)->some(function ($tier) {
+            return is_array($tier) && count($tier) > 0;
+        });
+
+        if (!$hasAgents) {
+            $errors['tierlistData'] = 'You must assign at least one agent to a tier.';
+        }
+
+        // Si hay errores, redirige de vuelta con ellos
+        if (!empty($errors)) {
+            return redirect()->back()->withErrors($errors)->withInput();
+        }
+
+        // Crear la tierlist si no hay errores
+        $tierlist = $tierlistService->createTierlist($title, $description, $rating_score, $user_id, $data);
+
+        return redirect()->route('tierlists.show', ['id' => $tierlist->id]);
     }
+
 
     /**
      * Display the specified resource.

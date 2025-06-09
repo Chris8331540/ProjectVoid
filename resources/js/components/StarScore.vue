@@ -26,10 +26,10 @@ const rate = async (score: number) => {
         average.value = res.data.average
     } catch (error: any) {
         if (error.response?.status === 401) {
-            errorMessage.value = 'Debes iniciar sesión para votar.'
+            errorMessage.value = 'Please, login to vote.'
 
         } else {
-            console.error('Error al guardar puntuación:', error)
+            console.error('Error saving vote:', error)
         }
     }
 }

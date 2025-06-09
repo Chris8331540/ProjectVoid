@@ -25,6 +25,7 @@ use App\Models\DodgeDmg;
 use App\Models\DodgeMultiplier;
 use Illuminate\Http\Request;
 use App\Models\Element as ModelsElement;
+use App\Models\Mindscape;
 use App\Models\Special;
 use App\Models\SpecialDaze;
 use App\Models\SpecialDmg;
@@ -183,7 +184,8 @@ class AgentService
         }
     }
 
-    public function createAssistSkills($assistSkillData, Agent $agent){
+    public function createAssistSkills($assistSkillData, Agent $agent)
+    {
         $assistCreated = [];
         foreach ($assistSkillData as $index => $assistSkill) {
             $assist = Assist::create([
@@ -219,7 +221,8 @@ class AgentService
         }
     }
 
-    public function createSpecialSkills($specialSkillData, Agent $agent){
+    public function createSpecialSkills($specialSkillData, Agent $agent)
+    {
         $specialCreated = [];
         foreach ($specialSkillData as $index => $specialSkill) {
             $special = Special::create([
@@ -255,7 +258,8 @@ class AgentService
         }
     }
 
-    public function createChainSkills($chainSkillData, Agent $agent){
+    public function createChainSkills($chainSkillData, Agent $agent)
+    {
         $chainCreated = [];
         foreach ($chainSkillData as $index => $chainSkill) {
             $chain = Chain::create([
@@ -289,5 +293,20 @@ class AgentService
                 }
             }
         }
+    }
+
+    public function createMindscapes($mindscapeData, Agent $agent)
+    {
+        $mindscapesCreated = [];
+        foreach ($mindscapeData as $index => $mindscape) {
+            $mindscapeC = Mindscape::create([
+                "title" => $mindscape["title"],
+                "description" => $mindscape["description"],
+                "order" => $index + 1,
+                "agent_id"=>$agent->id
+            ]);
+            array_push($mindscapesCreated, $mindscapeC);
+        }
+        return $mindscapesCreated;
     }
 }

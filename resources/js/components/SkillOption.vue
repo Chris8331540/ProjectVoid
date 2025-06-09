@@ -73,8 +73,8 @@ onMounted(() => {
     <div class="w-full">
         <SkillTabs :skillSelected="skillSelected" :updateSkillSelected="updateSkillSelected"></SkillTabs>
     </div>
-    <TextWrapper v-if="skillSelected === 0" widthClass="w-1/2">
-        <template v-for="(basic, indexBasic) in agent.basic">
+    <div v-if="skillSelected === 0" class="w-full flex-column flex-wrap flex relative z-10">
+        <TextWrapper v-for="(basic, indexBasic) in agent.basic" widthClass="w-1/2">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">Basic Attack: {{ basic.name }}</div>
                 <div class="info ml-1" v-html="replacePlaceholderImg(basic.info)"></div>
@@ -86,7 +86,8 @@ onMounted(() => {
                         <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
                         <AccordionContent>
                             <div class="p-4 relative z-10">
-                                <label :for="'lvl-basic-' + indexBasic">Level: {{ levelMap.basic[indexBasic] }}</label>
+                                <label :for="'lvl-basic-' + indexBasic">Level: {{ levelMap.basic[indexBasic]
+                                    }}</label>
                                 <input class="shiny-slider" type="range" min="1" max="12"
                                     v-model.number="levelMap.basic[indexBasic]" :id="'lvl-basic-' + indexBasic" />
 
@@ -122,12 +123,13 @@ onMounted(() => {
 
             </Accordion>
 
-        </template>
-    </TextWrapper>
+
+        </TextWrapper>
+    </div>
 
 
-    <TextWrapper v-if="skillSelected === 1" widthClass="w-1/2">
-        <template v-for="(dodge, indexDodge) in agent.dodge">
+    <div v-if="skillSelected === 1" class="w-full flex-column flex-wrap flex relative z-10">
+        <TextWrapper v-for="(dodge, indexDodge) in agent.dodge" widthClass="w-1/2">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">{{ dodge.name }}</div>
                 <div class="info ml-1" v-html="replacePlaceholderImg(dodge.info)"></div>
@@ -173,13 +175,11 @@ onMounted(() => {
                     </AccordionPanel>
                 </TextWrapper>
             </Accordion>
+        </TextWrapper>
+    </div>
 
-        </template>
-    </TextWrapper>
-
-
-    <TextWrapper v-if="skillSelected === 2" widthClass="w-1/2">
-        <template v-for="(assist, indexAssist) in agent.assist">
+    <div v-if="skillSelected === 2" class="w-full flex-column flex-wrap flex relative z-10">
+        <TextWrapper v-for="(assist, indexAssist) in agent.assist" widthClass="w-1/2">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">{{ assist.name }}</div>
                 <div class="info ml-1" v-html="replacePlaceholderImg(assist.info)"></div>
@@ -192,7 +192,7 @@ onMounted(() => {
                         <AccordionContent>
                             <div class="p-4 relative z-10">
                                 <label :for="'lvl-assist-' + indexAssist">Level: {{ levelMap.assist[indexAssist]
-                                    }}</label>
+                                }}</label>
                                 <input class="shiny-slider" type="range" min="1" max="12"
                                     v-model.number="levelMap.assist[indexAssist]" :id="'lvl-assist-' + indexAssist" />
 
@@ -226,12 +226,11 @@ onMounted(() => {
                     </AccordionPanel>
                 </TextWrapper>
             </Accordion>
+        </TextWrapper>
+    </div>
 
-        </template>
-    </TextWrapper>
-
-    <TextWrapper v-if="skillSelected === 3" widthClass="w-1/2">
-        <template v-for="(special, indexSpecial) in agent.special">
+    <div v-if="skillSelected === 3" class="w-full flex-column flex-wrap flex relative z-10">
+        <TextWrapper v-for="(special, indexSpecial) in agent.special" widthClass="w-1/2">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">{{ special.name }}</div>
                 <div class="info ml-1" v-html="replacePlaceholderImg(special.info)"></div>
@@ -244,9 +243,10 @@ onMounted(() => {
                         <AccordionContent>
                             <div class="p-4 relative z-10">
                                 <label :for="'lvl-special-' + indexSpecial">Level: {{ levelMap.special[indexSpecial]
-                                    }}</label>
+                                }}</label>
                                 <input class="shiny-slider" type="range" min="1" max="12"
-                                    v-model.number="levelMap.special[indexSpecial]" :id="'lvl-special-' + indexSpecial" />
+                                    v-model.number="levelMap.special[indexSpecial]"
+                                    :id="'lvl-special-' + indexSpecial" />
 
                                 <div class="flex flex-col gap-4 font-bold mt-4">
                                     <div v-for="(entry, index) in agent.special[indexSpecial].special_multiplier"
@@ -279,11 +279,11 @@ onMounted(() => {
                 </TextWrapper>
             </Accordion>
 
-        </template>
-    </TextWrapper>
-
-    <TextWrapper v-if="skillSelected === 4" widthClass="w-1/2">
-        <template v-for="(chain, indexChain) in agent.chain">
+        </TextWrapper>
+    </div>
+    
+    <div v-if="skillSelected === 4" class="w-full flex-column flex-wrap flex relative z-10">
+        <TextWrapper v-for="(chain, indexChain) in agent.chain" widthClass="w-1/2">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">{{ chain.name }}</div>
                 <div class="info ml-1" v-html="replacePlaceholderImg(chain.info)"></div>
@@ -295,7 +295,7 @@ onMounted(() => {
                         <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
                         <AccordionContent>
                             <div class="p-4 relative z-10">
-                                <label :for="'lvl-chain-'+indexChain">Level: {{ levelMap.chain[indexChain] }}</label>
+                                <label :for="'lvl-chain-' + indexChain">Level: {{ levelMap.chain[indexChain] }}</label>
                                 <input class="shiny-slider" type="range" min="1" max="12"
                                     v-model.number="levelMap.chain[indexChain]" id="'lvl-chain-'+indexChain" />
 
@@ -330,9 +330,8 @@ onMounted(() => {
                 </TextWrapper>
             </Accordion>
 
-        </template>
-    </TextWrapper>
-
+        </TextWrapper>
+    </div>
 
 </template>
 

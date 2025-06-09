@@ -30,7 +30,6 @@ const props = defineProps<{
     name?: string;
     tierlist: any
 }>();
-console.log(props.tierlist);
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Tier List',
@@ -38,7 +37,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-// console.log(props.tierlist);
 
 function ordenarTierlist(entries: any[]) {
     //Distribuir según categoría 
@@ -56,9 +54,7 @@ function ordenarTierlist(entries: any[]) {
 }
 
 ordenarTierlist(props.tierlist.tierlist_entries);
-// console.log(tierlistOrdered);
 const formatedDate = dayjs(props.tierlist.user.created_at).format('DD/MM/YY');
-console.log(props.tierlist.average_score);
 </script>
 
 <template>

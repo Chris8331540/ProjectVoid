@@ -21,7 +21,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Tier List" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <!--Solo mostrar el botón si está logueado-->
         <div class="flex ml-6 mt-4">
             <Link :href="'/tierlists/create'" class="p-2 bg-neutral-900 rounded button">
             Create tierlist

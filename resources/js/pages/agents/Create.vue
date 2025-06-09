@@ -10,7 +10,6 @@ import { useForm } from '@inertiajs/vue3'
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
 
 
-
 const imagePreview = ref<{ [key: string]: string | null }>({
     imagePrincipal: null,
     imageShow: null,
@@ -40,13 +39,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
 
 /*variables para las plantillas*/
-// const agentDataJson = ref("");
-// const coreSkillDataJson = ref("");
-// const basicSkillDataJson = ref("");
-// const dodgeSkillDataJson = ref("");
-// const assistSkillDataJson = ref("");
-// const specialSkillDataJson = ref("");
-// const chainSkillDataJson = ref("");
 const form = useForm<{
     agentDataJson: string;
     coreSkillDataJson: string;
@@ -55,6 +47,7 @@ const form = useForm<{
     assistSkillDataJson: string;
     specialSkillDataJson: string;
     chainSkillDataJson: string;
+    mindscapeDataJson: string;
     imagePrincipal: File | null;
     imageShow: File | null;
 }>({
@@ -65,6 +58,7 @@ const form = useForm<{
     assistSkillDataJson: '',
     specialSkillDataJson: '',
     chainSkillDataJson: '',
+    mindscapeDataJson: '',
     imagePrincipal: null,
     imageShow: null,
 });
@@ -271,13 +265,43 @@ function insertChainSkillTemplate() {
     ];
     form.chainSkillDataJson = JSON.stringify(chainSkillData, null, 4);
 }
+
+function insertMindscapesTemplate() {
+    const mindscapes = [
+        {
+            "title": "TITLE",
+            "description": "DESCRIPTION"
+        },
+        {
+            "title": "TITLE",
+            "description": "DESCRIPTION"
+        },
+        {
+            "title": "TITLE",
+            "description": "DESCRIPTION"
+        },
+        {
+            "title": "TITLE",
+            "description": "DESCRIPTION"
+        },
+        {
+            "title": "TITLE",
+            "description": "DESCRIPTION"
+        },
+        {
+            "title": "TITLE",
+            "description": "DESCRIPTION"
+        }
+    ];
+    form.mindscapeDataJson = JSON.stringify(mindscapes, null, 4);
+}
 </script>
 
 <template>
 
     <Head title="Create Agent" />
     <AppLayout :breadcrumbs="breadcrumbs">
-         <form @submit.prevent="submit" enctype="multipart/form-data">
+        <form @submit.prevent="submit" enctype="multipart/form-data">
             <!-- <input type="hidden" name="_token" :value="csrfToken" /> -->
             <div class="relative w-full min-h-screen ">
                 <svg class="absolute inset-0 w-full h-full stroke-neutral-900/20 dark:stroke-neutral-100/20"
@@ -299,7 +323,7 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.agentDataJson"
-                            name="agentDataJson"></textarea>
+                            name="agentDataJson" required></textarea>
                     </div>
                 </TextWrapper>
 
@@ -312,7 +336,7 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.coreSkillDataJson"
-                            name="coreSkillDataJson"></textarea>
+                            name="coreSkillDataJson" required></textarea>
                     </div>
                 </TextWrapper>
 
@@ -325,7 +349,7 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.basicSkillDataJson"
-                            name="basicSkillDataJson"></textarea>
+                            name="basicSkillDataJson" required></textarea>
                     </div>
                 </TextWrapper>
                 <TextWrapper width-class="w-full">
@@ -337,7 +361,7 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.dodgeSkillDataJson"
-                            name="dodgeSkillDataJson"></textarea>
+                            name="dodgeSkillDataJson" required></textarea>
                     </div>
                 </TextWrapper>
                 <TextWrapper width-class="w-full">
@@ -349,7 +373,7 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.assistSkillDataJson"
-                            name="assistSkillDataJson"></textarea>
+                            name="assistSkillDataJson" required></textarea>
                     </div>
                 </TextWrapper>
 
@@ -362,7 +386,7 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.specialSkillDataJson"
-                            name="specialSkillDataJson"></textarea>
+                            name="specialSkillDataJson" required></textarea>
                     </div>
                 </TextWrapper>
 
@@ -375,7 +399,19 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <textarea class="bg-black relative z-10 w-full rounded" v-model="form.chainSkillDataJson"
-                            name="chainSkillDataJson"></textarea>
+                            name="chainSkillDataJson" required></textarea>
+                    </div>
+                </TextWrapper>
+
+                <TextWrapper width-class="w-full">
+                    <div class="relative z-10 flex w-full justify-between mb-3">
+                        <div class="title relative z-10">Mindscapes data</div>
+                        <button type="button" class="btn-check vertical-align" @click="insertMindscapesTemplate">Insert
+                            Mindscape template</button>
+                    </div>
+                    <div>
+                        <textarea class="bg-black relative z-10 w-full rounded" v-model="form.mindscapeDataJson"
+                            name="mindscapeDataJson" required></textarea>
                     </div>
                 </TextWrapper>
 
@@ -385,30 +421,58 @@ function insertChainSkillTemplate() {
                     </div>
                     <div>
                         <input name="imagePrincipal" type="file" @change="previewImage($event, 'imagePrincipal')"
-                            class="relative z-10" />
+                            class="relative z-10" required />
                         <img v-if="imagePreview.imagePrincipal" :src="imagePreview.imagePrincipal"
                             class="mt-2 max-w-[200px] relative z-10" />
 
                         <input name="imageShow" type="file" @change="previewImage($event, 'imageShow')"
                             class="relative z-10" />
                         <img v-if="imagePreview.imageShow" :src="imagePreview.imageShow"
-                            class="mt-2 max-w-[200px] relative z-10" />
+                            class="mt-2 max-w-[200px] relative z-10" required />
                     </div>
                 </TextWrapper>
 
-                <TextWrapper>
-                    <div>
-                        <input class="relative z-10" type="submit" value="Crear agente">
-                    </div>
-                </TextWrapper>
+                <div class="flex ml-6 mt-4">
+                    <input class="relative z-10 p-2 bg-neutral-900 rounded button" type="submit" value="Create agent">
+                </div>
+
             </div>
         </form>
-
 
     </AppLayout>
 </template>
 <style scoped>
 .vertical-align {
     align-content: center;
+}
+
+.button:hover {
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: 800;
+    color: black;
+    background: linear-gradient(to left,
+            #A6C100 0%,
+            #DBD100 25%,
+            #A6C100 50%,
+            #DBD100 75%,
+            #A6C100 100%);
+    background-size: 400% auto;
+    /* animation: textShine 2.5s linear infinite; */
+    /* Transiciones específicas para los cambios de posicionamiento */
+    animation: textShine 1.4s ease-in-out infinite;
+}
+
+@keyframes textShine {
+    0% {
+        background-position: 135% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 </style>

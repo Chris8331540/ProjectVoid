@@ -35,6 +35,7 @@ class AgentController extends Controller
         $assistSkillData = json_decode($request->input('assistSkillDataJson'), true);
         $specialSkillData = json_decode($request->input('specialSkillDataJson'), true);
         $chainSkillData = json_decode($request->input('chainSkillDataJson'), true);
+        $mindscapeData = json_decode($request->input('mindscapeDataJson'), true);
 
         //Creamos el agente
         $agent = $agentService->createAgent($agentData, $imagePrincipal, $imageShow);
@@ -50,11 +51,14 @@ class AgentController extends Controller
         //creamos los assist skill
         $assistSkills = $agentService->createAssistSkills($assistSkillData, $agent);
 
-        // //creamos los special skill
+        //creamos los special skill
         $specialSkills = $agentService->createSpecialSkills($specialSkillData, $agent);
 
-        // //creamos los chain skill
+        //creamos los chain skill
         $chainSkills = $agentService->createChainSkills($chainSkillData, $agent);
+
+        //creamos los mindscapes
+        $minscapes = $agentService->createMindscapes($mindscapeData, $agent);
 
         //Redireccionamos a la página del personaje recién creado
         return redirect()->route('agents.show', ['id' => $agent->id]);

@@ -13,7 +13,6 @@ const usepage = usePage<any>();
 //compruebo que existe un usuario autenticado, y en caso de que sí, que compruebe sus ids, si son iguales entonces
 //el usuario autenticado es válido para que se le muestre el botón de eliminar la tierlist
 const isUserAuth = usepage.props.auth.user == null ? false : usepage.props.auth.user.id == props.userId;
-console.log(isUserAuth);
 const currentUrl = window.location.pathname;
 const tierlistUrl = currentUrl === '/tierlists';
 const tierlists = ref<any>([])
@@ -27,7 +26,7 @@ const deleteTierlist = async (id: number) => {
         await axios.delete(`/tierlists/${id}`);
         tierlists.value = tierlists.value.filter((t: any) => t.id !== id);
     } catch (error) {
-        console.error("Error eliminando tierlist:", error);
+        console.error("Error deleting tierlist:", error);
     }
 };
 
@@ -42,14 +41,6 @@ const fetchItems = async () => {
         //TODO: optimizar dado que al final comparten el mismo formato json (en principio)
         if (page.value === 1) tierlists.value = res.data.data
         else tierlists.value.push(...res.data.data)
-        // if (currentUrl === '/tierlists') {
-        //     if (page.value === 1) tierlists.value = res.data.data
-        //     else tierlists.value.push(...res.data.data)
-        // } else {
-        //     if (page.value === 1) tierlists.value = res.data.data
-        //     else tierlists.value.push(...res.data.data)
-        // }
-
 
         hasMore.value = page.value < res.data.last_page
         if (hasMore.value) page.value++
@@ -60,7 +51,6 @@ const fetchItems = async () => {
         loading.value = false
     }
 }
-console.log(tierlists);
 const onScroll = () => {
     const el = scrollContainer.value as any;
     if (!el) return
@@ -69,13 +59,6 @@ const onScroll = () => {
         fetchItems()
     }
 }
-// const average_score = 4.7
-// function calculateAverageScore(averageScore: any) {
-//     if (averageScore == null) {
-//         return 0;
-//     }
-//     return averageScore / 5 * 100;
-// }
 onMounted(() => {
     fetchItems()
 })
