@@ -49,6 +49,12 @@ Route::get("/agents/{id}", function ($id) {
         "assist" => function ($query) {
             $query->with(["assistMultiplier.assistDmg", "assistMultiplier.assistDaze", "assistMultiplier.assistOtherProperty"]);
         },
+        "special" => function ($query) {
+            $query->with(["specialMultiplier.specialDmg", "specialMultiplier.specialDaze", "specialMultiplier.specialOtherProperty"]);
+        },
+        "chain" => function ($query) {
+            $query->with(["chainMultiplier.chainDmg", "chainMultiplier.chainDaze", "chainMultiplier.chainOtherProperty"]);
+        },
         "mindscape" => function ($query) {
             $query->orderBy("order");
         }
@@ -116,11 +122,11 @@ Route::get("/profile/{id}", function (Request $request, $id) {
     if ($request->wantsJson()) {
         // Retornamos sólo los datos en JSON para AJAX
         $tierlists = Tierlist::with("user")->where("user_id", $id)->withAvg('scores as average_score', 'score')->paginate(10);
-         $tierlists->getCollection()->transform(function ($tierlists) {
+        $tierlists->getCollection()->transform(function ($tierlists) {
             $tierlists->average_score = (float) $tierlists->average_score ?? 0;
             return $tierlists;
         });
-        
+
         return $tierlists;
         //Como el json es separado en user, y tierlists, cuando se accede al perfil el método actual de extracción no es factible
     }

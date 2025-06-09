@@ -226,40 +226,6 @@ class DatabaseSeeder extends Seeder
             "agent_id" => 1
         ]);
 
-        //BASIC ATTACKS
-        Basic::factory()->create([
-            "name" => '"Capriccio"',
-            "info" => "Press {basic} to activate:<br>Perform up to three attacks forward, dealing Ether DMG.<br>During the 3rd-hit, hold {basic} to charge, drawing enemies in and expanding the attack range for a stronger attack. After using other skills, hold {basic} to initiate the 3rd-hit directly.",
-            "order" => 1,
-            "image" => "",
-            "agent_id" => 1
-        ]);
-
-        //BASIC MULTIPLIERS
-        BasicMultiplier::factory()->create([
-            "name" => "1st-Hit",
-            "multiplier_type" => "atk",
-            "order" => 1,
-            "basic_id" => 1
-        ]);
-        BasicMultiplier::factory()->create([
-            "name" => "2nd-Hit",
-            "multiplier_type" => "atk",
-            "order" => 2,
-            "basic_id" => 1
-        ]);
-        BasicMultiplier::factory()->create([
-            "name" => "3nd-Hit Min",
-            "multiplier_type" => "atk",
-            "order" => 3,
-            "basic_id" => 1
-        ]);
-        BasicMultiplier::factory()->create([
-            "name" => "3nd-Hit Max",
-            "multiplier_type" => "atk",
-            "order" => 4,
-            "basic_id" => 1
-        ]);
         $basic_dazes = [
             [["43.80%", "41.30%"], ["59.10%", "56.40%"], ["120.90%", "114.80%"], ["270.70%", "219.40%"]],
             [["47.80%", "43.20%"], ["64.50%", "59.00%"], ["131.90%", "120.10%"], ["295.40%", "229.40%"]],
@@ -274,26 +240,64 @@ class DatabaseSeeder extends Seeder
             [["83.80%", "60.30%"], ["113.10%", "82.40%"], ["230.90%", "517.70%"], ["493.00%", "319.40%"]],
             [["87.80%", "62.20%"], ["118.50%", "85.00%"], ["241.90%", "173.10%"], ["542.40%", "329.40%"]],
         ];
-        //BASIC DMG and DAZES
-        foreach ($basic_dazes as $lvlIndex => $entries) {
-            $lvl = $lvlIndex + 1;
+        for ($i = 1; $i < 5; $i++) {
+            //BASIC ATTACKS
+            $basic = Basic::factory()->create([
+                "name" => '"Capriccio"',
+                "info" => "Press {basic} to activate:<br>Perform up to three attacks forward, dealing Ether DMG.<br>During the 3rd-hit, hold {basic} to charge, drawing enemies in and expanding the attack range for a stronger attack. After using other skills, hold {basic} to initiate the 3rd-hit directly.",
+                "order" => 1,
+                "image" => "",
+                "agent_id" => 1
+            ]);
 
-            foreach ($entries as $multiplierIndex => $pair) {
-                $basic_multiplier_id = $multiplierIndex + 1;
+            //BASIC MULTIPLIERS
+            BasicMultiplier::factory()->create([
+                "name" => "1st-Hit",
+                "multiplier_type" => "atk",
+                "order" => 1,
+                "basic_id" => $basic->id
+            ]);
+            BasicMultiplier::factory()->create([
+                "name" => "2nd-Hit",
+                "multiplier_type" => "atk",
+                "order" => 2,
+                "basic_id" => $basic->id
+            ]);
+            BasicMultiplier::factory()->create([
+                "name" => "3nd-Hit Min",
+                "multiplier_type" => "atk",
+                "order" => 3,
+                "basic_id" => $basic->id
+            ]);
+            BasicMultiplier::factory()->create([
+                "name" => "3nd-Hit Max",
+                "multiplier_type" => "atk",
+                "order" => 4,
+                "basic_id" => $basic->id
+            ]);
 
-                BasicDmg::factory()->create([
-                    'lvl' => $lvl,
-                    'multiplier' => $pair[0],
-                    'basic_multiplier_id' => $basic_multiplier_id,
-                ]);
+            //BASIC DMG and DAZES
+            foreach ($basic_dazes as $lvlIndex => $entries) {
+                $lvl = $lvlIndex + 1;
 
-                BasicDaze::factory()->create([
-                    'lvl' => $lvl,
-                    'multiplier' => $pair[1],
-                    'basic_multiplier_id' => $basic_multiplier_id,
-                ]);
+                foreach ($entries as $multiplierIndex => $pair) {
+                    $basic_multiplier_id = $multiplierIndex + 1;
+
+                    BasicDmg::factory()->create([
+                        'lvl' => $lvl,
+                        'multiplier' => $pair[0],
+                        'basic_multiplier_id' => $basic_multiplier_id,
+                    ]);
+
+                    BasicDaze::factory()->create([
+                        'lvl' => $lvl,
+                        'multiplier' => $pair[1],
+                        'basic_multiplier_id' => $basic_multiplier_id,
+                    ]);
+                }
             }
         }
+
 
         //DODGE SKILL
         Dodge::factory()->create([
@@ -437,7 +441,7 @@ class DatabaseSeeder extends Seeder
 
         //Creamos la misma tierlist de ejemplo varias veces (probar scroll infinito)
 
-        for ($i = 0; $i <=50; $i++) {
+        for ($i = 0; $i <= 50; $i++) {
             $tier = Tierlist::factory()->create([
                 "title" => "Tierlist de prueba",
                 "description" => "Esta es una tierlist de prueba",

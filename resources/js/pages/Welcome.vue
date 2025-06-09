@@ -19,6 +19,17 @@ const props = defineProps<{
     <Head title="Inicio" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="w-full flex flex-col p-4 h-full justify-center">
+            <div class="w-full flex justify-center">
+                <img class="rounded max-h-96" src="/storage/images/app/zenless-zone-zero-characters-portrailt-photo.jpg"/>
+            </div>
+            <div class="w-full flex justify-center">
+                <p class="title text-xl">Welcome to Project Void, a fan project</p>
+            </div>
+            <div>
+
+            </div>
+        </div>
     </AppLayout>
 
 </template>

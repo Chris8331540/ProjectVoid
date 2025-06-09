@@ -10,30 +10,48 @@ class Agent extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function element(){
+    public function element()
+    {
         return $this->belongsTo(Element::class);
     }
 
-    public function type(){
+    public function type()
+    {
         return $this->belongsTo(Type::class);
     }
 
-    public function coreSkill(){
+    public function coreSkill()
+    {
         return $this->hasMany(CoreSkill::class);
     }
 
-    public function basic(){
+    public function basic()
+    {
         return $this->hasMany(Basic::class);
     }
 
-    public function dodge(){
+    public function dodge()
+    {
         return $this->hasMany(Dodge::class);
     }
-    public function assist(){
+
+    public function assist()
+    {
         return $this->hasMany(Assist::class);
     }
 
-    public function mindscape(){
+    public function special()
+    {
+        return $this->hasMany(Special::class);
+    }
+
+    public function chain()
+    {
+        return $this->hasMany(Chain::class);
+    }
+
+    public function mindscape()
+    {
         return $this->hasMany(Mindscape::class);
     }
 }
