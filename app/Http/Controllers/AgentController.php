@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agent;
 use App\Models\CoreSkill;
 use App\Models\CoreSkillAddition;
 use App\Models\CoreSkillAttribute;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\AgentService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AgentController extends Controller
 {
@@ -36,7 +38,6 @@ class AgentController extends Controller
         $specialSkillData = json_decode($request->input('specialSkillDataJson'), true);
         $chainSkillData = json_decode($request->input('chainSkillDataJson'), true);
         $mindscapeData = json_decode($request->input('mindscapeDataJson'), true);
-
         //Creamos el agente
         $agent = $agentService->createAgent($agentData, $imagePrincipal, $imageShow);
         //creamos las coreSkill
@@ -62,5 +63,14 @@ class AgentController extends Controller
 
         //Redireccionamos a la página del personaje recién creado
         return redirect()->route('agents.show', ['id' => $agent->id]);
+    }
+    public function destroy($id)
+    {
+        if (Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized');
+        }
+        Agent::findOrFail($id)->delete();
+
+        return redirect()->back()->with('success', 'Agent deleted');
     }
 }

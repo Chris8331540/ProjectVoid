@@ -71,7 +71,7 @@ onMounted(() => {
         <TextWrapper v-for="tierlist in tierlists" :key="tierlist.id">
             <div class="flex flex-row">
                 <div class="flex flex-col" :class="isUserAuth ? 'w-2/3' : 'w-full'">
-                    <Link :href="`/tierlists/${tierlist.id}`">
+                    <Link :href="route('tierlists.show', tierlist.id)">
                     <div class="relative z-10 title !ml-0 w-full">{{ tierlist.title }}, by {{ tierlist.user.name }}
                     </div>
 

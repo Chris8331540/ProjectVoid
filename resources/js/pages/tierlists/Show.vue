@@ -65,7 +65,7 @@ const formatedDate = dayjs(props.tierlist.user.created_at).format('DD/MM/YY');
         <TextWrapper class="-mb-4">
             <div class="flex flex-column">
                 <div>
-                    <div class="relative z-10 title !ml-0">{{ tierlist.title }} by {{ tierlist.user.name }}</div>
+                    <div class="relative z-10 title !ml-0">{{ tierlist.title }} by <Link :href="route('user.profile', tierlist.user.id)">{{ tierlist.user.name }}</Link></div>
                     <div class="relative z-10"> {{ tierlist.description }}</div>
                 </div>
                 <div>

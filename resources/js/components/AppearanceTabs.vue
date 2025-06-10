@@ -32,9 +32,9 @@ const elements = [
     { Icon: "/storage/images/elements/Icon_Electric.webp", label: "Electric", value: "electric" },
     { Icon: "/storage/images/elements/Icon_Ether.webp", label: "Ether", value: "ether" },
     { Icon: "/storage/images/elements/Icon_Fire.webp", label: "Fire", value: "fire" },
-    { Icon: "/storage/images/elements/Icon_Frost.webp", label: "Ether", value: "frost" },
-    { Icon: "/storage/images/elements/Icon_Ice.webp", label: "Ether", value: "ice" },
-    { Icon: "/storage/images/elements/Icon_Physical.webp", label: "Ether", value: "physical" },
+    { Icon: "/storage/images/elements/Icon_Frost.webp", label: "Frost", value: "frost" },
+    { Icon: "/storage/images/elements/Icon_Ice.webp", label: "Ice", value: "ice" },
+    { Icon: "/storage/images/elements/Icon_Physical.webp", label: "Physical", value: "physical" },
 
 ] as const;
 
@@ -59,8 +59,6 @@ const types = [
 <template>
     <template v-if="isAgentsPage">
         <div class="flex flex-wrap justify-center">
-
-
             <div
                 :class="['inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800 m-2 mt-4', containerClass]">
                 <button v-for="{ Icon, label, value } in ranks" :key="value" @click="filterStore.updateRank(value)"

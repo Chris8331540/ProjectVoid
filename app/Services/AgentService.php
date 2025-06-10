@@ -132,12 +132,12 @@ class AgentService
                 //Creamos sus multiplicadores de daño y aturdimiento
                 foreach ($basicMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
                     $dmg = BasicDmg::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[0],
                         "basic_multiplier_id" => $basicMult->id
                     ]);
                     $daze = BasicDaze::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[1],
                         "basic_multiplier_id" => $basicMult->id
                     ]);
@@ -170,12 +170,12 @@ class AgentService
                 //Creamos sus multiplicadores de daño y aturdimiento
                 foreach ($dodgeMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
                     $dmg = DodgeDmg::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[0],
                         "dodge_multiplier_id" => $dodgeMult->id
                     ]);
                     $daze = DodgeDaze::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[1],
                         "dodge_multiplier_id" => $dodgeMult->id
                     ]);
@@ -207,12 +207,12 @@ class AgentService
                 //Creamos sus multiplicadores de daño y aturdimiento
                 foreach ($assistMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
                     $dmg = AssistDmg::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[0],
                         "assist_multiplier_id" => $assistMult->id
                     ]);
                     $daze = AssistDaze::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[1],
                         "assist_multiplier_id" => $assistMult->id
                     ]);
@@ -244,12 +244,12 @@ class AgentService
                 //Creamos sus multiplicadores de daño y aturdimiento
                 foreach ($specialMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
                     $dmg = SpecialDmg::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[0],
                         "special_multiplier_id" => $specialMult->id
                     ]);
                     $daze = SpecialDaze::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[1],
                         "special_multiplier_id" => $specialMult->id
                     ]);
@@ -281,12 +281,12 @@ class AgentService
                 //Creamos sus multiplicadores de daño y aturdimiento
                 foreach ($chainMultiplier["dmgs_dazes"] as $indexDD => $dmgDaze) {
                     $dmg = ChainDmg::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[0],
                         "chain_multiplier_id" => $chainMult->id
                     ]);
                     $daze = ChainDaze::create([
-                        "lvl" => $indexDD,
+                        "lvl" => $indexDD + 1,
                         "multiplier" => $dmgDaze[1],
                         "chain_multiplier_id" => $chainMult->id
                     ]);
@@ -303,7 +303,7 @@ class AgentService
                 "title" => $mindscape["title"],
                 "description" => $mindscape["description"],
                 "order" => $index + 1,
-                "agent_id"=>$agent->id
+                "agent_id" => $agent->id
             ]);
             array_push($mindscapesCreated, $mindscapeC);
         }

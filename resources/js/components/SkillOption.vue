@@ -44,6 +44,7 @@ function replacePlaceholderImg(text: string) {
 // const currentLvl = ref(1);
 //Tendría que ordenar los dazes, dmgs y otherproperties por nivel, para poder usar currentLvl
 const findMultiplier = (array: any[], lvl: any) => {
+    console.log(typeof array);
     return array.find(item => item.lvl === lvl)?.multiplier || "-";
 };
 const levelMap = reactive<{
@@ -73,263 +74,275 @@ onMounted(() => {
     <div class="w-full">
         <SkillTabs :skillSelected="skillSelected" :updateSkillSelected="updateSkillSelected"></SkillTabs>
     </div>
-    <div v-if="skillSelected === 0" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(basic, indexBasic) in agent.basic" widthClass="w-1/2">
-            <div class="w-full relative z-10 coreSkill">
-                <div class="title text-xl">Basic Attack: {{ basic.name }}</div>
-                <div class="info ml-1" v-html="replacePlaceholderImg(basic.info)"></div>
-            </div>
-            <!--Multiplicadores-->
-            <Accordion class="relative z-10">
-                <TextWrapper paddingClass="p-0" class="pt-2">
-                    <AccordionPanel value="0" class="relative z-10">
-                        <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
-                        <AccordionContent>
-                            <div class="p-4 relative z-10">
-                                <label :for="'lvl-basic-' + indexBasic">Level: {{ levelMap.basic[indexBasic]
-                                    }}</label>
-                                <input class="shiny-slider" type="range" min="1" max="12"
-                                    v-model.number="levelMap.basic[indexBasic]" :id="'lvl-basic-' + indexBasic" />
+    <div v-if="skillSelected === 0" class="w-full flex-wrap flex relative z-10">
+        <TextWrapper v-for="(basic, indexBasic) in agent.basic" widthClass="sm:w-1/2 w-full">
+            <div class="flex flex-col h-full skill-container">
+                <div class="w-full relative z-10 coreSkill">
+                    <div class="title text-xl">{{ basic.name }}</div>
+                    <div class="info ml-1" v-html="replacePlaceholderImg(basic.info)"></div>
+                </div>
+                <!--Multiplicadores-->
+                <Accordion class="relative z-10" v-if="agent.basic[indexBasic].basic_multiplier!=''">
+                    <TextWrapper paddingClass="p-0" class="pt-2">
+                        <AccordionPanel value="0" class="relative z-10">
+                            <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
+                            <AccordionContent>
+                                <div class="p-4 relative z-10">
+                                    <label :for="'lvl-basic-' + indexBasic">Level: {{ levelMap.basic[indexBasic]
+                                        }}</label>
+                                    <input class="shiny-slider" type="range" min="1" max="16"
+                                        v-model.number="levelMap.basic[indexBasic]" :id="'lvl-basic-' + indexBasic" />
 
-                                <div class="flex flex-col gap-4 font-bold mt-4">
-                                    <div v-for="(entry, index) in agent.basic[indexBasic].basic_multiplier" :key="index"
-                                        class="flex w-full gap-4 flex-col base-text-style">
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Dmg Multiplier
+                                    <div class="flex flex-col gap-4 font-bold mt-4">
+                                        <div v-for="(entry, index) in agent.basic[indexBasic].basic_multiplier"
+                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Dmg Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.basic_dmg, levelMap.basic[indexBasic]) }}
+                                                </div>
                                             </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.basic_dmg, levelMap.basic[indexBasic]) }}
+
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Daze Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.basic_daze, levelMap.basic[indexBasic]) }}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Daze Multiplier
-                                            </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.basic_daze, levelMap.basic[indexBasic]) }}
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionPanel>
-                </TextWrapper>
+                            </AccordionContent>
+                        </AccordionPanel>
+                    </TextWrapper>
 
-            </Accordion>
-
+                </Accordion>
+            </div>
 
         </TextWrapper>
     </div>
 
 
     <div v-if="skillSelected === 1" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(dodge, indexDodge) in agent.dodge" widthClass="w-1/2">
-            <div class="w-full relative z-10 coreSkill">
-                <div class="title text-xl">{{ dodge.name }}</div>
-                <div class="info ml-1" v-html="replacePlaceholderImg(dodge.info)"></div>
-            </div>
-            <!--Multiplicadores-->
-            <Accordion class="relative z-10">
-                <TextWrapper paddingClass="p-0" class="pt-2">
-                    <AccordionPanel value="0" class="relative z-10">
-                        <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
-                        <AccordionContent>
-                            <div class="p-4 relative z-10">
-                                <label :for="'lvl-dodge-' + indexDodge">Level: {{
-                                    levelMap.dodge[indexDodge] }}</label>
-                                <input class="shiny-slider" type="range" min="1" max="12"
-                                    v-model.number="levelMap.dodge[indexDodge]" :id="'lvl-dodge-' + indexDodge" />
-                                <div class="flex flex-col gap-4 font-bold mt-4">
-                                    <div v-for="(entry, index) in agent.dodge[indexDodge].dodge_multiplier" :key="index"
-                                        class="flex w-full gap-4 flex-col base-text-style">
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Dmg Multiplier
+        <TextWrapper v-for="(dodge, indexDodge) in agent.dodge" widthClass="sm:w-1/2 w-full">
+            <div class="flex flex-col h-full skill-container">
+                <div class="w-full relative z-10 coreSkill">
+                    <div class="title text-xl">{{ dodge.name }}</div>
+                    <div class="info ml-1" v-html="replacePlaceholderImg(dodge.info)"></div>
+                </div>
+                <!--Multiplicadores-->
+                <Accordion class="relative z-10" v-if="agent.dodge[indexDodge].dodge_multiplier!=''">
+                    <TextWrapper paddingClass="p-0" class="pt-2">
+                        <AccordionPanel value="0" class="relative z-10">
+                            <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
+                            <AccordionContent>
+                                <div class="p-4 relative z-10">
+                                    <label :for="'lvl-dodge-' + indexDodge">Level: {{
+                                        levelMap.dodge[indexDodge] }}</label>
+                                    <input class="shiny-slider" type="range" min="1" max="16"
+                                        v-model.number="levelMap.dodge[indexDodge]" :id="'lvl-dodge-' + indexDodge" />
+                                    <div class="flex flex-col gap-4 font-bold mt-4">
+                                        <div v-for="(entry, index) in agent.dodge[indexDodge].dodge_multiplier"
+                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Dmg Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.dodge_dmg, levelMap.dodge[indexDodge]) }}
+                                                </div>
                                             </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.dodge_dmg, levelMap.dodge[indexDodge]) }}
+
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Daze Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.dodge_daze, levelMap.dodge[indexDodge]) }}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Daze Multiplier
-                                            </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.dodge_daze, levelMap.dodge[indexDodge]) }}
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionPanel>
-                </TextWrapper>
-            </Accordion>
+                            </AccordionContent>
+                        </AccordionPanel>
+                    </TextWrapper>
+                </Accordion>
+            </div>
         </TextWrapper>
     </div>
 
     <div v-if="skillSelected === 2" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(assist, indexAssist) in agent.assist" widthClass="w-1/2">
-            <div class="w-full relative z-10 coreSkill">
-                <div class="title text-xl">{{ assist.name }}</div>
-                <div class="info ml-1" v-html="replacePlaceholderImg(assist.info)"></div>
-            </div>
-            <!--Multiplicadores-->
-            <Accordion class="relative z-10">
-                <TextWrapper paddingClass="p-0" class="pt-2">
-                    <AccordionPanel value="0" class="relative z-10">
-                        <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
-                        <AccordionContent>
-                            <div class="p-4 relative z-10">
-                                <label :for="'lvl-assist-' + indexAssist">Level: {{ levelMap.assist[indexAssist]
-                                }}</label>
-                                <input class="shiny-slider" type="range" min="1" max="12"
-                                    v-model.number="levelMap.assist[indexAssist]" :id="'lvl-assist-' + indexAssist" />
+        <TextWrapper v-for="(assist, indexAssist) in agent.assist" widthClass="sm:w-1/2 w-full">
+            <div class="flex flex-col h-full skill-container">
+                <div class="w-full relative z-10 coreSkill">
+                    <div class="title text-xl">{{ assist.name }}</div>
+                    <div class="info ml-1" v-html="replacePlaceholderImg(assist.info)"></div>
+                </div>
+                <!--Multiplicadores-->
+                <Accordion class="relative z-10" v-if="agent.assist[indexAssist].assist_multiplier!=''">
+                    <TextWrapper paddingClass="p-0" class="pt-2">
+                        <AccordionPanel value="0" class="relative z-10">
+                            <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
+                            <AccordionContent>
+                                <div class="p-4 relative z-10">
+                                    <label :for="'lvl-assist-' + indexAssist">Level: {{ levelMap.assist[indexAssist]
+                                        }}</label>
+                                    <input class="shiny-slider" type="range" min="1" max="16"
+                                        v-model.number="levelMap.assist[indexAssist]"
+                                        :id="'lvl-assist-' + indexAssist" />
 
-                                <div class="flex flex-col gap-4 font-bold mt-4">
-                                    <div v-for="(entry, index) in agent.assist[indexAssist].assist_multiplier"
-                                        :key="index" class="flex w-full gap-4 flex-col base-text-style">
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Dmg Multiplier
+                                    <div class="flex flex-col gap-4 font-bold mt-4">
+                                        <div v-for="(entry, index) in agent.assist[indexAssist].assist_multiplier"
+                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Dmg Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.assist_dmg, levelMap.assist[indexAssist]) }}
+                                                </div>
                                             </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.assist_dmg, levelMap.assist[indexAssist]) }}
+
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Daze Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.assist_daze, levelMap.assist[indexAssist])
+                                                    }}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Daze Multiplier
-                                            </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.assist_daze, levelMap.assist[indexAssist]) }}
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionPanel>
-                </TextWrapper>
-            </Accordion>
+                            </AccordionContent>
+                        </AccordionPanel>
+                    </TextWrapper>
+                </Accordion>
+            </div>
         </TextWrapper>
     </div>
 
     <div v-if="skillSelected === 3" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(special, indexSpecial) in agent.special" widthClass="w-1/2">
-            <div class="w-full relative z-10 coreSkill">
-                <div class="title text-xl">{{ special.name }}</div>
-                <div class="info ml-1" v-html="replacePlaceholderImg(special.info)"></div>
-            </div>
-            <!--Multiplicadores-->
-            <Accordion class="relative z-10">
-                <TextWrapper paddingClass="p-0" class="pt-2">
-                    <AccordionPanel value="0" class="relative z-10">
-                        <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
-                        <AccordionContent>
-                            <div class="p-4 relative z-10">
-                                <label :for="'lvl-special-' + indexSpecial">Level: {{ levelMap.special[indexSpecial]
-                                }}</label>
-                                <input class="shiny-slider" type="range" min="1" max="12"
-                                    v-model.number="levelMap.special[indexSpecial]"
-                                    :id="'lvl-special-' + indexSpecial" />
+        <TextWrapper v-for="(special, indexSpecial) in agent.special" widthClass="sm:w-1/2 w-full">
+            <div class="flex flex-col h-full skill-container">
+                <div class="w-full relative z-10 coreSkill">
+                    <div class="title text-xl">{{ special.name }}</div>
+                    <div class="info ml-1" v-html="replacePlaceholderImg(special.info)"></div>
+                </div>
+                <!--Multiplicadores-->
+                <Accordion class="relative z-10" v-if="agent.special[indexSpecial].special_multiplier!=''">
+                    <TextWrapper paddingClass="p-0" class="pt-2">
+                        <AccordionPanel value="0" class="relative z-10">
+                            <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
+                            <AccordionContent>
+                                <div class="p-4 relative z-10">
+                                    <label :for="'lvl-special-' + indexSpecial">Level: {{ levelMap.special[indexSpecial]
+                                    }}</label>
+                                    <input class="shiny-slider" type="range" min="1" max="16"
+                                        v-model.number="levelMap.special[indexSpecial]"
+                                        :id="'lvl-special-' + indexSpecial" />
 
-                                <div class="flex flex-col gap-4 font-bold mt-4">
-                                    <div v-for="(entry, index) in agent.special[indexSpecial].special_multiplier"
-                                        :key="index" class="flex w-full gap-4 flex-col base-text-style">
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Dmg Multiplier
+                                    <div class="flex flex-col gap-4 font-bold mt-4">
+                                        <div v-for="(entry, index) in agent.special[indexSpecial].special_multiplier"
+                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Dmg Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.special_dmg, levelMap.special[indexSpecial])
+                                                    }}
+                                                </div>
                                             </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.special_dmg, levelMap.special[indexSpecial]) }}
+
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Daze Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.special_daze,
+                                                        levelMap.special[indexSpecial]) }}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Daze Multiplier
-                                            </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.special_daze, levelMap.special[indexSpecial]) }}
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionPanel>
-                </TextWrapper>
-            </Accordion>
-
+                            </AccordionContent>
+                        </AccordionPanel>
+                    </TextWrapper>
+                </Accordion>
+            </div>
         </TextWrapper>
     </div>
-    
+
     <div v-if="skillSelected === 4" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(chain, indexChain) in agent.chain" widthClass="w-1/2">
-            <div class="w-full relative z-10 coreSkill">
-                <div class="title text-xl">{{ chain.name }}</div>
-                <div class="info ml-1" v-html="replacePlaceholderImg(chain.info)"></div>
-            </div>
-            <!--Multiplicadores-->
-            <Accordion class="relative z-10">
-                <TextWrapper paddingClass="p-0" class="pt-2">
-                    <AccordionPanel value="0" class="relative z-10">
-                        <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
-                        <AccordionContent>
-                            <div class="p-4 relative z-10">
-                                <label :for="'lvl-chain-' + indexChain">Level: {{ levelMap.chain[indexChain] }}</label>
-                                <input class="shiny-slider" type="range" min="1" max="12"
-                                    v-model.number="levelMap.chain[indexChain]" id="'lvl-chain-'+indexChain" />
+        <TextWrapper v-for="(chain, indexChain) in agent.chain" widthClass="sm:w-1/2 w-full">
+            <div class="flex flex-col h-full skill-container">
+                <div class="w-full relative z-10 coreSkill">
+                    <div class="title text-xl">{{ chain.name }}</div>
+                    <div class="info ml-1" v-html="replacePlaceholderImg(chain.info)"></div>
+                </div>
+                <!--Multiplicadores-->
+                <Accordion class="relative z-10" v-if="agent.chain[indexChain].chain_multiplier!=''">
+                    <TextWrapper paddingClass="p-0" class="pt-2">
+                        <AccordionPanel value="0" class="relative z-10">
+                            <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
+                            <AccordionContent>
+                                <div class="p-4 relative z-10">
+                                    <label :for="'lvl-chain-' + indexChain">Level: {{ levelMap.chain[indexChain]
+                                        }}</label>
+                                    <input class="shiny-slider" type="range" min="1" max="16"
+                                        v-model.number="levelMap.chain[indexChain]" id="'lvl-chain-'+indexChain" />
 
-                                <div class="flex flex-col gap-4 font-bold mt-4">
-                                    <div v-for="(entry, index) in agent.chain[indexChain].chain_multiplier" :key="index"
-                                        class="flex w-full gap-4 flex-col base-text-style">
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Dmg Multiplier
+                                    <div class="flex flex-col gap-4 font-bold mt-4">
+                                        <div v-for="(entry, index) in agent.chain[indexChain].chain_multiplier"
+                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Dmg Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.chain_dmg, levelMap.chain[indexChain]) }}
+                                                </div>
                                             </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.chain_dmg, levelMap.chain[indexChain]) }}
+
+                                            <div
+                                                class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
+                                                <div class="uppercase text-start">
+                                                    {{ entry.name }} Daze Multiplier
+                                                </div>
+                                                <div class="md:text-end">
+                                                    {{ findMultiplier(entry.chain_daze, levelMap.chain[indexChain]) }}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
-                                            <div class="uppercase text-start">
-                                                {{ entry.name }} Daze Multiplier
-                                            </div>
-                                            <div class="md:text-end">
-                                                {{ findMultiplier(entry.chain_daze, levelMap.chain[indexChain]) }}
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionPanel>
-                </TextWrapper>
-            </Accordion>
-
+                            </AccordionContent>
+                        </AccordionPanel>
+                    </TextWrapper>
+                </Accordion>
+            </div>
         </TextWrapper>
     </div>
 
@@ -426,5 +439,9 @@ input[type="range"] {
 
 .header-accordion {
     font-weight: bold;
+}
+
+.skill-container {
+    justify-content: space-between;
 }
 </style>

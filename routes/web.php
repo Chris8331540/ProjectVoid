@@ -18,6 +18,10 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
+Route::get("/about", function () {
+    return Inertia::render("About/About");
+})->name("about");
+
 Route::get("/agents", function () {
     $agents = Agent::select("id", "name", "image", "rank", "element_id", "type_id")->with(["element", "type"])->get();
     return Inertia::render("Agents", ["agents" => $agents]);
@@ -31,6 +35,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     Route::post("/agents/create", [AgentController::class, 'create']);
+
+    Route::delete('/agents/delete/{id}', [AgentController::class, 'destroy']);
 });
 
 Route::get("/agents/{id}", function ($id) {
