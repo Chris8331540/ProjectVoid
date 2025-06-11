@@ -8,7 +8,7 @@ import { ref } from "vue";
 import { useForm } from '@inertiajs/vue3'
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
-
+const errorMessage = ref('');
 
 const imagePreview = ref<{ [key: string]: string | null }>({
     imagePrincipal: null,
@@ -65,9 +65,8 @@ const form = useForm<{
 
 const submit = () => {
     form.post('/agents/create', {
-        forceFormData: true,
-        onSuccess: () => {
-            // Opcional: resetear el formulario o mostrar un mensaje
+        onError: (errors) => {
+            errorMessage.value = errors.error;
         },
     })
 }
@@ -434,6 +433,10 @@ function insertMindscapesTemplate() {
 
                 <div class="flex ml-6 mt-4">
                     <input class="relative z-10 p-2 bg-neutral-900 rounded button" type="submit" value="Create agent">
+                    <div v-if="errorMessage"
+                        class="flex text-sm text-red-500 bg-red-100 px-2 py-1 rounded transition-opacity duration-300 ml-2 error-text">
+                        {{ errorMessage }}
+                    </div>
                 </div>
 
             </div>
@@ -442,6 +445,9 @@ function insertMindscapesTemplate() {
     </AppLayout>
 </template>
 <style scoped>
+.error-text {
+  align-items: center;
+}
 .vertical-align {
     align-content: center;
 }

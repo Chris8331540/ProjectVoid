@@ -52,11 +52,12 @@ function isAnyEmpty() {
   if (!form.descriptionTierlist) {
     return "Please, add a description for the tierlist";
   }
-  return Object.values(tierlistOrdered.value).every((list) => list.length === 0) ? "You must assign at least one agent to the tier before submitting." : "";
+  return Object.values(tierlistOrdered.value).every((list) => list.length === 0) ? "You must assign at least one agent to the tier before submitting." : "";//""cuenta como falso (vacio)
 }
 
 // Método para enviar el formulario con Inertia
 function submit() {
+  //""cuenta como falso (vacio)
   const error = isAnyEmpty();
   if (error) {
     errorMessage.value = error;
@@ -64,8 +65,8 @@ function submit() {
   }
 
   form.post('/tierlists/create', {
-    onError: (errors) => {
-      errorMessage.value = errors.titleTierlist + " " + errors.descriptionTierlist + " " + errors.tierlistData;
+    onError: (error) => {
+      errorMessage.value = error.error;
     },
   });
 }
