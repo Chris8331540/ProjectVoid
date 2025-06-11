@@ -72,7 +72,8 @@ Route::get("/tierlists", function (Request $request) {
     //Si requiere json, rescata de 10 en 10 y devuelve en json
     if ($request->wantsJson()) {
         $tierlists = Tierlist::with(['user'])
-            ->withAvg('scores as average_score', 'score') // relación 'scores' que conecta con tabla pivote
+            ->withAvg('scores as average_score', 'score')// relación 'scores' que conecta con tabla pivote
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         $tierlists->getCollection()->transform(function ($tierlists) {
@@ -127,7 +128,7 @@ Route::get("/profile/{id}", function (Request $request, $id) {
     $user = User::findOrFail($id);
     if ($request->wantsJson()) {
         // Retornamos sólo los datos en JSON para AJAX
-        $tierlists = Tierlist::with("user")->where("user_id", $id)->withAvg('scores as average_score', 'score')->paginate(10);
+        $tierlists = Tierlist::with("user")->where("user_id", $id)->withAvg('scores as average_score', 'score')->orderBy('created_at', 'desc')->paginate(10);
         $tierlists->getCollection()->transform(function ($tierlists) {
             $tierlists->average_score = (float) $tierlists->average_score ?? 0;
             return $tierlists;
