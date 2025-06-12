@@ -92,7 +92,13 @@ class AgentController extends Controller
         if (Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized');
         }
-        Agent::findOrFail($id)->delete();
+        $agent = Agent::findOrFail($id);
+        
+        //Solución temporal, tendría que modificar la estructura de la tabla para permitir onDeleteCascade
+        // Borra las tierlist entries primero
+        $agent->tierlistEntries()->delete();
+        // Luego borra el agent
+        $agent->delete();
 
         return redirect()->back()->with('success', 'Agent deleted');
     }

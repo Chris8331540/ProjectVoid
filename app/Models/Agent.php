@@ -54,4 +54,8 @@ class Agent extends Model
     {
         return $this->hasMany(Mindscape::class);
     }
+
+    public function tierlistEntries(){
+        return $this->hasMany(TierlistEntry::class);
+    }
 }
