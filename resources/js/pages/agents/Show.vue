@@ -213,7 +213,7 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
             </SkillOption>
             <div v-if="propShowSubMenu.optionSelected.value === 2"
                 class="w-full flex-column flex-wrap flex relative z-10">
-                <TextWrapper v-for="mindscape in agent.mindscape" widthClass="sm:w-1/2 w-full">
+                <TextWrapper v-for="mindscape in agent.mindscape" widthClass="sm:w-1/2 w-full" :key="mindscape.id">
                     <div class="relative z-10 title text-xl !ml-0">{{ mindscape.title }}</div>
                     <div class="relative z-10">{{ mindscape.description }}</div>
                 </TextWrapper>

@@ -8,7 +8,7 @@ import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
 
-import { ref, computed, reactive, onMounted } from 'vue';
+import {reactive, onMounted } from 'vue';
 const props = defineProps<{
     name?: string;
     agent: any,
@@ -74,8 +74,9 @@ onMounted(() => {
     <div class="w-full">
         <SkillTabs :skillSelected="skillSelected" :updateSkillSelected="updateSkillSelected"></SkillTabs>
     </div>
+
     <div v-if="skillSelected === 0" class="w-full flex-wrap flex relative z-10">
-        <TextWrapper v-for="(basic, indexBasic) in agent.basic" widthClass="sm:w-1/2 w-full">
+        <TextWrapper v-for="(basic, indexBasic) in agent.basic" :key="'basic-'+indexBasic" widthClass="sm:w-1/2 w-full">
             <div class="flex flex-col h-full skill-container">
                 <div class="w-full relative z-10 coreSkill">
                     <div class="title text-xl">{{ basic.name }}</div>
@@ -95,7 +96,7 @@ onMounted(() => {
 
                                     <div class="flex flex-col gap-4 font-bold mt-4">
                                         <div v-for="(entry, index) in agent.basic[indexBasic].basic_multiplier"
-                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            :key="'basic-mult-'+indexBasic+'-'+index" class="flex w-full gap-4 flex-col base-text-style">
                                             <div
                                                 class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
                                                 <div class="uppercase text-start">
@@ -131,7 +132,7 @@ onMounted(() => {
 
 
     <div v-if="skillSelected === 1" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(dodge, indexDodge) in agent.dodge" widthClass="sm:w-1/2 w-full">
+        <TextWrapper v-for="(dodge, indexDodge) in agent.dodge" :key="'dodge-'+indexDodge" widthClass="sm:w-1/2 w-full">
             <div class="flex flex-col h-full skill-container">
                 <div class="w-full relative z-10 coreSkill">
                     <div class="title text-xl">{{ dodge.name }}</div>
@@ -150,7 +151,7 @@ onMounted(() => {
                                         v-model.number="levelMap.dodge[indexDodge]" :id="'lvl-dodge-' + indexDodge" />
                                     <div class="flex flex-col gap-4 font-bold mt-4">
                                         <div v-for="(entry, index) in agent.dodge[indexDodge].dodge_multiplier"
-                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            :key="'dodge-mult-'+indexDodge+'-'+index" class="flex w-full gap-4 flex-col base-text-style">
                                             <div
                                                 class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
                                                 <div class="uppercase text-start">
@@ -183,14 +184,14 @@ onMounted(() => {
     </div>
 
     <div v-if="skillSelected === 2" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(assist, indexAssist) in agent.assist" widthClass="sm:w-1/2 w-full">
+        <TextWrapper v-for="(assist, indexAssist) in agent.assist" :key="'assist-'+indexAssist" widthClass="sm:w-1/2 w-full">
             <div class="flex flex-col h-full skill-container">
                 <div class="w-full relative z-10 coreSkill">
                     <div class="title text-xl">{{ assist.name }}</div>
                     <div class="info ml-1" v-html="replacePlaceholderImg(assist.info)"></div>
                 </div>
                 <!--Multiplicadores-->
-                <Accordion class="relative z-10" v-if="agent.assist[indexAssist].assist_multiplier != ''">
+                <Accordion class="relative z-1 0" v-if="agent.assist[indexAssist].assist_multiplier != ''">
                     <TextWrapper paddingClass="p-0" class="pt-2">
                         <AccordionPanel value="0" class="relative z-10">
                             <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
@@ -204,7 +205,7 @@ onMounted(() => {
 
                                     <div class="flex flex-col gap-4 font-bold mt-4">
                                         <div v-for="(entry, index) in agent.assist[indexAssist].assist_multiplier"
-                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            :key="'assist-mult-'+indexAssist+'-'+index" class="flex w-full gap-4 flex-col base-text-style">
                                             <div
                                                 class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
                                                 <div class="uppercase text-start">
@@ -238,7 +239,7 @@ onMounted(() => {
     </div>
 
     <div v-if="skillSelected === 3" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(special, indexSpecial) in agent.special" widthClass="sm:w-1/2 w-full">
+        <TextWrapper v-for="(special, indexSpecial) in agent.special" :key="'special-'+indexSpecial" widthClass="sm:w-1/2 w-full">
             <div class="flex flex-col h-full skill-container">
                 <div class="w-full relative z-10 coreSkill">
                     <div class="title text-xl">{{ special.name }}</div>
@@ -259,7 +260,7 @@ onMounted(() => {
 
                                     <div class="flex flex-col gap-4 font-bold mt-4">
                                         <div v-for="(entry, index) in agent.special[indexSpecial].special_multiplier"
-                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            :key="'special-mult-'+indexSpecial+'-'+index" class="flex w-full gap-4 flex-col base-text-style">
                                             <div
                                                 class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
                                                 <div class="uppercase text-start">
@@ -294,7 +295,7 @@ onMounted(() => {
     </div>
 
     <div v-if="skillSelected === 4" class="w-full flex-column flex-wrap flex relative z-10">
-        <TextWrapper v-for="(chain, indexChain) in agent.chain" widthClass="sm:w-1/2 w-full">
+        <TextWrapper v-for="(chain, indexChain) in agent.chain" :key="'chain-'+indexChain" widthClass="sm:w-1/2 w-full">
             <div class="flex flex-col h-full skill-container">
                 <div class="w-full relative z-10 coreSkill">
                     <div class="title text-xl">{{ chain.name }}</div>
@@ -310,11 +311,11 @@ onMounted(() => {
                                     <label :for="'lvl-chain-' + indexChain">Level: {{ levelMap.chain[indexChain]
                                     }}</label>
                                     <input class="shiny-slider" type="range" min="1" max="16"
-                                        v-model.number="levelMap.chain[indexChain]" id="'lvl-chain-'+indexChain" />
+                                        v-model.number="levelMap.chain[indexChain]" :id="'lvl-chain-'+indexChain" />
 
                                     <div class="flex flex-col gap-4 font-bold mt-4">
                                         <div v-for="(entry, index) in agent.chain[indexChain].chain_multiplier"
-                                            :key="index" class="flex w-full gap-4 flex-col base-text-style">
+                                            :key="'chain-mult-'+indexChain+'-'+index" class="flex w-full gap-4 flex-col base-text-style">
                                             <div
                                                 class="justify-between rounded-full relative z-10 py-3 px-8 depth-effect md:flex">
                                                 <div class="uppercase text-start">

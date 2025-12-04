@@ -11,7 +11,7 @@ const props = defineProps<{
 }>();
 
 function replacePlaceholder(text: string, multipliers: Array<any>) {
-    let multipliersOrdered = orderMultipliers(multipliers);
+    const multipliersOrdered = orderMultipliers(multipliers);
     let index = 0; // Para llevar el seguimiento de los reemplazos
     return text.replace(/{multiplier}/g, () => multipliersOrdered[index++].multiplier || "");
 }

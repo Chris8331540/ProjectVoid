@@ -1,6 +1,6 @@
 import {ref} from 'vue';
 
-let coreLetters = ["A", "B", "C", "D", "E", "F"];
+const coreLetters = ["A", "B", "C", "D", "E", "F"];
 //Actualizamos la variable
 //tambien podemos tener otra variable para acceder al "array" del objeto, donde A = 0, B = 1, etc
 export const useCoreSkill = () =>{

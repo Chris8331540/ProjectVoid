@@ -2,7 +2,7 @@
 import { useAppearance } from '@/composables/useAppearance';
 import { Monitor, Moon, Sun } from 'lucide-vue-next';
 // import { useElement, useRank, useType } from "@/composables/useFilters";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted} from "vue";
 
 import { useFilterStore } from '@/composables/useFilters';
 

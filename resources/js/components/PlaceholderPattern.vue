@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { computed } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import {Link } from '@inertiajs/vue3';
 
 
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);

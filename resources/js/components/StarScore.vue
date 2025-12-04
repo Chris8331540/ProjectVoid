@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, computed } from 'vue'
 
 import axios from 'axios'
 import { Link, usePage } from '@inertiajs/vue3';

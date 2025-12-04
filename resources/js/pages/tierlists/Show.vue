@@ -6,7 +6,6 @@ import { Head } from '@inertiajs/vue3';
 
 import TextWrapper from '@/components/TextWrapper.vue';
 import { Link } from '@inertiajs/vue3';
-import dayjs from 'dayjs';
 import { ref } from 'vue';
 import StarScore from '@/components/StarScore.vue';
 type TierCategory = 's' | 'a' | 'b' | 'c' | 'd' | 'e'

@@ -3,8 +3,6 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import TextWrapper from '@/components/TextWrapper.vue';
-import { Link } from '@inertiajs/vue3';
-import { usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 const props = defineProps<{
