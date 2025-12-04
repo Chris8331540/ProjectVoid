@@ -50,7 +50,7 @@ function ordenarTierlist(entries: any[]) {
 }
 
 ordenarTierlist(props.tierlist.tierlist_entries);
-const formatedDate = dayjs(props.tierlist.user.created_at).format('DD/MM/YY');
+// const formatedDate = dayjs(props.tierlist.user.created_at).format('DD/MM/YY');
 </script>
 
 <template>

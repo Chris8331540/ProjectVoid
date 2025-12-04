@@ -13,7 +13,7 @@ const props = defineProps<{
     name?: string;
     agent: any,
     skillSelected: number,
-    updateSkillSelected: Function
+    updateSkillSelected: (skill: any) => void
 }>();
 const srcReplacement = "/storage/images/attacks/";
 const abilitysImg: {
@@ -82,14 +82,14 @@ onMounted(() => {
                     <div class="info ml-1" v-html="replacePlaceholderImg(basic.info)"></div>
                 </div>
                 <!--Multiplicadores-->
-                <Accordion class="relative z-10" v-if="agent.basic[indexBasic].basic_multiplier!=''">
+                <Accordion class="relative z-10" v-if="agent.basic[indexBasic].basic_multiplier != ''">
                     <TextWrapper paddingClass="p-0" class="pt-2">
                         <AccordionPanel value="0" class="relative z-10">
                             <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
                             <AccordionContent>
                                 <div class="p-4 relative z-10">
                                     <label :for="'lvl-basic-' + indexBasic">Level: {{ levelMap.basic[indexBasic]
-                                        }}</label>
+                                    }}</label>
                                     <input class="shiny-slider" type="range" min="1" max="16"
                                         v-model.number="levelMap.basic[indexBasic]" :id="'lvl-basic-' + indexBasic" />
 
@@ -138,7 +138,7 @@ onMounted(() => {
                     <div class="info ml-1" v-html="replacePlaceholderImg(dodge.info)"></div>
                 </div>
                 <!--Multiplicadores-->
-                <Accordion class="relative z-10" v-if="agent.dodge[indexDodge].dodge_multiplier!=''">
+                <Accordion class="relative z-10" v-if="agent.dodge[indexDodge].dodge_multiplier != ''">
                     <TextWrapper paddingClass="p-0" class="pt-2">
                         <AccordionPanel value="0" class="relative z-10">
                             <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
@@ -190,14 +190,14 @@ onMounted(() => {
                     <div class="info ml-1" v-html="replacePlaceholderImg(assist.info)"></div>
                 </div>
                 <!--Multiplicadores-->
-                <Accordion class="relative z-10" v-if="agent.assist[indexAssist].assist_multiplier!=''">
+                <Accordion class="relative z-10" v-if="agent.assist[indexAssist].assist_multiplier != ''">
                     <TextWrapper paddingClass="p-0" class="pt-2">
                         <AccordionPanel value="0" class="relative z-10">
                             <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
                             <AccordionContent>
                                 <div class="p-4 relative z-10">
                                     <label :for="'lvl-assist-' + indexAssist">Level: {{ levelMap.assist[indexAssist]
-                                        }}</label>
+                                    }}</label>
                                     <input class="shiny-slider" type="range" min="1" max="16"
                                         v-model.number="levelMap.assist[indexAssist]"
                                         :id="'lvl-assist-' + indexAssist" />
@@ -245,14 +245,14 @@ onMounted(() => {
                     <div class="info ml-1" v-html="replacePlaceholderImg(special.info)"></div>
                 </div>
                 <!--Multiplicadores-->
-                <Accordion class="relative z-10" v-if="agent.special[indexSpecial].special_multiplier!=''">
+                <Accordion class="relative z-10" v-if="agent.special[indexSpecial].special_multiplier != ''">
                     <TextWrapper paddingClass="p-0" class="pt-2">
                         <AccordionPanel value="0" class="relative z-10">
                             <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
                             <AccordionContent>
                                 <div class="p-4 relative z-10">
                                     <label :for="'lvl-special-' + indexSpecial">Level: {{ levelMap.special[indexSpecial]
-                                    }}</label>
+                                        }}</label>
                                     <input class="shiny-slider" type="range" min="1" max="16"
                                         v-model.number="levelMap.special[indexSpecial]"
                                         :id="'lvl-special-' + indexSpecial" />
@@ -301,14 +301,14 @@ onMounted(() => {
                     <div class="info ml-1" v-html="replacePlaceholderImg(chain.info)"></div>
                 </div>
                 <!--Multiplicadores-->
-                <Accordion class="relative z-10" v-if="agent.chain[indexChain].chain_multiplier!=''">
+                <Accordion class="relative z-10" v-if="agent.chain[indexChain].chain_multiplier != ''">
                     <TextWrapper paddingClass="p-0" class="pt-2">
                         <AccordionPanel value="0" class="relative z-10">
                             <AccordionHeader class="header-accordion">Multipliers</AccordionHeader>
                             <AccordionContent>
                                 <div class="p-4 relative z-10">
                                     <label :for="'lvl-chain-' + indexChain">Level: {{ levelMap.chain[indexChain]
-                                        }}</label>
+                                    }}</label>
                                     <input class="shiny-slider" type="range" min="1" max="16"
                                         v-model.number="levelMap.chain[indexChain]" id="'lvl-chain-'+indexChain" />
 

@@ -6,7 +6,7 @@ import { Head, Link } from '@inertiajs/vue3';
 
 const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
 
-const props = defineProps<{
+defineProps<{
     imgSrc: string,
     name: string,
     elementIcon: string,

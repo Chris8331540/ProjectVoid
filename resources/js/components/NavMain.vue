@@ -12,7 +12,7 @@ const page = usePage<SharedData>();
 const currentPage = computed(() => page.url);
 
 
-const {isMobile, state} = useSidebar();
+const {state} = useSidebar();
 </script>
 
 <template>

@@ -7,7 +7,7 @@ import TextWrapper from '@/components/TextWrapper.vue';
 import { ref } from "vue";
 import { useForm } from '@inertiajs/vue3'
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+// const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
 const errorMessage = ref('');
 
 const imagePreview = ref<{ [key: string]: string | null }>({

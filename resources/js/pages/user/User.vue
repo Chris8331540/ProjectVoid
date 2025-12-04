@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
 ];
-const page = usePage();
+// const page = usePage();
 // const user = page.props.auth?.user;
 
 const formatedDate = dayjs(props.user.created_at).format('DD/MM/YY');

@@ -3,7 +3,7 @@
 defineProps<{
     name?: string
     skillSelected: number,
-    updateSkillSelected: Function,
+    updateSkillSelected: (skill: any) => void
 }>();
 
 const skillButtons = ["basic", "dodge", "assist", "special", "chain"];
@@ -139,7 +139,7 @@ const skillImgs = ["basic_attack.webp", "dodge_attack.webp", "assist_attack.webp
             #DBD100 75%,
             #A6C100 100%);
     background-size: 400% auto;
-    animation:textShine 1.4s ease-in-out infinite;
+    animation: textShine 1.4s ease-in-out infinite;
     /* border-radius: 100px 20px; */
     /* Transiciones específicas para los cambios de posicionamiento */
     transition: all 0.5s ease-in-out;
@@ -162,7 +162,7 @@ const skillImgs = ["basic_attack.webp", "dodge_attack.webp", "assist_attack.webp
             #DBD100 75%,
             #A6C100 100%);
     background-size: 400% auto;
-    animation:textShine 1.8s ease-in-out infinite;
+    animation: textShine 1.8s ease-in-out infinite;
     /* border-radius: 100px 20px; */
     /* Transiciones específicas para los cambios de posicionamiento */
     transition: all 0.5s ease-in-out;
