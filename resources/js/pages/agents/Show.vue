@@ -16,7 +16,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
 ];
-const props = defineProps<{
+defineProps<{
     name?: string;
     agent: any
 }>();

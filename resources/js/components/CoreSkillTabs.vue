@@ -2,14 +2,13 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 
-interface Props {
+defineProps <{
     class?: string;
     letterSelected: string,
     numberCore: number,
     updateCoreSkill: (skill: any) => void
-}
+}>();
 const letters = ["A", "B", "C", "D", "E", "F"];
-const { class: containerClass = '' } = defineProps<Props>();
 
 </script>
 <template>

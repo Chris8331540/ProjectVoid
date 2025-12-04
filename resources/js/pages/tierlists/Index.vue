@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/vue3';
 import TextWrapper from '@/components/TextWrapper.vue';
 import { Link } from '@inertiajs/vue3';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
-const props = defineProps<{
+defineProps<{
     name?: string;
 }>();
 const breadcrumbs: BreadcrumbItem[] = [

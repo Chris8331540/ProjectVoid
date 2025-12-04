@@ -9,7 +9,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/',
     },
 ];
-const props = defineProps<{
+defineProps<{
     name?: string;
 }>();
 </script>
