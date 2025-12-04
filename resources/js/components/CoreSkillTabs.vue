@@ -1,22 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 
-const isMobile = ref(window.innerWidth < 512);
-// const checkScreenSize = () =>{
-//     isMobile.value = window.innerWidth < 512;
-// }
-// onMounted(()=>{
-//     window.addEventListener("resize", checkScreenSize);
-// });
-// onUnmounted(()=>{
-//     window.addEventListener("resize", checkScreenSize);
-// });
 
 interface Props {
     class?: string;
     letterSelected: string,
     numberCore: number,
-    updateCoreSkill: Function
+    updateCoreSkill: (skill: any) => void
 }
 const letters = ["A", "B", "C", "D", "E", "F"];
 const { class: containerClass = '' } = defineProps<Props>();

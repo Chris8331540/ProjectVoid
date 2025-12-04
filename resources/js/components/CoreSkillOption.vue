@@ -6,7 +6,7 @@ const props = defineProps<{
     coreSkills: any,
     numberCore: number,
     letterSelected: string,
-    updateCoreSkill: Function
+    updateCoreSkill: (skill: any) => void
 
 }>();
 
@@ -27,13 +27,13 @@ function orderMultipliers(multipliers: Array<any>) {
     <TextWrapper>
         <CoreSkillTabs class="relative z-10" :letterSelected="letterSelected" :numberCore="numberCore"
             :updateCoreSkill="updateCoreSkill"></CoreSkillTabs>
-        <template v-for="coreSkill in coreSkills">
+        <template v-for="coreSkill in coreSkills" :key="coreSkill.id || coreSkill.name">
             <div class="w-full relative z-10 coreSkill">
                 <div class="title text-xl">{{ coreSkill.name }}</div>
                 <div class="info ml-1">{{ replacePlaceholder(coreSkill.info,
                     coreSkill.core_skill_multiplier) }}</div>
                 <div class="w-full relative z-10 flex flex-row flex-wrap">
-                    <template v-for="coreSkillAttribute in coreSkill.core_skill_attribute">
+                    <template v-for="coreSkillAttribute in coreSkill.core_skill_attribute" :key="coreSkillAttribute.id || coreSkillAttribute.name">
                         <div class="uppercase text-lg ml-1 title-button italic">
                             {{ coreSkillAttribute.name }} +{{
                                 coreSkillAttribute.core_skill_addition[numberCore].value }}
