@@ -32,5 +32,6 @@ const props = withDefaults(defineProps<{
     background-image: repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a), repeating-linear-gradient(45deg, #27272a 25%, transparent 25%, transparent 75%, #27272a 75%, #27272a);
     background-position: 0 0, 4px 4px;
     background-size: 8px 8px;
+
 }
 </style>

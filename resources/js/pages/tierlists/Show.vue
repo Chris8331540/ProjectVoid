@@ -3,11 +3,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import ImageHolderTierList from '@/components/ImageHolderTierList.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../../components/PlaceholderPattern.vue';
-import { computed } from "vue";
-import AppearanceTabs from '@/components/AppearanceTabs.vue';
 
-import { useFilterStore } from '@/composables/useFilters';
 import TextWrapper from '@/components/TextWrapper.vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
