@@ -20,7 +20,6 @@ const page = usePage();
 const canExecute = computed(() => page.url !== '/tierlists');
 const rate = async (score: number) => {
     if (!canExecute.value) return
-    console.log(typeof (score))
     try {
         const res = await axios.post(`/tierlists/${props.tierlistId}/rate`, { score })
         average.value = res.data.average

@@ -44,7 +44,6 @@ function replacePlaceholderImg(text: string) {
 // const currentLvl = ref(1);
 //Tendría que ordenar los dazes, dmgs y otherproperties por nivel, para poder usar currentLvl
 const findMultiplier = (array: any[], lvl: any) => {
-    console.log(typeof array);
     return array.find(item => item.lvl === lvl)?.multiplier || "-";
 };
 const levelMap = reactive<{
